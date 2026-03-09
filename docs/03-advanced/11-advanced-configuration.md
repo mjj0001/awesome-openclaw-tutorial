@@ -704,7 +704,6 @@ openclaw config get agents.defaults.model
 #### 容灾最佳实践
 
 **1. 选择不同提供商**：
-```text
 ✅ 推荐：Anthropic → OpenAI → Google
 ❌ 不推荐：Claude Opus → Claude Sonnet（同提供商）
 ```text
@@ -1398,7 +1397,7 @@ openclaw stats today
 - 其他：25%
 ```text
 **消耗优化建议**：
-```
+
 ⚠️ 高消耗任务：
 - 文件搜索：每次10K tokens
 - 建议：优化搜索范围

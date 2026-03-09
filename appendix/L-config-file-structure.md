@@ -191,7 +191,9 @@ rm ~/.openclaw/agents/main-assistant/agent/auth-profiles.json
    ↓
 4. 默认值（最低优先级）
 
-````text
+`
+```
+
 ### 示例说明
 
 假设你有以下配置：

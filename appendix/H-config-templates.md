@@ -453,8 +453,8 @@
     "autoUpdate": true,
     "updateSchedule": "0 3 * * 0",
     "directory": "~/.openclaw/skills",
-    "r
-
+    "registry": {
+      "@openclaw/skill-calendar": {
         "version": "1.1.0",
         "enabled": true,
         "config": {

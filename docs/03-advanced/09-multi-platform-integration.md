@@ -66,7 +66,8 @@
 
 ```bash
 openclaw setup
-```text
+```
+
 向导会引导您完成：
 1. 创建飞书应用并获取凭证
 2. 配置应用凭证
@@ -76,7 +77,8 @@ openclaw setup
 ```bash
 openclaw gateway status      # 查看网关运行状态
 openclaw logs --follow       # 查看实时日志
-```text
+```
+
 **方式二：通过命令行添加**
 
 如果您已经完成了初始安装，可以用以下命令添加飞书渠道：

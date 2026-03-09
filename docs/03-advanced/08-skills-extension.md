@@ -397,6 +397,7 @@ clawhub install nano-banana-pro
 **搜索技巧**：
 
 ```
+
 # 按名称搜索
 搜索：file-search
 
@@ -2215,7 +2216,6 @@ grep "requires" ~/.openclaw/skills/my-skill/SKILL.md
     }
   }
 }
-```text
 ❌ **不要**：
 ```markdown
 ---
@@ -2260,7 +2260,7 @@ openclaw logs --skill my-skill
 
 **成本计算**：
 
-```
+
 基础开销（仅当≥1个Skills时）：195字符
 
 每个Skills：97字符 + XML转义的字段长度
