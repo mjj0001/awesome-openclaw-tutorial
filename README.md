@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.3.8-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
+[![Version](https://img.shields.io/badge/version-v2026.3.12-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 
 ## 🎉 项目状态
@@ -59,7 +59,7 @@
 | **附录数量** | 14个（A-N） | 15个（A-O）✨ |
 | **总字数** | 41.8万字 | 42.3万字 |
 | **章节数** | 15章+14附录+1安全指南 | 15章+15附录+1安全指南 |
-| **适用版本** | v2026.3.7 | v2026.3.8 |
+| **适用版本** | v2026.3.7 | v2026.3.12 |
 
 👉 **[查看公众号文章](公众号文章-2026年3月更新.md)** 了解详细更新内容
 
@@ -799,21 +799,21 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 
 ## 🆕 OpenClaw 最新版本
 
-**当前最新版本**：openclaw2026.3.8（2026.3.8）
+**当前最新版本**：openclaw 2026.3.12（2026.3.12）
 
-**2026.3.8重点更新（建议关注）**：
-- ✅ 新增备份命令：`openclaw backup create` / `openclaw backup verify`（支持 `--only-config`、`--no-include-workspace`）
-- ✅ Talk 模式新增：`talk.silenceTimeoutMs`（自动发送前的静默等待）
-- ✅ ACP 增强：`openclaw acp --provenance off|meta|meta+receipt`（可选溯源+回执注入）
-- ✅ Brave web_search 新模式（可选）：`tools.web.search.brave.mode: "llm-context"`
-- ✅ Chrome Relay 跨环境绑定（按需）：`browser.relayBindHost`
+**2026.3.12 重点更新（建议关注）**：
+- 🎛️ **Dashboard v2** - 全新的控制面板UI��更美观易用
+- ⚡ **Fast mode 支持** - ollama/sglang/vllm 等本地模型加速模式
+- 🔌 **增强插件支持** - "core goes on a diet"，更轻量的核心
+- 📊 **实时终端仪表板** - 监控 CPU、内存、GPU、会话和 Agent 状态
+- 🚀 **性能优化** - 响应速度和资源占用进一步优化
 
-**主要更新**：
-- ✅ Gateway认证要求（Breaking Change）：必须显式设置gateway.auth.mode
-- ✅ 模型提供商扩展：支持更多国产模型和自定义Provider
-- ✅ 安全性加固：修复多项安全漏洞，包括CVE-2026-25253
-- ✅ Skills安全：增强ClawHub审查机制
-- ✅ 工具权限隔离：2026.3.2引入的profile模式得到优化
+**历史版本重要更新**：
+- ✅ **v2026.3.8**：新增备份命令、ACP 增强、Brave 搜索模式
+- ✅ **v2026.3.7**：Gateway 认证要求（Breaking Change）
+- ✅ **v2026.3.2**：Secrets 系统成熟、SecretRef 支持
+- ✅ **安全性加固**：修复多项安全漏洞，包括 CVE-2026-25253
+- ✅ **Skills 安全**：增强 ClawHub 审查机制
 
 👉 [查看完整更新日志](https://github.com/openclaw/openclaw/releases)
 
@@ -857,13 +857,13 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 **副标题**：从零开始打造你的AI工作助手
 **总字数**：423,000字（正文267,000字 + 附录156,000字）
 **章节数**：15章正文 + 15个附录 + 1个安全指南
-**适用OpenClaw版本**：2026.3.8（推荐稳定版）
+**适用OpenClaw版本**：2026.3.12（推荐最���版）
 
 **本次更新亮点**：
 - ✅ 新增附录O：国产Claw产品选购指南（450行）
 - ✅ Skills生态大爆发：从1800+到492,000+
 - ✅ 安全指南升级：ACP、备份工具、ClawJacked漏洞等
-- ✅ 更新统计数据和版本信息
+- ✅ 更新统计数据和版本信息（v2026.3.12）
 - ✅ 教程总字数达42.3万字
 
 👉 [查看详细改进内容](IMPROVEMENTS-SUMMARY.md)
