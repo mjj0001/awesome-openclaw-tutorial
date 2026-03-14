@@ -1,0 +1,26 @@
+{
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "your-secret-token-here"
+    }
+  },
+  "platforms": [
+    {
+      "type": "feishu",
+      "config": {
+        "appId": "your-feishu-app-id",
+        "appSecret": "your-feishu-app-secret",
+        "encryptKey": "your-encrypt-key",
+        "verificationToken": "your-verification-token"
+      }
+    }
+  ],
+  "agents": [
+    {
+      "name": "飞书助手",
+      "model": "deepseek-chat",
+      "systemPrompt": "你是一个飞书机器人助手，可以帮助用户处理工作事务。"
+    }
+  ]
+}

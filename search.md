@@ -261,7 +261,7 @@ mark {
   function performSearch(query) {
     if (!query || query.trim() === '') {
       document.getElementById('search-results').innerHTML =
-        '<p class="search-hint">💡 请输入搜索��键词</p>';
+        '<p class="search-hint">💡 请输入搜索关键词</p>';
       document.getElementById('search-stats').innerHTML = '';
       return;
     }

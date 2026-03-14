@@ -69,7 +69,7 @@ openclaw gateway restart
 
 ---
 
-### 🔧 2026.3.2 版��：AI变"哑巴"了？
+### 🔧 2026.3.2 版本：AI变"哑巴"了？
 
 **问题现象**：升级到 2026.3.2 后，OpenClaw只能聊天不能干活（文件管理、命令执行等工具功能全部失效）
 
@@ -145,7 +145,7 @@ openclaw gateway restart
 
 **⚠️ 重要提示**：如果你从旧版本升级到 v2026.3.7 且没有配置认证，Gateway将拒绝启动。这是一个有意为之的设计，强制所有用户设置认证。
 
-**快速修复（命令行��**：
+**快速修复（命令行）**：
 
 ```bash
 # 设置token认证
@@ -216,7 +216,7 @@ openclaw gateway restart
 ### 附录：速查手册
 
 #### 基础附录（A-F）
-| ��录 | 内容 |
+| 附录 | 内容 |
 |------|------|
 | [附录A：命令速查表](appendix/A-command-reference.md) | 100+ 常用命令，5 大类快速查找 |
 | [附录B：必装 Skills 清单](appendix/B-skills-catalog.md) | Top10 必装技能，附安装教程 |
@@ -234,7 +234,7 @@ openclaw gateway restart
 | [附录J：飞书配置检查清单](appendix/J-feishu-checklist.md) | 确保飞书Bot配置完整，避免常见问题 |
 | [附录K：API Key 配置完整指南](appendix/K-api-key-config-guide.md) | 多种API Key配置方式详解 |
 | [附录L：配置文件结构完整指南](appendix/L-config-file-structure.md) | 全局配置、Agent配置、认证配置详解 |
-| [附录M：搜索功能使用指南](appendix/M-search-guide.md) | 搜索���能使用技巧和常见问题 |
+| [附录M：搜索功能使用指南](appendix/M-search-guide.md) | 搜索功能使用技巧和常见问题 |
 | [附录N：Skills 生态说明](appendix/N-skills-ecosystem.md) | 内置49个、官方93个、社区1715+个Skills介绍 |
 | [附录O：国产 Claw 产品选购指南](appendix/O-domestic-claw-products.md) | 国产AI Agent产品特点和差异，选型建议 |
 
@@ -265,6 +265,52 @@ openclaw gateway restart
 - [OpenClaw 官方文档](https://docs.openclaw.ai)
 - [ClawHub 技能市场](https://clawhub.ai)
 - [GitHub 仓库](https://github.com/xianyu110/awesome-openclaw-tutorial)
+
+---
+
+## 📮 联系方式
+
+<div align="center">
+    <p>
+        <!-- CSDN Badge -->
+        <a href="https://blog.csdn.net/xianyu120">
+            <img src="https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn" alt="CSDN" />
+        </a>
+        <!-- Bilibili Badge -->
+        <a href="https://space.bilibili.com/399102586">
+            <img src="https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili" alt="Bilibili" />
+        </a>
+        <!-- WeChat Official Account Badge -->
+        <a href="https://upload.maynor1024.live/file/1773461955906_qrcode_for_gh_c749803541de_1280.jpg" target="_blank">
+            <img src="https://img.shields.io/badge/微信公众号-关注我-07C160?style=for-the-badge&logo=wechat" alt="微信公众号" />
+        </a>
+        <!-- YouTube Badge -->
+        <a href="https://www.youtube.com/@buguniao537">
+            <img src="https://img.shields.io/badge/YouTube-Profile-red?style=for-the-badge&logo=youtube" alt="Youtube" />
+        </a>
+        <!-- QQ Badge -->
+        <a href="https://qm.qq.com/q/Q4YTVK5T6q">
+            <img src="https://img.shields.io/badge/QQ-1002569303-0099ff?style=for-the-badge&logo=tencentqq" alt="QQ" />
+        </a>
+        <!-- X (Twitter) Badge -->
+        <a href="https://x.com/Nikitka_aktikiN">
+            <img src="https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" />
+        </a>
+    </p>
+</div>
+
+### 社交媒体
+- **GitHub**: [@xianyu110](https://github.com/xianyu110)
+- **CSDN专栏**: [OpenClaw从入门到精通](https://blog.csdn.net/xianyu120/category_13126767.html)
+- **B站**: [@MaynorAI](https://space.bilibili.com/399102586)
+- **YouTube**: [@buguniao537](https://www.youtube.com/@buguniao537)
+- **X (Twitter)**: [@Nikitka_aktikiN](https://x.com/Nikitka_aktikiN)
+- **QQ群**: [1002569303](https://qm.qq.com/q/Q4YTVK5T6q)
+- **微信公众号**: [扫码关注](https://upload.maynor1024.live/file/1773461955906_qrcode_for_gh_c749803541de_1280.jpg)
+
+### 项目链接
+- **Clawbot项目**: [700+ Stars](https://github.com/xianyu110/clawbot)
+- **两万人AI社区主理人**
 
 ---
 

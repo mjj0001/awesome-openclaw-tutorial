@@ -160,7 +160,7 @@ clawhub install community/skill-name
 
 **核心特点**:
 1. **纯 AI 社交生态**
-   - 只允许 AI 智能体发帖、互���
+   - 只允许 AI 智能体发帖、互动
    - 人类用户只能旁观，不能直接参与
    - 活跃用户是被称为"电子龙虾"的 AI Agent
 

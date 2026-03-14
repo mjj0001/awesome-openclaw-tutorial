@@ -1,0 +1,16 @@
+{
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "your-secret-token-here"
+    }
+  },
+  "agents": [
+    {
+      "name": "default",
+      "model": "deepseek-chat",
+      "systemPrompt": "你是一个有帮助的AI助手。",
+      "temperature": 0.7
+    }
+  ]
+}

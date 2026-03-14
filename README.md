@@ -1,4 +1,4 @@
-# 🦞 Awesome OpenClaw Tutorial
+1# 🦞 Awesome OpenClaw Tutorial
 # 🦞 一本书玩转OpenClaw：超级个体实战指南
 
 > 从零开始打造你的AI工作助手：最全面的中文教程，涵盖安装、配置、实战案例和避坑指南
@@ -36,6 +36,19 @@
 - 🔌 **增强插件支持** - "core goes on a diet"，更轻量的核心
 - 📊 **实时终端仪表板** - 监控 CPU、内存、GPU、会话和 Agent 状态
 - 🚀 **性能优化** - 响应速度和资源占用进一步优化
+
+**升级示例**（从 v2026.3.2 升级到 v2026.3.12）：
+
+![](https://upload.maynor1024.live/file/1773461284985_image-20260314120751746.png)
+
+升级命令：
+```bash
+# 更新OpenClaw
+openclaw update
+
+# 重启Gateway
+openclaw gateway restart
+```
 
 ### ✨ 新增附录O：国产Claw产品选购指南
 
@@ -213,7 +226,7 @@ openclaw gateway restart
 
 **找不到答案？**
 - 📖 [查看完整FAQ](appendix/E-common-problems.md)
-- 💬 [GitHub Discussions](https://github.com/xianyu110/awesome-openclaw-tutorial/discussions)
+- 💬 [提交问题](https://github.com/xianyu110/awesome-openclaw-tutorial/issues)
 - 🐛 [报告Bug](https://github.com/xianyu110/awesome-openclaw-tutorial/issues)
 
 ---
@@ -770,10 +783,46 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 
 ## 📮 联系方式
 
+<div align="center">
+    <p>
+        <!-- CSDN Badge -->
+        <a href="https://blog.csdn.net/xianyu120">
+            <img src="https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn" alt="CSDN" />
+        </a>
+        <!-- Bilibili Badge -->
+        <a href="https://space.bilibili.com/399102586">
+            <img src="https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili" alt="Bilibili" />
+        </a>
+        <!-- WeChat Official Account Badge -->
+        <a href="https://restname.oss-cn-hangzhou.aliyuncs.com/qrcode_for_gh_c749803541de_1280.jpg" target="_blank">
+            <img src="https://img.shields.io/badge/微信公众号-关注我-07C160?style=for-the-badge&logo=wechat" alt="微信公众号" />
+        </a>
+        <!-- YouTube Badge -->
+        <a href="https://www.youtube.com/@buguniao537">
+            <img src="https://img.shields.io/badge/YouTube-Profile-red?style=for-the-badge&logo=youtube" alt="Youtube" />
+        </a>
+        <!-- QQ Badge -->
+        <a href="https://qm.qq.com/q/Q4YTVK5T6q">
+            <img src="https://img.shields.io/badge/QQ-1002569303-0099ff?style=for-the-badge&logo=tencentqq" alt="QQ" />
+        </a>
+        <!-- X (Twitter) Badge -->
+        <a href="https://x.com/Nikitka_aktikiN">
+            <img src="https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" />
+        </a>
+    </p>
+</div>
+
+### 社交媒体
 - **GitHub**: [@xianyu110](https://github.com/xianyu110)
-- **Clawbot项目**: [700+ Stars](https://github.com/xianyu110/clawbot)
 - **CSDN专栏**: [OpenClaw从入门到精通](https://blog.csdn.net/xianyu120/category_13126767.html)
 - **B站**: [@MaynorAI](https://space.bilibili.com/399102586)
+- **YouTube**: [@buguniao537](https://www.youtube.com/@buguniao537)
+- **X (Twitter)**: [@Nikitka_aktikiN](https://x.com/Nikitka_aktikiN)
+- **QQ群**: [1002569303](https://qm.qq.com/q/Q4YTVK5T6q)
+- **微信公众号**: [扫码关注](https://upload.maynor1024.live/file/1773461955906_qrcode_for_gh_c749803541de_1280.jpg)
+
+### 项目链接
+- **Clawbot项目**: [700+ Stars](https://github.com/xianyu110/clawbot)
 - **两万人AI社区主理人**
 
 ## 👥 交流群
@@ -812,7 +861,7 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 **当前最新版本**：openclaw 2026.3.12（2026.3.12）
 
 **2026.3.12 重点更新（建议关注）**：
-- 🎛️ **Dashboard v2** - 全新的控制面板UI��更美观易用
+- 🎛️ **Dashboard v2** - 全新的控制面板UI，更美观易用
 - ⚡ **Fast mode 支持** - ollama/sglang/vllm 等本地模型加速模式
 - 🔌 **增强插件支持** - "core goes on a diet"，更轻量的核心
 - 📊 **实时终端仪表板** - 监控 CPU、内存、GPU、会话和 Agent 状态
@@ -867,7 +916,7 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 **副标题**：从零开始打造你的AI工作助手
 **总字数**：423,000字（正文267,000字 + 附录156,000字）
 **章节数**：15章正文 + 15个附录 + 1个安全指南
-**适用OpenClaw版本**：2026.3.12（推荐最���版）
+**适用OpenClaw版本**：2026.3.12（推荐最新版）
 
 **本次更新亮点**：
 - ✅ 新增附录O：国产Claw产品选购指南（450行）

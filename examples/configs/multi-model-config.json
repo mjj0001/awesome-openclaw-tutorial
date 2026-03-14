@@ -1,0 +1,28 @@
+{
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "your-secret-token-here"
+    }
+  },
+  "agents": [
+    {
+      "name": "deepseek",
+      "model": "deepseek-chat",
+      "systemPrompt": "你是一个擅长快速响应的AI助手。",
+      "temperature": 0.7
+    },
+    {
+      "name": "kimi",
+      "model": "moonshot-v1-8k",
+      "systemPrompt": "你是一个擅长处理长文档的AI助手。",
+      "temperature": 0.5
+    },
+    {
+      "name": "gpt4",
+      "model": "gpt-4",
+      "systemPrompt": "你是一个专业的AI助手。",
+      "temperature": 0.7
+    }
+  ]
+}
