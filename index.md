@@ -19,6 +19,20 @@ title: 首页
 [![X](https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Nikitka_aktikiN)
 
 
+## 📖 新书预告：《OpenClaw超级个体实操手册》
+
+⚠️ **本教程早期内容存在AI生成未验证的问题**（[#34](https://github.com/xianyu110/awesome-openclaw-tutorial/issues/34)），正在分批修正中。
+
+纸质书在此基础上做了**全面重写+逐条验证**：
+- 🔍 144条CLI命令对照官方文档逐条核对（教程中约60%已删除或修正）
+- ✅ 9套配置模板全部在v2026.3.7+实际跑通
+- 🛡️ 新增安全防护指南 + 国产Claw全景指南
+- 📦 7份随书附赠电子资料
+
+**清华大学出版社**，即将上市。⭐Star本仓库第一时间通知！
+
+---
+
 ## 🎯 新手快速通道
 
 根据你的情况选择路径：
@@ -171,10 +185,8 @@ openclaw gateway restart
 | 内容 | 数量 |
 |------|------|
 | 正文章节 | 15 章，约 267,000 字 |
-| 基础附录 | 6 个（A-F），约 86,000 字 |
-| 高级附录 | 10 个（G-O），约 67,000 字 |
-| 视频教程附录 | 1 个（F），约 2,600 字 |
-| 安全指南 | 1 个，约 15,000 字 |
+| 基础附录 | 8 个（A-F），约 88,000 字 |
+| 高级附录 | 8 个（G-N），约 67,000 字 |
 | 实战案例 | 70+ 个，可直接复用 |
 | 配置截图 | 50+ 张，手把手教学 |
 | 命令参考 | 100+ 条，完整速查表 |
@@ -234,7 +246,7 @@ openclaw gateway restart
 #### 视频教程附录（F）
 | [附录F：配套实操视频指南](appendix/F-video-tutorials.md) | 7个视频教程链接，包含部署、接入和高级配置 |
 
-#### 高级附录（G-O）
+#### 高级附录（G-N）
 
 | 附录 | 内容 |
 |------|------|
@@ -244,15 +256,8 @@ openclaw gateway restart
 | [附录J：飞书配置检查清单](appendix/J-feishu-checklist.md) | 确保飞书Bot配置完整，避免常见问题 |
 | [附录K：API Key 配置完整指南](appendix/K-api-key-config-guide.md) | 多种API Key配置方式详解 |
 | [附录L：配置文件结构完整指南](appendix/L-config-file-structure.md) | 全局配置、Agent配置、认证配置详解 |
-| [附录M：搜索功能使用指南](appendix/M-search-guide.md) | 搜索功能使用技巧和常见问题 |
+| [附录M：搜索功能使用指南](appendix/M-search-guide.md) | 搜索功能使用��巧和常见问题 |
 | [附录N：Skills 生态说明](appendix/N-skills-ecosystem.md) | 内置49个、官方93个、社区1715+个Skills介绍 |
-| [附录O：国产 Claw 产品选购指南](appendix/O-domestic-claw-products.md) | 国产AI Agent产品特点和差异，选型建议 |
-
-#### 安全指南
-
-| 附录 | 内容 |
-|------|------|
-| [安全指南](docs/03-advanced/99-security-guide.md) | 安全模型、已知安全事件、Skills安全与最佳实践 |
 
 ---
 
@@ -321,8 +326,8 @@ openclaw gateway restart
   <p>🚀 一个人 + OpenClaw = 无限可能 🚀</p>
 </div>
 
-**最后更新**：2026年3月13日
+**最后更新**：2026年3月16日
 **教程版本**：v1.6
-**总字数**：423,000字（正文267,000字 + 附录156,000字）
-**章节数**：15章正文 + 15个附录 + 1个安全指南
+**总字数**：422,000字（正文267,000字 + 附录155,000字）
+**章节数**：15章正文 + 16个附录
 **适用 OpenClaw 版本**：2026.3.12（推荐最新版）
