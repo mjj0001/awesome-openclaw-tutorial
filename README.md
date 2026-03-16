@@ -559,14 +559,6 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 - 💰 成本优化：国产模型组合，月费用降至5-30元
 - ⚡ 性能调优：响应速度提升3倍
 
-#### [安全指南：从威胁认知到工程化加固](docs/03-advanced/99-security-guide.md)
-> 全面了解OpenClaw安全风险，掌握七步防护体系
-- ⚠️ **风险认知**：为什么OpenClaw的安全风险与众不同
-- 🚨 **事件全景**：CVE漏洞、供应链投毒、1184+恶意Skills、27万+暴露实例
-- 🔒 **防护体系**：七步安全加固实操（升级、认证、隔离、权限、审计）
-- 🛡️ **国内态势**：工信部/CNCERT预警、腾讯/360安全产品矩阵
-- 📊 **工具资源**：安全审计命令、社区工具、官方信息来源
-
 ---
 
 ### 🎯 第四部分：实战案例（4章）
@@ -640,13 +632,6 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 | [附录L：配置文件结构完整指南](appendix/L-config-file-structure.md) | 全局配置、Agent配置、认证配置详解 |
 | [附录M：搜索功能使用指南](appendix/M-search-guide.md) | 搜索功能使用技巧和常见问题 |
 | [附录N：Skills 生态说明](appendix/N-skills-ecosystem.md) | 内置49个、官方93个、社区1715+个Skills介绍 |
-
-#### 安全指南
-
-| 附录 | 内容 |
-|------|------|
-| [安全指南](docs/03-advanced/99-security-guide.md) | 从威胁认知到工程化加固：27万+暴露实例、1184+恶意Skills、七步防护体系 |
-
 
 
 ## 📊 项目数据
