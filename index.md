@@ -21,7 +21,7 @@ title: 首页
 
 ## 📖 新书预告：《OpenClaw超级个体实操手册》
 
-⚠️ **本教程早期内容存在生成未验证的访问题**（[#34](https://github.com/xianyu110/awesome-openclaw-tutorial/issues/34)），正在分批修正中。
+⚠️ **本教程从第10章开始存在skill找不到和配置参数错误的问题**（[#34](https://github.com/xianyu110/awesome-openclaw-tutorial/issues/34)），纸质书本已逐条修正即将上市，近期可以关注。
 
 纸质书在此基础上做了**全面重写+逐条验证**：
 - 🔍 144条CLI命令对照官方文档逐条核对（教程中约60%已删除或修正）
