@@ -1,0 +1,839 @@
+> OpenClaw 你可以部署在自己的电脑上，也可以部署在各个大厂提供的平台。对小白特别友好，无需配置模型，无需购买服务器，甚至无需复杂的配置，只需要动动手点点就好了。不过置换的是，你需要购买平台对应的会员之类的。
+
+
+
+## 1、扣子 OpenClaw
+
+
+
+打开：https://www.coze.cn/
+
+
+
+注册一个账号，登录后，按照箭头选择一键部署：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MzRjYzdhOTczYWRlYmQ5MjAyNzBjYzUzNjIzMzRmOTJfSFVkUlVrUXRCMEJvWU5OMHNJM0F4RUYxRW5QZ1ZKSWFfVG9rZW46QUZPMGJEME5Db2ZwMHF4Vk1Nd2N0eTNMbkVjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+3 分钟快速部署：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YTI0NDJmZjRiYzA1N2FmYjNiNWUxNDA5ZDVmYjQ4NjBfaHZhVW50dk9RV1liOFhFc0Z5R09rN1R5dUs4UFNBWVpfVG9rZW46WlJCTmJwOWJtbzBoR094eVpieGNxa3pwbk9lXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+当前「OpenClaw 部署」仅面向个人高阶版、个人旗舰版、企业标准版以及企业旗舰版用户开放限时体验。
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NmZjMTJlYjhmY2IyMGJmMzI0MDgxNDYzNDQ2ZmI3MWVfdUd3OGU3NlZrZnlJQ3NBb01oNjlLU0lZb3ViSXVmb1NfVG9rZW46R21pNmJTd1E5b1R0TDh4bDhTRmM5WjFwbmNoXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+最低可以购买高阶版，99 一个月，然后就可以体验了。
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MTlmYmY0OTJmYjA3MTUzNmY5OWIyMDg0ZDBiODY4NmZfU214ZzNGNzk0NGEyTWJ2OGhpQ1g0N3hXdkxtUnlLdjhfVG9rZW46WWMzZGJIZHlSb0ZXQUN4MjJ3Y2NjNmhvbjRmXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+选择模型和版本后，就能一键部署了，部署好了之后：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MjBiMGUwNzQ2Y2NiYjg1Y2NmYWFlZjU1NTY3MjMwMzZfMHQxMUd3bWpoajQxM1lvRXNmQmhWdDZ0Tm9pS2tWS0VfVG9rZW46V3RkOGJXbUo4b0FPaTh4TXo4aGNoUTNHbnFiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+如果需要配置飞书渠道，可以参考如下配置：
+
+
+
+点击配置，去创建：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmQwM2ViYmQ4NDViYmU3MzE0MDc2ZjhiN2IxZjEyN2VfcTR5UXgyN1VIUlJqVmVCekw5Z1NMU2xodG85RWVocG5fVG9rZW46QUtvR2JoM1ZNb25PUnR4TE1zUmM5R05CbmhmXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+做个授权，等待个几秒钟，机器人就创建成功了，可以按照这个视频来做配置：
+
+
+
+
+
+
+
+
+
+扣子他们还搞了个 Agent 交流平台，目前已经有 13634 多个 Agent 了。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTcyMjg3NmM2MzU4YTU2ZDM4YTFiNWZiZGU5ZjQyYzVfcTRIZWNtSEg5OVgxZndraVdUWkE4NjQ5Um9OTUZOMlNfVG9rZW46SVNCRWJCdW5ub2pRem14dVdaUmNVa2F0blpkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+我们也可以把自己的小龙虾注册上去，然后发帖子和别的小龙虾一起互动玩起来。
+
+注册也很简单，你可以像我一样给这个提示词：
+
+```java
+你去这里 https://instreet.coze.site/skill.md 注册一个InStreet 账号，然后发帖说自己注册成功了！
+```
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTBkMGJjMDFhOTYzYTQ4MGU0Mjk1N2ZmMThmMGNmMmFfOU9pR1JTaWFxWXdRVjg1ZGRjQlFlNzVlNHFqZUJ4WFhfVG9rZW46TjNGOGJFS09lb1lqbml4MVE3Z2N1aU1Kbk9mXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+
+
+## 2、Kimi OpenClaw
+
+
+
+打开 Kimi 官网：https://www.kimi.com/
+
+
+
+点击 Kimi Claw，简称 kimi 版小龙虾。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NzcxOGM1ODllODI4YjBkYjE3ZTFjZTkwODI3YTk5ZjlfWmZkaEtqNHo5MzdCdXFzY2lFZU5QOUZYZVJBUlJ5endfVG9rZW46UmFwNmJOdldSb3pHaHh4R0d6a2NLTkNRbnVjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+当你用你粗壮的大拇指点击创建时，等待个 1 分多钟就部署好了。
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDdjOWE4ZjdiNWZmYTdmZTFmNzAyZjgwMzlmM2Q3ZDVfRmNlVmlBc0lNMzRQTUJUc0RrT1lGYXF0amR0bTBmSzhfVG9rZW46TFpKdmJDYkVkb2lqZGt4SGlUVmN1eXJkbmpkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+然后就可以在浏览器里面直接召唤出小龙虾。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NjgwODQ1OTUzOWIwNjg2NWY1ZDY2ZTAwMWY0ZDgxYTFfczkzVVpKMTlYckY3OXlYWVJGU3hkWlhudEFsQWRRbHRfVG9rZW46SndOSWI5NXZFb2Y1U0J4am9vcGNjU0NjbkxkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+在右侧可以手动对自己的龙虾改名和重启，这个相当于在云端给每个人开了个沙箱环境，然后在这个独立的环境中装了个 OpenClaw。
+
+
+
+> 不过这个一键部署仅支持 Allegretto 及以上计划，大概 200，我之前买了所以就能直接创建。
+
+
+
+这里自动配置的 Kimi K2.5 Thinking 模型会自动关联 Kimi Code 会员权益额度。
+
+
+
+在使用记录这里也能看到具体的使用：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDAwNjdkN2UxOTM1NmFmNzZiZThhZmQzYjcxNWNmZDhfajc0SnNOSVQ2QWlqNVQxVVRVa2xlZTlpUVM4R3daTW9fVG9rZW46TGx4bGJsNGR3b0ZtVUR4NVV4UmN1VFZibnZnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+如果已经有自己的 OpenClaw，也可以通过安装 Kimi 插件的方式实现在 Kimi 里和 OpenClaw 聊天。
+
+
+
+说实话，这个配置插件的方式只是多了一种渠道罢了，我这里就没把自己的龙虾关联过来，而是重新新建了一个。
+
+
+
+毕竟新建一个干干净净的环境，想装啥 skill 就装啥，不用担心和自己本地的龙虾配置冲突，用起来反而更省心。
+
+
+
+并且在飞书上做了集成，也就是我现在飞书上直接召唤 KimiClaw，整个配置过程，花了 3 分钟不到。
+
+
+
+然后把小龙虾拉进群聊，大家一起吹水。
+
+
+
+整个过程丝滑到有些怀疑人生，对小白来说简直太友好。
+
+
+
+
+
+当在飞书里对话时，它会先给你个回复表情，代表已收到，还挺有用的，不然每次等待回复的过程以为挂了导致会重复发送。
+
+
+
+ClawHub 是专门为小龙虾提供的 skill 仓库，这里有非常多好用的 skill。
+
+> 地址：https://clawhub.ai/
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NDU2ODk2YjFlNjU2ZjM4Yzc5MTgxY2Y2YTNlZTU5NjNfOFhXQmQ0cjlwclYxOWdmM0ljUWdGQUl2OGdtQlRHTnZfVG9rZW46TUNGbGJEMXU3b2JqMXh4YXBBUmNBanU4bmtkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+在 KimiClaw 里，从 ClawHub 获取技能很简单，只需要跟他说需要的需求，就能快速安装好。
+
+
+
+比如我的banana生成图片技能，下达指令后，bananapro-image-gen，快速安装，然后就可以直接使用这个技能生成精美封面图片了。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MGI4YmVkYWUzYjY3YWI4NWYwNjJjNDE2ZWM4YzUyMjBfdzlxYnY3cW1QV29SRU9KZkxxMEZteFFjYldTcUxsTFpfVG9rZW46TWM2RWJBdDBybzJWZFd4cVVDWGNxZGk5bkd5XzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OTdjMzBlMDMwNjcyNzFkMDVhZWI2M2U3OWZmMjA4ZjRfeW5PbW5qSEFOWmFaUFNxc3NhOEU4b1BEcnlxdjQ2SEtfVG9rZW46SjJnWmJuRU9Tb25ENEN4ZDlIV2NNcGtqbnRmXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+除了这种方式，对于一些没有上到 ClawHub 的技能，也可以直接把 GitHub 项目地址丢给他，也能一键安装。
+
+
+
+比较有意思的是，KimiClaw 可以打开浏览器后截图发我想要的信息，比如我想看看苹果最新官网有啥新东西，于是就可以直接问他。
+
+
+
+
+
+基于此，我还发现一个比较好玩的玩法，就是你不用去装什么 API，你可以通过这种方式来监控你关注账号的最新动态。
+
+
+
+
+
+他能够去查看最新的动态通过浏览器访问截图然后分析的方式，想想我们人不也是这样？打开，查看，这是绝对安全的方式，也不需要配置 API：
+
+
+
+
+
+你可以一个定时任务，比如设置每 2 分钟就去截图一次，看看有没有更新。
+
+
+
+
+
+拿这个来监控奥特曼，据说这家伙，2 月份从 19 号之后又要搞事，频发产品。
+
+
+
+最近看 40W 推特大 V AlexFinn 的分享自己过去几周使用 OpenClaw，我觉得还挺有帮助的，他分享到自己用 OpenClaw 来构建第二大脑系统。
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YmUzZTUzMjM3NDkzNjVlNmVhNWEwYTg2YzQ2OTMzYjhfdE1oTWdNTnowT3hpZkNuR0F3cU4yTzdHbkdaV3dyR0dfVG9rZW46Rk9TUmJXd1lZb1RyeVp4ZWR3WGNyUnR2bkFnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+因为 OpenClaw 能保存记忆，完全可以把你的所有思考，所有想做的事情，都给 OpenClaw，当你真正想要应用的时候，你只需要问 OpenClaw，就能拿到结果。
+
+比如当我在飞书中下达这个指令，它会帮我自动开发好这套系统。
+
+```java
+我想构建一个第二大脑系统,可以查看我们所有的笔记、对话和记忆。请用Next.js构建出来，请直接给我应用。
+```
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MGMwZjQwMTM3MGRkODAyOGNkYzNjMzkzNDBhNmZkMmZfUm9MN2tmQTRlZ3VuRTlpUnEzc3Ewc2V2MXA5elRncmtfVG9rZW46Vzl4YmIwUzBUb1dQOWt4UGd6SGNkRkhabm9FXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+接下来，我只需要把我的所思所遇所想通通丢给 KimiClaw：
+
+```java
+今天看到一句话，帮我记下： 挣钱，靠手脚，拼的是眼力和体力，勤奋最重要。 赚钱，靠资本，拼的是脑力和心力，认知最重要。
+```
+
+由于我的 OpenClaw 是运行在 Kimi 提供的云环境中，所以他给了我一个云服务本地的地址，我打不开，让它自己帮我整个 HTTP 服务器。
+
+但可惜，服务地址并打不开，估摸着是无法操控服务器开启端口，也到是有办法，可以部署到 vercel，或者让它截个图，先一饱眼福吧。
+
+打开看看这个由 K 2.5 生成的页面，我是一眼就认出来了，哈哈。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MzRiZWU2MDM1OWY2NDkwYTgyYjc3YjFiOWJjMGUwYTlfUjVmaExiR2dseno3eFNBb0VIeWhIZ0d2Q3dpeG1FU0ZfVG9rZW46TXRkS2JZYXU5b1laN3p4c1l6Y2NSclkzbndjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+稍微观察下就能发现，它把我和它的任务记录也都记录出来了👍。
+
+以后有什么，直接丢给它，做第二大脑太舒服了。
+
+
+
+
+
+下面介绍下接入飞书机器人步骤，非常简单，直接在 KimiClaw 里面提问说怎么接入飞书，它会一步步教你。
+
+**第一步，创建飞书机器人**
+
+访问飞书开放平台：[https://open.feishu.cn/app，点击创建应用：](https://open.feishu.cn/app%EF%BC%8C%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%EF%BC%9A)
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YTAxNWYwYWFlNjI4MzRmOGZiNjQ4YWY2MDJkYzlhODBfNXI5aHNEWmNMRnpsazZiNFlXTVg4OEY1bGV4S0ZseXlfVG9rZW46UkVHaGIzVHVPbzRkdWt4Slo4OWN1ekl4bjJlXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+填写应用名称和描述后就直接创建：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTQ1YjhkMmMwYmY5OWJhYTc1MDcxZTBjMjljOTlkZjhfNFJtcjE5YWFwMjQxUVdvUWhJSkVUd0Nobnl4VEJJWklfVG9rZW46RDN5dWJvWHh3b0JnYWd4TXV4aGM1YVlqbkxoXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+点击添加应用能力，添加机器人。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NmYxOWQxM2U2NmI5Yzg2OWMwOWRjZjA2MzAwMDhjMmJfUkhyNm1qTm1LSHh0RFloVmNWaG1ITkp5cTNjSWxraDhfVG9rZW46R21lRmJiRUNUb2lnam54RWpwaWNBeTJKbkdpXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+**第二步，配置权限**
+
+需要至少开通以下的权限：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OTBiMGJjZjhkZjVlZjBkNWU0NDkwYTI4YTljMDhjZWZfdmxVN3F0eG9qeWVheFRHMmFOQmtTZWxBZnB5djZ5b0FfVG9rZW46Q1BGdGJJcUw3b2RHSHV4MDY5S2NENXI3bmZjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+可以在权限管理-开通权限这里选择需要的权限手动开通：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YTA1Yzg0NmFkYTBjZmExODg2MWM4MDM0NjYyMzI5NGRfOVFHQWpZNk1iUlRNVXZCeVZVY3M5aU1zaTRURnJEdTRfVG9rZW46Tjg5R2JZdllTb09mTEJ4WlY0dGMzaXBRbjB6XzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+也可以直接导入以下权限配置即可：
+
+```java
+  {
+  "scopes": {
+    "tenant": [
+      "aily:file:read",
+      "aily:file:write",
+      "application:application.app_message_stats.overview:readonly",
+      "application:application:self_manage",
+      "application:bot.menu:write",
+      "contact:user.employee_id:readonly",
+      "corehr:file:download",
+      "event:ip_list",
+      "im:chat.access_event.bot_p2p_chat:read",
+      "im:chat.members:bot_access",
+      "im:message",
+      "im:message.group_at_msg:readonly",
+      "im:message.p2p_msg:readonly",
+      "im:message:readonly",
+      "im:message:send_as_bot",
+      "im:message.reactions:read",
+      "im:resource"
+    ],
+    "user": ["aily:file:read", "aily:file:write", "im:chat.access_event.bot_p2p_chat:read"]
+  }
+}
+```
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MGNhYzIzMjViNGEyMDhkNmE3MjBlN2ViNTU5YTcyMWRfeTlwWDJFMldqYUVZQTE0aG9hNDJlTFp0Rk9qQlFNdEtfVG9rZW46QnNXdmJCdmVXb1hrQ1l4RFN4eWN3cGdKbnVXXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+**第三步，找到 App ID 和 App Secret**
+
+在凭证与基础信息中找到 App ID 和 App Secret，这个在飞书配置的时候会需要。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YzcyNTk2NmQ5MjZhYWZiOTJmZWI3OTdmMmI4OWE5OGRfalpZb1RXdFBza29wSUxCUlpwdW9rdDVOdDd4ZG03NXVfVG9rZW46REY5bGJPdTIxb1FEZ3V4djdPb2NUamRVbjdnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+然后把 App ID 和 App Secret 发给 KimiClaw
+
+**第四步，事件与回调**
+
+在 KimiClaw 重启后，在飞书配置页点「事件与回调」，使用 **长连接** 接收事件，点击【保存】。保存后添加事件：im.message.receive\_v1
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OWZhYjZiMDlkOTllNTliMTQ1MWUzMDI5ZmM1ODZmNTlfZWJvcEdHR2JmVk50NlBJc0o0eURSZThZTFhKRHVNd3FfVG9rZW46THltcmJZS3Zkb0tEZDN4TDB6bGNVcE9ybldoXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+待重启后，接下来就可以直接在飞书中使用了。
+
+在飞书中的 bot 和 web 里的 bot 是同一个，消息也是通的。
+
+
+
+## 3、飞书openclaw
+
+
+
+> **2026 年 3 月 31 日 24:00 时（北京时间）**&#x524D;免费部署、每日免费 100 万 Tokens 额度！每日限量 10 万名，
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MmQ5ODI0Y2ZjM2Q1Y2NiZjQ5M2E0NmQ2ZDJiOTdkOWFfTnlHMHJVYVVzOERCMENTc1pVS21wMmdZWmE0M0t6YU9fVG9rZW46VVZNdWJoSVBkb1ZVeWJ4VURyMGNYRDJVbnpnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+主打一分钟极限部署，有手就行。如果部署的早的话，每天都有免费额度，如果找不到额度了，可能已经活动结束了，早不熟早优势。
+
+
+
+可以电脑上点击链接：https://miaoda.feishu.cn/
+
+
+
+点击创建：
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2M1YmYzZGM1MjFhNDQwNGFlNDg2NmM3MmMwMjc0MTlfUEpzdUppUFduUW9EOVc2d2w4dlR6MThmeXhUeGlzNlVfVG9rZW46RFd3eWIyUGh3b1dHMWR4b2RQZWNBaGFqbjZiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+进行一键配置就好了，当然你也可以直接手机打开飞书，搜索「**妙搭**」，然后手机上点几下就配置好了。
+
+
+
+不到一分钟，就安装配置好，并且丝滑的链接上了飞书。
+
+在飞书秒搭也能看到刚才创建好的 OpenClaw，同时也能删除和管理 OpenClaw。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MzM1ZWE5M2RlZDJmNDkwMTk1NzNhOGZiZjUyNjFmY2NfZ2w5dlFSSUMwTXNUS3BWdDZPM1ZYOGtGTlUzN3NGRkhfVG9rZW46UWJGbGJsNmZ1b1lKSDh4amVKVmM2THdTbmxlXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+比如当你的 OpenClaw 坏了，或者想定制一些什么功能，你就能直接在秒搭上修改了，比如我让我的小龙虾每次完成任务后都来个”已完成，老板～”
+
+我打开飞书开放平台，也看到了刚才自动创建的这个飞书机器人，可以说，体验丝滑到极致了。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OWVjMGNiMzkyN2M5MWQ4NDUyOGU2OWE1MjQ5NTQwNzVfOU52N3NKMHNzSTdZdjE2d3FBNUNTSnpYZG1kMUhHS1FfVG9rZW46QVZWVmI2SUxCb2FsRVl4NDZQbGM0UVBDbmVjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+和别的小龙虾不一样的是，在对话页面多了「快捷指令」和「设置」按钮，当点击快捷指令，会有 2 个功能：
+
+> /new：新建一个会话
+> &#x20;/stop：阻断当前对话
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTI2MTc5ZTZhOGJhM2RiOWFlOWJmYzY5OGI4OWJlNjlfeGZHSHZRbnFtUmZBWHRUYVN2encxNVNVT1BWaElrZjVfVG9rZW46QXdXZGJ2emZob2RRMzN4cFlMMWNCZWdobmxVXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+讲真，这 2 功能还挺方便的，经常聊多了会出现上下文污染，有 /new 就可以重新开始一个对话。
+
+出现龙虾瞎搞或者和预期不符时，也可以快速的用 /stop 命令制止他。
+
+当你点击设置的时候，实际上就会崩到飞书秒搭小龙虾的设置界面了。
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MGE0YzU5ZjljYjgzNWQ4MzZkY2VhYmNlMDYzOWMzZGJfYzRUYjhCTm91MUxJdjZvMXpzQ0lMSlhVcUNnWVZQYzBfVG9rZW46SnRsQmJQdUVDb3k2Q2p4emdFY2NpWHFnbm5kXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+核心二，就是当小龙虾出问题，你得找得到地方排查问题，修复问题，或者配置，你可以在秒搭上找到你🦞，点击管理：
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MGM0YmI5YWI3YTc4ODNjN2E1NTA1YTg2N2ZiZGRlMGFfaFFLV1Ywelgyc3M5SHlzWkZFbDY0VGVNRVN4OWJNcGZfVG9rZW46SFlnS2JUcm1Cb1JuUnR4TUNEeWNGbmNNbkpmXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+可以自定义你的小龙虾，也可以添加技能什么的：
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MjdlNjI1YjA4NGM5NTY5MTgwOTVlN2FjZDRhOGUzOWNfY0ZQNG9DdVJwTGNTN2VpbVBGV25TSkNhRXh6bmNjR0JfVG9rZW46SkhBWWJyRWtGb0t3bEV4ZW9mMmNSQWI2bnFsXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+核心三，就是要能自定义自己想要的 Skills，方法还是很多的，我比较直接暴力的用法是，把技能打包，直接飞书丢给 OpenClaw，然后让他自己安装。
+
+比如我安装好了我自定义的生图技能，就能让 OpenClaw自由调用了：
+
+
+
+可以干啥呢？
+
+
+
+比如可以一句话创建飞书多维表格：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmM3Zjg5Zjk5ZmI5MDY3NTBiNDExMjQwMWExZTdhNGNfWVA1YWtpaTdIdnJLb2E5czdSOHNNVmdkbGg2NnlpY1JfVG9rZW46WkxXR2JtbmNXb3lHa3N4N0lva2M2aTJubjZjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+当然了，生成飞书的待办也是一句话需求，比如我把公司发票和会议纪要丢给他，OpenClaw 直接帮生成待办，并用文档发给我。
+
+
+
+
+
+然后基于待办生成飞书的日程，AI 时代的办公就是这么朴实无华。
+
+
+
+
+
+如果这还只是小打小闹，那基于这些元能力，配合上自定义加装的技能，可玩性就非常大了。
+
+
+
+我安装上了 douyin-downloader 抖音视频下载及解析技能，配合我的视频深度解析 skill：canghe-volcengine-video-understanding。
+
+
+
+就能直接将爆款抖音视频链接生成公众号文章，并保存在飞书文档中，配图会截取视频部分图片及生图，真正做到一键操作。
+
+
+
+
+
+抖音视频链接直接可以通过技能下载：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTUzMjBiNzBhYTVkMGNkNGRiZDRhZjg3OWVhMDI2Y2JfQ0w4TWlCa3o2TW9YR3JjUktxM3liVWpZMGt6OEFWV0NfVG9rZW46WGVWSGJwODZhb0NBM0V4cDM1dGMxYjAybm5kXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+解析视频，截取视频图片，生成公众号文章，放到飞书文档，一波流操作：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MjllN2JkMTAyNzRlZTM4MTQ5ZmNhOGE2ODQ0MzM0MDlfWFpCMXZGeTlOdXNGcEFjNkJDRHBwVWZCWGhJUkRsQ0VfVG9rZW46QlkxSGJ5UXprb2dpbkZ4QkNlYmNrQXBHbnFiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+非常的丝滑，给个任务给 OpenClaw，这家伙就什么都帮我干好了。
+
+
+
+飞书官方教程：[ 【飞书妙搭】全网最简单的 OpenClaw 真一键部署来了！｜限时免费，含高级玩法](https://larkcommunity.feishu.cn/wiki/LY1swuqTaiEOQ0kHXxzcoegMn4f)
+
+
+
+## 4、腾讯OpenClaw——WorkBuddy
+
+
+
+官网地址：https://www.codebuddy.cn/work/
+
+
+
+这是腾讯 CodeBuddy 团队开发的一款桌面端 Agent，也可以用飞书、企业微信直接连接。
+
+
+
+简单来说 WorkBuddy 是 AI 原生桌面 Agent，能自主完成很多的办公类自动化操作。像什么数据分析，做 PPT，文件管理，通通都可以完成。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YjFkM2Y3MTJiNTQ3OGQ1MzRjMDNlZTAyOTc5M2NlNWVfTVA5UG5vNTNPNmZua2VpY1NWYTAxZFhIWG02dmdJZTZfVG9rZW46UzBWYWJrOWt2b1dEYkh4UmYwb2NZNTJabkRkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+不过不同的是，WorkBuddy Claw 可以通过企业微信、飞书、钉钉、QQ等日常 IM 工具中，通过手机直接指挥 WorkBuddy 干活。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=M2I3NGI1MzRmMDYyZjE2YmIyNjIwMTEyMzgyNjcyMzRfTGVSQ2R2ek51OFFRdG1ZUk5SdkhYRGxMRXF4bVRiQTdfVG9rZW46Vmd2Q2JiREtpbzNack54WDdjOWN2OXdKbmdOXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+打开 WorkBuddy，点击右上角个人按钮，选择「claw 设置」：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDY3NTY0NjI0OWZkYWYyMTA5MzE1ZTZjZmVmY2JhNzJfNm9MWlkzSnAydWhwOEozNENpbDk1SjlzczdZU21pU3VfVG9rZW46S1haWWJwcFFob3ZLRjh4cENiSGNkbzhkbm1EXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+选择飞书集成：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjEyZDQ0MzljNDU5N2Y0ZTQzMTA1MDYxNzBmYmE2YWVfak1sMVBRUnY0ZUVvRndXcFp0WjNKQ3NuSHAzTWxQeDhfVG9rZW46SWhzUGJqMmo5b3Z2ZGd4U3J3UmNzVElmbm1mXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+可以看到需要这 2 个参数，下面就是需要去飞书开放后台搞到这 2 参数。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NDhkZjdhMWVlYjE0NDU0NjU0YTQ0ZjQ2YzE2ODIwYWJfNWhhbGFHQU1WaVh3Nm1GU1pFS0pwdEVsWG9kRGlrNXJfVG9rZW46QlhtT2I3RlhBb3ljazB4RksyNmMwM1hDbm1iXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+打开飞书开放后台，选择企业自建应用，创建企业自建应用：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NDlkMGM2ODZiZjUxMTBiNGYwYTcxMGFiYmE2OWU1MjFfUW8xemdhQVR6RU5VVDFHUVJMV3lkOThCVUxUbTFZR2hfVG9rZW46RXE2cWJWZEk1b2N4RFd4cHFtMWNZaFFIbkZXXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+飞书开放后台地址如下：
+
+
+
+```java
+https://open.feishu.cn/app?lang=zh-CN
+```
+
+添加应用能力，选择添加一个机器人：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NzAxNzA2NjAwZTU2NmFhNDZmMjk2MmM3MDc1Yjk0NmZfeDRVMjMyRDdCaWpiaXFUbk1wWDJ0alZ5Q2c2ZWNJRFpfVG9rZW46WVFIUWIxOUdsb1BFd2l4YUppM2M3ZzFNbmtiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+然后批量导入应用权限：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ODAzMjI0ZWY4NWRiMmFiZTUyZDgxMTNkYmVhYzVkMjdfa1RJOWlMalRsV1NTbnZ2RHdBekZOSGhUeGo2WHlmOUNfVG9rZW46VFFwVGJUelBCb3FuMHh4NGg5R2Nub2JwbkllXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+把这个权限全部复制到指定的地方就好。
+
+
+
+```java
+{
+  "scopes": {
+    "tenant": [
+      "contact:contact.base:readonly",
+      "docx:document:readonly",
+      "im:chat:read",
+      "im:chat:update",
+      "im:message.group_at_msg:readonly",
+      "im:message.p2p_msg:readonly",
+      "im:message.pins:read",
+      "im:message.pins:write_only",
+      "im:message.reactions:read",
+      "im:message.reactions:write_only",
+      "im:message:readonly",
+      "im:message:recall",
+      "im:message:send_as_bot",
+      "im:message:send_multi_users",
+      "im:message:send_sys_msg",
+      "im:message:update",
+      "im:resource",
+      "application:application:self_manage",
+      "cardkit:card:write",
+      "cardkit:card:read"
+    ],
+    "user": [
+      "contact:user.employee_id:readonly",
+      "offline_access",
+      "base:app:copy",
+      "base:field:create",
+      "base:field:delete",
+      "base:field:read",
+      "base:field:update",
+      "base:record:create",
+      "base:record:delete",
+      "base:record:retrieve",
+      "base:record:update",
+      "base:table:create",
+      "base:table:delete",
+      "base:table:read",
+      "base:table:update",
+      "base:view:read",
+      "base:view:write_only",
+      "base:app:create",
+      "base:app:update",
+      "base:app:read",
+      "board:whiteboard:node:create",
+      "board:whiteboard:node:read",
+      "calendar:calendar:read",
+      "calendar:calendar.event:create",
+      "calendar:calendar.event:delete",
+      "calendar:calendar.event:read",
+      "calendar:calendar.event:reply",
+      "calendar:calendar.event:update",
+      "calendar:calendar.free_busy:read",
+      "contact:contact.base:readonly",
+      "contact:user.base:readonly",
+      "contact:user:search",
+      "docs:document.comment:create",
+      "docs:document.comment:read",
+      "docs:document.comment:update",
+      "docs:document.media:download",
+      "docs:document:copy",
+      "docx:document:create",
+      "docx:document:readonly",
+      "docx:document:write_only",
+      "drive:drive.metadata:readonly",
+      "drive:file:download",
+      "drive:file:upload",
+      "im:chat.members:read",
+      "im:chat:read",
+      "im:message",
+      "im:message.group_msg:get_as_user",
+      "im:message.p2p_msg:get_as_user",
+      "im:message:readonly",
+      "search:docs:read",
+      "search:message",
+      "space:document:delete",
+      "space:document:move",
+      "space:document:retrieve",
+      "task:comment:read",
+      "task:comment:write",
+      "task:task:read",
+      "task:task:write",
+      "task:task:writeonly",
+      "task:tasklist:read",
+      "task:tasklist:write",
+      "wiki:node:copy",
+      "wiki:node:create",
+      "wiki:node:move",
+      "wiki:node:read",
+      "wiki:node:retrieve",
+      "wiki:space:read",
+      "wiki:space:retrieve",
+      "wiki:space:write_only"
+    ]
+  }
+}
+```
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YzAxMjhkZDBjMjJmZTQ2NjMzZTE2ZGM2YmNkMTgxMDVfODNWQ0tNVlI4NGp3bFRiY1FHV3ZucldOaXVUMjZYU2tfVG9rZW46V2ZPcmI3aVQ3bzFZM1F4UnlQVGN0SWd0bkFkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+点击下一步，确认申请开通权限。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NDczMzFjMDVkM2RiMThlMzFiNzE0NWY5ZTkzZGNiYTdfcFFBVzdnVXh3cTlIVjZRMWpSY0tqemRaajZFcXRIaUNfVG9rZW46RlZSRGI3Y2NPb2JaMmR4YU9FVGNhVUlZbllzXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+下面是获取应用凭证，选择「凭证与基础信息」，复制 App ID 和 App Secret：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MTQwODUxMzQ3ZDhjZGZhMDk0NjMzNmFmOGM5Yzg0ODFfbW1xSTdLczRhT3FHd3dCNUhjazlmdnVzWkFmZ2tidmJfVG9rZW46WTRpNWJoNU9zbzVudjF4NmRNUGNTTjBTbnA0XzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+并填入到刚才 WorkBuddy 飞书的对应配置处。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NzA2Y2Q5ZGZkYzk4NDEyYzA0MzlhNzhlZWY2YjliZTVfQmNwSTZINmtNQjBBTnFDbFNGRTRhOGd4d08xT2hVWU9fVG9rZW46VjlURmJjWWN4b0lidWh4T1VFU2NDcEJZbkFCXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+&#x20;点击注册后即可获得一个 Webhook 地址，复制这个地址：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NzY1Nzk3Y2EzOTZiNjFkYjEyZmM5ZmUwYWU5ZTA3OGFfU3RmbkhoalE1bWtCU3g0VU9rcUFhTzR1d0lFSXQ2ZXRfVG9rZW46RkhBU2JxMFdzb3lzRlZ4ZEZvUWNSTUI1bkhkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+回到飞书开放平台，找到刚才新建的应用，配置「事件与回调」：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTExZTlhYWM2ODEyOGI3ODJkMjJlYjQxZjIwNjY1MTVfaWxUamR6dDlHaUNNUHJZTVBHZTRyTndCMTdueVFualFfVG9rZW46QlFYdmJ6OG5yb0NodXl4UmRsUGMyWTJobkllXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+> 这是个关键配置，需要订阅机器人长链接接收事件和卡片回调。这一步的作用是让 openclaw 在飞书内具备收发消息的能力。
+
+选择将事件发送至开发者服务器，黏贴刚才的 Webhook 地址。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MTBjYzgzM2U4ZTAwN2NiN2FmNjcyZjY2NzQ2M2QzNTlfVGFSdU5XZ1BCMUxtOThURFl0RTZlZFFNd3hZUlBuaVJfVG9rZW46QWZxcmJLYnBmb3dCcFF4V2VFS2M3Q3lJbkFnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+然后添加接收事件：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGM3NmE4ZTczZDUwYjhiNGFhOGEwNzU3N2Q3YjVkYTFfTjJWWmo1b2FUbkMyaWI0VTRKMEtIMzNEZ0FSWHo4QjNfVG9rZW46VU9aYmJ0NTYwb09iek54RlZ2SmNjT2J2bk9oXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+搜索「接收消息」，点击立即添加：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YjBmMzMyMDE2OTdjZDVjMjc0NmU4ZTZlMWZkMmM0MzdfdnZzMEpMSlYwRXpyUXl2VW9GSkdMeHlmNnhJQVlTeDhfVG9rZW46UVo1VWJmeVNOb3NnWGV4QnhyZWNlVXdnbmt3XzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+接下来，进行回调配置，同样是同样页面，选择「回调配置」，同样将回调发送至开发者服务器，黏贴刚才的 Webhook 地址：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NWNiMGFhNjIzZGFmMzliZTBkZmYwNjgyZWJkMTQ4NTlfVFB3em5nTHpZTXAySGlKak1CdEpONFJ6cTIySjdHeGVfVG9rZW46Q2pqSmI1NjF0b01lb3B4eXg2RGNHdmtMbkNnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+需要添加「卡片回传交互」这个回调：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OGY5YTkyMzZmMmM3ZDhkMTQ1NjRlYTZjOWYyZDVkNTVfQWpZUk1uWHk3ank2b09HQW1XclljZGEyR1pYYTBCM1BfVG9rZW46RFZ1NmJwZDNjb25wWEV4TjBQamNqTmp1bmJmXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+最后就直接发布一下这个应用，先点击创建一下版本：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YWMwNTFiOTRlMzFkMjU2YmFlZDA5ZTIzYjZjMjVmNDhfN1drbEhTb01GZXhRVG51bTNrRVVLNlJYbHc2WEdXQ3FfVG9rZW46UWFDc2JJUDhEb2IwNVZ4VW16VGNLY2k4bjFnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+版本号和描述填下就可以发布了：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MDc1MjNlZDI5ZDE4OTkyNWQ5YWNlOTRkZWUyOWYzMjNfUEVZT0VnbjVHNXhHRWFuMnJmWG5ycmRCT1ltY0RKN1ZfVG9rZW46UjJ0amJJZ1NnbzBib294ZmhhR2NUTkJHblhiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+在飞书中点击打开应用即可和小龙虾开始对话了。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NTgxZmQ1MTJlODI5MWUyM2RmYzIxOTJlODZhMzgwMWJfT1JpZFJiWDZORjU5a2lHQ05sdkVvbXB2eHZhSmsxZTFfVG9rZW46VE5ZUWJ3RUdUb1JoS2R4SkgwQ2N3RENMblRoXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+在飞书中开始对话，就可以看到能操控 WorkBuddy 了，而且默认的 claw 文件夹就是用户的 /WorkBuddy/Claw 文件夹。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjU5OTM1MzdkMjVkYjg1M2MxNTdhY2FjODBkYzQ2MmVfZUgxbldJSE5CVTdQOUw5NDV6VGx4eGE4eUtiZTNmV2pfVG9rZW46Tk5zemJuMXZ2b3pqRUh4UWhiZmN4cHZ1bkt1XzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+那可以做啥呢？比如，我在手机飞书上，让 WorkBuddy 整理一下桌面：
+
+
+
+
+
+
+
+WorkBuddy 能处理复杂任务，比如进行多个 PDF 报销发票自动识别、分类并汇总金额。
+
+其中给的指令是：
+
+```java
+请帮我处理叫做“团建设报销”文件夹里的报销发票单，图片是付款明细
+请生成一个报销简述，包含以下信息：
+- 日期
+- 商家名称
+- 消费金额
+- 消费类别（餐饮/交通/住宿/其他）
+- 备注
+
+并按照如下示例排序：2025.12.01  深圳前海数码大厦团建聚餐 消费金额：100 元
+最后帮我汇总金额，分别按照支付的明细和发票的明细金额，如有异常，帮我特殊标注
+除了最终直接输出给我外，还要以一个excel交付
+```
+
+WorkBuddy 会自动帮忙整理好，并计算出金额，最终给一个 Excel 交付结果。
+
+我发现在 WorkBuddy 中有不少的 SKill，可一键安装。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=N2Q3NDA2YWIzODU1ZTA2Y2I0YzYwYWVhMDgyZDQ4NDlfNGdJVHlmaDh1MGZ3d1RDRk5tQUNjZXFMQlFLMDRIUFJfVG9rZW46UVdVWGJPN3dlb1FMTFR4S3paMmNsREgybjRiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+
+
+然后就可以上手使用，配置飞书也几乎没什么门槛，主打一个方便。
+
+你不需要购买模型了，因为 WorkBuddy 已经内置了全球顶尖的模型。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MDJlYzk4MzE1MWI5YTc3NGNiY2U0MmRjOTcwNTNkM2ZfWXlya0ljMVgzMWpsSjRSSTI5U3h4M1Zta01IM0RkT0hfVG9rZW46UG5ob2JEWmV0b0dKdkh4Y3ZuVGNzTHlQbjJlXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+> 我这里用的是国内版，只有国内模型，国际版现在还没上线。
+
+和 Openclaw 不同的是，安全问题还是有保证的，只会对指定的文件夹做改动。
+
+现在大家完全可以去试试，腾讯大好人，**只要是 CodeBuddy 国内版用户，无论新老，一次性赠送 5,000 Credits，这是注册即有，无门槛**。
+
+```java
+领取地址：https://www.codebuddy.cn/profile/usage 
+```
+
+领完你就可以用手机遥控 AI 干活了。
+
+
+
+
+
+## 5、火山 ArkClaw
+
+
+
+地址：https://www.volcengine.com/
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OTg5OWYzMjU4YmFiYTEwMzViZDY4YTEyZTI5Y2NhZjlfMTFicWQ3V01oNkZiRjgwbDNRNVdncTRVWHhjZmNuNXlfVG9rZW46Rzh0MGJuWTB2b2dmOXZ4S2xOdmNCcUdrbjZjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+点击「立即体验」：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZThhOWZmMTU1NjJmMGE3MTA5NjFhZDE2ZDRkNWQ1ZTlfbWZtTjRiOXg5b09wZm5EWE1zdWpBUEh5SlJqY3N4TzFfVG9rZW46VTRQMGJFS3lkb2lZRzh4N1NHV2NWTVJVbmRoXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+点击「立即创建」：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YjYzOWM0YWQ3OWM0YzZjNDFlYTNkMmEyNmZlNWJmMGVfMXdJeHM0dHp5TXU1VDEwc3QxcWR2VU02eXhvQkdWRkFfVG9rZW46RW5EZ2I3SW80bzZWMXJ4MlYzT2NPOHJGbmdjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+等待一会会，预计 1-2 分钟
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=OTVhZGY2MTIxNGZmYmVhODNkYjA5NDIwYzIwYjVkYzVfcTdYSDBiVlBoTXU2cXJEc04yWWV1OU42UUxVREpTN0NfVG9rZW46WjNXRWJnSG1Kb1prb2N4YmFjV2NRemoxblBiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+文档完善中。。
+
+
+
+
+
+## 6、智谱**AutoClaw**
+
+
+
+**地址：https://autoglm.zhipuai.cn/autoclaw/**
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGQ1NDE3ZjRkYmY4MmUyN2Y3OWVhNWRmYmI3NDFkNDRfcUxZV3FJa3dLNlZvRmVuVjF5djdrZk5rb0FHU1IxcEdfVG9rZW46Q09BTmJta3JCb3VsUUN4S2dYeWNEeEY3bkhnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+选择接入 IM：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YzIwMzQyYzY2OGFjYzRkNWE2ZWEyODkzMGU3MGUxMGVfU29wMTZVMWNWZVU0em1KNUxyWnN6T0NSOXZZWFlOa1NfVG9rZW46QVhBemJ6SmtZb3cwdVF4dkF4SWNRclQ2bjFkXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+接入飞书机器人：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=MTA0YzEzNWNkZWNkZjMwNWU3ZjJhYTYwZDczY2I1YTRfWjZybkd2Sm56U0dFdHJzeVB4dEp0VEtnZXdwNk1oekJfVG9rZW46RzRZbmJVOFhJb2M2b2x4UHRZS2MxV3o0bkZnXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+选择自动配置，登录飞书后，就能看到他自动帮配置了：
+
+
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=NGNiYjY3ZWMyNzYxMjU3ZWVmYzM1NWVmZTc5YWY3MjZfeFF6QlhManNsOEpRUElkN2dpdWF0bjc1bnF3STlKNGRfVG9rZW46WFRja2J1M1h3bzFZckZ4cE9CbGNBeHRsbnJiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+很快就配置好了：
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=YzQ2NzdjYjNlN2U5N2JkODUwNzBmOGE4NGM5M2VmYjRfZW1iMUQ4N3pzbm1uOE5YcXlkUEpnVjJXV3Z6aEpkQWFfVG9rZW46QjRlS2JyVEtWb3EwT1N4TkRaemNGV09RbndjXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+打开飞书，就能看到了。
+
+![](https://my.feishu.cn/space/api/box/stream/download/asynccode/?code=Yjk5ZWRhMjFjMGNmODdlMjZiODU0ODlhNmRkNjAxMmNfRE1NbDhtZHdIYk5tMzc1VklGMzFKQ3RtaldFa3E3dGxfVG9rZW46UkY0M2JMSXFMb3ZXQlJ4Z0ROZ2NWeklPbjdiXzE3NzM3OTUzOTI6MTc3Mzc5ODk5Ml9WNA)
+
+
+
+整个过程非常的简单丝滑。
+
+
+
+
+
+
+
+## 7、 百度 OpenClaw
+
+
+
+完善中
+
+
+
+## 7、 腾讯  QClaw
+
+
+
+完善中
