@@ -19,21 +19,20 @@ title: 首页
 [![X](https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Nikitka_aktikiN)
 
 
-## 📖 纸质书预告：《OpenClaw超级个体实操手册》
+## 📖 纸质书：《OpenClaw超级个体实操手册》
 
 ⚠️ **重要提示**：本教程从第10章开始存在skill找不到和配置参数错误的问题（[#34](https://github.com/xianyu110/awesome-openclaw-tutorial/issues/34)）
 
-**纸质书已全面修正，即将上市！**
+**纸质书已全面修正，现已上市！**
 
-清华大学出版社即将出版《OpenClaw超级个体实操手册》，在开源教程基础上做了**全面重写+逐条验证**：
+清华大学出版社出版《OpenClaw超级个体实操手册》，在开源教程基础上做了**全面重写+逐条验证**：
 
 - 🔍 **144条CLI命令**对照官方文档逐条核对（教程中约60%已删除或修正）
 - ✅ **9套配置模板**全部在v2026.3.7+实际跑通
 - 🛡️ **新增安全防护指南** + 国产Claw全景指南
 - 📦 **7份随书附赠**电子资料
 
-📅 **预计上市时间**：2026年3月底
-⭐ **Star本仓库**第一时间获取上市通知！
+🛒 **购买链接**：[京东专属链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
 ---
 
