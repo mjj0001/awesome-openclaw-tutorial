@@ -10,7 +10,7 @@ title: 首页
 [![GitHub stars](https://img.shields.io/github/stars/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.3.12-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
+[![Version](https://img.shields.io/badge/version-v2026.3.24-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 [![CSDN](https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn)](https://blog.csdn.net/xianyu120)
 [![Bilibili](https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili)](https://space.bilibili.com/399102586)
@@ -48,6 +48,7 @@ title: 首页
 | **企业级，需要高安全性** | [**JVSClaw**](Openclaw史上最简单教程，小白一键部署.md#10jvsclaw阿里云无影) | **14天免费** + **6核12GB** + **端到端加密** | → 需邀请码 |
 | **想用浏览器操控** | [Kimi Claw](Openclaw史上最简单教程，小白一键部署.md#3kimi-openclaw) | **Kimi K2.5** + **浏览器控制** | → 200元/月 |
 | **量化交易/多IM** | [腾讯 WorkBuddy](Openclaw史上最简单教程，小白一键部署.md#4腾讯-openclawworkbuddy) | **桌面端Agent** + **多IM支持** | → 送5000积分 |
+| **macOS原生体验** | [QClaw](Openclaw史上最简单教程，小白一键部署.md#5qclaw) | **腾讯官方桌面客户端** + **全量公测** | → 免费 |
 | **Agent生态丰富** | [扣子 OpenClaw](Openclaw史上最简单教程，小白一键部署.md#2扣子-openclaw) | **1800+Skills** | → 99元/月起 |
 
 📖 **[查看完整一键部署教程 →](Openclaw史上最简单教程，小白一键部署.md)**
@@ -69,7 +70,7 @@ title: 首页
 
 ### 💎 进阶技能（提升）
 - 🔌 [第8章：Skills扩展](docs/03-advanced/08-skills-extension.md) - 1800+技能
-- 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉
+- 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉/QQ/微信
 - 🔗 [第10章：API集成](docs/03-advanced/10-api-integration.md) - 绘图/视频/语音
 - ⚙️ [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md) - 性能优化
 
@@ -292,10 +293,10 @@ openclaw gateway restart
 
 <div align="center">
 
-**最后更新**：2026年3月18日
-**教程版本**：v1.7
+**最后更新**：2026年4月4日
+**教程版本**：v1.9
 **总字数**：408,000字（15章节 + 15附录）
-**适用OpenClaw版本**：2026.3.12（推荐最新版）
+**适用OpenClaw版本**：2026.3.24（推荐最新版）
 
 🎉 **教程已完成 | 支持续优化 | 完全免费** 🎉
 🚀 **一个人 + OpenClaw = 无限可能** 🚀

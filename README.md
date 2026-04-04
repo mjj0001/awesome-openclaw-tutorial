@@ -49,7 +49,7 @@
 
 ### 💎 进阶技能（提升）
 - 🔌 [第8章：Skills扩展](docs/03-advanced/08-skills-extension.md) - 1800+技能
-- 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉
+- 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉/QQ/微信
 - 🔗 [第10章：API集成](docs/03-advanced/10-api-integration.md) - 绘图/视频/语音
 - ⚙️ [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md) - 性能优化
 
