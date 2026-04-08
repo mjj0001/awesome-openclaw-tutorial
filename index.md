@@ -37,6 +37,8 @@ title: 首页
 
 🛒 **购买链接**：[京东专属链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
+📦 **本地一键部署安装包**：[https://tryopenclaw.asia/](https://tryopenclaw.asia/)
+
 ---
 
 ## 🚀 30秒快速选择：哪种部署方式适合你？

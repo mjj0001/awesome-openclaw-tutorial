@@ -197,6 +197,8 @@ openclaw --version  # 确认版本为 2026.3.24
 
 🛒 **购买链接**：[京东专属链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
+📦 **本地一键部署安装包**：[https://tryopenclaw.asia/](https://tryopenclaw.asia/)
+
 ---
 
 ### 📖 关于本教程
