@@ -66,7 +66,15 @@ response = client.chat.completions.create(
     temperature=0.1,
 )
 
-content = response.choices[0].message.content.strip()
+# 兼容不同 API 返回格式
+if isinstance(response, str):
+    content = response.strip()
+elif hasattr(response, "choices"):
+    content = response.choices[0].message.content.strip()
+elif hasattr(response, "content"):
+    content = response.content.strip()
+else:
+    content = str(response).strip()
 # 去掉可能的 markdown 代码块包裹
 if content.startswith("```"):
     content = re.sub(r"^```\w*\n?", "", content)
