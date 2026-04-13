@@ -24,6 +24,26 @@
 
 ~~本章节将介绍如何将OpenClaw与各种第三方API服务集成，扩展AI的能力边界。重点介绍4个实用场景的配置方法：AI绘图、Notion数据同步、视频生成和语音合成。~~
 
+## ✅ 2026.4+ 推荐主路线（先看这个）
+
+> ⚠️ **高风险提醒**：本章下方大量旧命令和第三方 Skill 名称已不再是官方主线，包括 `bananapro-image-gen`、`video-agent`、`sora-video-gen`、`veo3-video-gen`、`openclaw video generate`、`openclaw tts generate` 等。
+
+| 场景 | 本章旧写法 | 现在建议的官方主路线 |
+|------|-----------|----------------------|
+| AI 绘图 | 第三方 Skill 安装 | `openclaw infer image generate` 或让 Agent 直接调用 `image_generate` |
+| 视频生成 | `openclaw video generate` / `video-agent` | `openclaw infer video generate` 或让 Agent 调用 `video_generate` |
+| 语音合成 | `openclaw tts generate` | `openclaw infer tts convert` |
+| 音乐生成 | 本章未覆盖 | 让 Agent 调用 `music_generate` |
+| 本地媒体工作流 | 零散自建方案 | 使用官方 `ComfyUI` provider/plugin |
+| 外部自动化接入 | 分散脚本 | 使用 `Task Flow + Webhooks` |
+
+**建议阅读顺序**：
+1. 先按第 2 章把运行时升级到 `v2026.4.11` + `Node 24`
+2. 再看官方 `infer` CLI / `video_generate` / `music_generate`
+3. 只有官方主路线不满足需求时，再回头参考第三方 Skill 生态
+
+---
+
 ~~💡 **本章节重点**：API集成的配置方法和基础使用。详细的实战案例请参考第14章节《创意应用探索》。~~
 
 ---
@@ -47,72 +67,37 @@ OpenClaw支持多种AI绘图服务：
 - ✅ 中文支持好
 - ✅ 适合教程配图、白板图
 
-### 10.1.2 安装bananapro-image-gen Skill
+### 10.1.2 当前推荐：直接用官方图像入口
 
-**方式1：从GitHub安装（推荐）**
+如果你在 `2026.4+` 版本里只是想稳定出图，不建议再把 `bananapro-image-gen` 或第三方中转配置当默认主路线。推荐优先顺序：
 
-```bash
-# 克隆技能仓库
-git clone https://github.com/xianyu110/awesome-openclaw-tutorial.git
-
-# 复制到OpenClaw的skills目附录
-cp -r expert-skills-hub/skills/bananapro-image-gen ~/.openclaw/skills/
-
-# 安装依赖
-cd ~/.openclaw/skills/bananapro-image-gen
-pip3 install -r requirements.txt
-```text
-**方式2：使用npx命令**
+1. `openclaw infer image generate`
+2. 让 Agent 直接调用 `image_generate`
+3. 需要本地工作流或可视化编排时，再接 `ComfyUI`
 
 ```bash
-npx skills add https://github.com/xianyu110/awesome-openclaw-tutorial --skill bananapro-image-gen
-```text
-**验证安装：**
+# 最短可用示例
+openclaw infer image generate --prompt "一张手写白板风格的 OpenClaw 工作流示意图" --json
+```
+
+### 10.1.3 配置建议
+
+**推荐做法**：
+- 直接使用 OpenClaw 已配置好的 provider（如 OpenAI、Google、MiniMax）
+- 通过 `openclaw onboard` 或 `openclaw configure` 完成模型配置
+- 如果要走本地可控工作流，优先配置 `ComfyUI` provider/plugin
+
+**检查方法**：
 
 ```bash
-ls ~/.openclaw/skills/bananapro-image-gen
-# 应该看到：SKILL.md, README.md, scripts/, test.sh 等文件
-```text
-### 10.1.3 配置API
+# 查看已配置模型
+openclaw models list
 
-**步骤1：获取API 密钥**
+# 直接测试图像生成入口
+openclaw infer image generate --prompt "一只极简风格的小龙虾图标" --json
+```
 
-1. 访问中转API服务商（推荐支持Gemini的服务）
-2. 注册并充值（建议10-20元测试）
-3. 获取API Key
-
-**步骤2：配置 OpenClaw**
-
-```bash
-nano ~/.openclaw/openclaw.json
-```text
-添加配置：
-
-```json
-{
-  "api": {
-    "gemini": {
-      "apiKey": "your-api-key-here",
-      "baseUrl": "https://apipro.maynor1024.live",
-      "model": "gemini-3-pro-image-preview"
-    }
-  }
-}
-```text
-**步骤3：测试连接**
-
-```bash
-cd ~/.openclaw/skills/bananapro-image-gen
-bash test.sh
-```text
-如果看到生成的图片，说明配置成功！
-
-**成本参考：**
-- 生成1张1K图片：约0.05-0.1元
-- 生成1张2K图片：约0.1-0.2元
-- 生成1张4K图片：约0.2-0.4元
-
-💡 **省钱技巧：** 日常使用1K分辨率即可，只有需要打印或高清展示时才用2K/4K。
+> ⚠️ **历史方案说明**：本章原来的 `bananapro-image-gen` 安装步骤、第三方中转 API 配置和测试脚本，现仅建议作为历史参考，不再推荐作为默认路径。
 
 ### 10.1.4 基础使用教程
 
@@ -126,8 +111,8 @@ bash test.sh
 - 使用蓝色和橙色
 - 包含一个人和AI的元素
 - 适合用在社交媒体头像
-```text
-OpenClaw会自动调用绘图Skill，生成Logo并保存到本地。
+```
+OpenClaw 会按当前已配置的图像能力生成结果并保存到本地。
 
 **示例2：生成白板图**
 
@@ -143,7 +128,7 @@ OpenClaw会自动调用绘图Skill，生成Logo并保存到本地。
 4. 多平台支持 - 随时随地
 
 用手写字体，添加箭头、框图等手绘元素
-```text
+```
 **示例3：生成社交媒体配图**
 
 ```
@@ -152,29 +137,24 @@ OpenClaw会自动调用绘图Skill，生成Logo并保存到本地。
 - 温暖的配色
 - 包含文字：一个人 + AI = 无限可能
 - 简约风格
-```text
+```
 ### 10.1.5 命令行使用（进阶）
 
-如果你想批量生成图片或集成到自动化脚本中，可以直接使用命令行：
+如果你想批量生成图片或集成到自动化脚本中，优先使用官方 `infer` 入口：
 
 **基础用法：**
 
 ```bash
-cd ~/.openclaw/skills/bananapro-image-gen
+# 生成图片
+openclaw infer image generate \
+    --prompt "一个简约的 Logo 设计，主题是 AI 助手" \
+    --json
 
-# 生成图片（OpenAI格式）
-python3 scripts/generate_image.py \
-    --prompt "1个简约的Logo设计，主题是AI助手" \
-    --filename output.png \
-    --api-format openai
-
-# 生成高清图片（Gemini格式）
-python3 scripts/generate_image.py \
-    --prompt "一张白板图，手写风格" \
-    --filename whiteboard.png \
-    --api-format gemini \
-    --resolution 2K
-```text
+# 生成白板风格配图
+openclaw infer image generate \
+    --prompt "一张白板图，手写风格，展示 OpenClaw 工作流" \
+    --json
+```
 **参数说明：**
 
 | 参数 | 说明 | 默认值 | 示例 |
@@ -202,9 +182,9 @@ prompts=(
 
 for i in "${!prompts[@]}"; do
     echo "生成第 $((i+1)) 张图片..."
-    python3 scripts/generate_image.py \
+    openclaw infer image generate \
         --prompt "${prompts[$i]}" \
-        --filename "output_$((i+1)).png"
+        --json
 done
 
 echo "批量生成完成！"
@@ -212,7 +192,7 @@ EOF
 
 chmod +x batch_generate.sh
 ./batch_generate.sh
-```text
+```
 ### 10.1.6 提示词技巧
 
 好的提示词是生成高质量图片的关键。以下是一些实用技巧：
@@ -222,14 +202,14 @@ chmod +x batch_generate.sh
 ```
 ❌ 不好：生成一张图片
 ✅ 好：生成一张白板图片，手写字体风格，简约现代
-```text
+```
 **技巧2：详细描述**
 
 ```
 ❌ 不好：画1个Logo
 ✅ 好：设计1个Logo，圆形，蓝色渐变，中间是1个抽象的大脑图案，
       周围有数据流动的线条，现代科技感
-```text
+```
 **技巧3：指定元素**
 
 ```
@@ -240,7 +220,7 @@ chmod +x batch_generate.sh
       - 数据库（圆柱图标）
       - 用箭头连接各个组件
       - 添加文字标注
-```text
+```
 **技巧4：参考风格**
 
 ```
@@ -249,7 +229,7 @@ chmod +x batch_generate.sh
       - 扁平化设计
       - 水彩画风格
       - 像素艺术风格
-```text
+```
 **提示词模板库：**
 
 ```bash
@@ -287,7 +267,7 @@ chmod +x batch_generate.sh
 - [组件1] → [组件2]
 - [组件2] → [组件3]
 用框图、箭头、图标等元素，清晰展示系统结构"
-```text
+```
 ### 10.1.7 实战案例
 
 **案例1：为教程生成章节节总结图**
@@ -295,11 +275,12 @@ chmod +x batch_generate.sh
 场景：你在写一本OpenClaw教程，需要为每章节生成一张总结白板图。
 
 ```bash
-# 使用提供的测试脚本
-cd ~/.openclaw/skills/bananapro-image-gen
-bash test_chapters.sh
-```text
-这个脚本会自动生成4张图片：
+# 推荐直接用官方图像入口逐章生成
+openclaw infer image generate \
+  --prompt "生成一张白板图片，手写字体风格，总结 OpenClaw 第 1 章节核心要点" \
+  --json
+```
+下面这些输出目标仍然可以作为案例参考：
 - `chapter1_summary.png` - 第1章节总结
 - `architecture.png` - 核心架构图
 - `chapter2_deployment.png` - 部署方式对比
@@ -336,16 +317,15 @@ for i, title in enumerate(articles, 1):
     """
     
     subprocess.run([
-        "python3", "scripts/generate_image.py",
+        "openclaw", "infer", "image", "generate",
         "--prompt", prompt,
-        "--filename", f"social_{i}.png",
-        "--resolution", "2K"
+        "--json"
     ])
     
     print(f"✅ 生成第{i}张配图")
 
 print("🎉 批量生成完成！")
-```text
+```
 **效果：**
 - 生成10张配图：约10分钟
 - 成本：约2元（2K分辨率）
@@ -376,9 +356,9 @@ for project in "${projects[@]}"; do
     - 简洁现代
     - 适合用在社交媒体"
     
-    python3 scripts/generate_image.py \
+    openclaw infer image generate \
         --prompt "$prompt" \
-        --filename "logo_${name}.png"
+        --json
     
     echo "✅ 生成 ${name} Logo"
 done
@@ -386,7 +366,7 @@ EOF
 
 chmod +x generate_logos.sh
 ./generate_logos.sh
-```text
+```
 ### 10.1.8 常见访问题
 
 **Q1：生成的图片不符合预期怎么怎么办？**
@@ -403,7 +383,7 @@ A：
 - 日常使用1K分辨率（约0.05元/张）
 - 批量生成时使用脚本，避免重复生成
 - 设置每日预算上限
-- 使用中转API，成本更低
+- 优先使用已配置好的官方 provider，减少额外中转成本与迁移成本
 
 **Q3：支持哪些图片格式？**
 
@@ -415,50 +395,53 @@ convert output.png output.jpg
 
 # 转换为WebP（更小的文件）
 convert output.png output.webp
-```text
+```
 **Q4：生成速度慢怎么怎么办？**
 
 A：
 - 检查网络连接
-- 使用国内中转API
+- 检查当前 provider 是否可用
 - 降低分辨率（1K最快）
 - 避免高峰时段
 
 **Q5：如何集成到自动化工作流？**
 
-A：参考10.1.5的批量生成示例，或者在OpenClaw的自动化任务中调用：
+A：参考 10.1.5 的批量生成示例，或者在你自己的脚本里直接调用官方 CLI：
 
 ```python
-# 在OpenClaw的自动化脚本中
-from skills.nano_banana_image_gen import generate_image
+import subprocess
 
-# 生成图片
-image_path = generate_image(
-    prompt="你的提示词",
-    filename="output.png",
-    resolution="1K"
+subprocess.run(
+    [
+        "openclaw",
+        "infer",
+        "image",
+        "generate",
+        "--prompt",
+        "你的提示词",
+        "--json",
+    ],
+    check=True,
 )
-
-print(f"图片已生成：{image_path}")
-```text
+```
 ### 10.1.9 进阶技巧
 
-**技巧1：使用两种API格式**
+**技巧1：切换图像 provider / 参数**
 
-Skill支持两种API格式，可以根据需求切换：
+官方图像入口会按当前配置好的 provider 执行；如果 provider 支持，也可以传不同参数：
 
 ```bash
-# OpenAI格式（兼内容性好）
-python3 scripts/generate_image.py \
-    --api-format openai \
+# 直接生成
+openclaw infer image generate \
     --prompt "你的提示词"
 
-# Gemini格式（功能更强）
-python3 scripts/generate_image.py \
-    --api-format gemini \
+# 指定常见参数
+openclaw infer image generate \
     --prompt "你的提示词" \
-    --resolution 2K
-```text
+    --api-format gemini \
+    --resolution 2K \
+    --json
+```
 **技巧2：图片后处理**
 
 生成图片后，可以使用Python进行后处理：
@@ -479,7 +462,7 @@ img = img.resize((800, 600))
 
 # 保存
 img.save("output_processed.png")
-```text
+```
 **技巧3：创建图片模板**
 
 ```python
@@ -517,7 +500,7 @@ generate_from_template(
     style="现代科技",
     usage="社交媒体"
 )
-```text
+```
 ---
 
 ## ~~10.2 Notion数据同步封装~~
@@ -553,7 +536,7 @@ npm install @notionhq/client
 
 # 或使用 Python SDK
 pip install notion-client
-```text
+```
 ~~**方案2：自定义 Skill**~~
 
 ~~创建自己的 Notion Skill：~~
@@ -576,7 +559,7 @@ EOF
 # 安装依赖
 npm init -y
 npm install @notionhq/client
-```text
+```
 ~~**方案3：使用 MCP 服务器**~~
 
 ~~如果你使用的是支持 MCP (Model Context Protocol) 的版本，可以配置 Notion MCP 服务器：~~
@@ -593,7 +576,7 @@ npm install @notionhq/client
     }
   }
 }
-```text
+```
 ~~💡 **注意**：由于 ClawHub 市场的 Skills 在不断更新，建议：~~
 1. ~~访问 https://clawhub.ai 查看最新可用的 Skills~~
 2. ~~使用 `npx clawhub@latest search notion` 搜索相关 Skills~~
@@ -724,11 +707,11 @@ npm install @notionhq/client
 https://www.notion.so/workspace/DatabaseName-1234567890abcdef1234567890abcdef?v=...
                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                                                  这部分就是 Database ID
-```text
+```
 ~~去掉连字符后的格式：~~
 ```
 1234567890abcdef1234567890abcdef
-```text
+```
 ~~**方法2：使用 Notion API 查询**~~
 
 ```bash
@@ -743,13 +726,13 @@ curl -X POST https://api.notion.com/v1/search \
       "value": "database"
     }
   }'
-```text
+```
 ~~**保存 Database ID：**~~
 
 ```bash
 # 添加到 OpenClaw 配置
 nano ~/.openclaw/openclaw.json
-```text
+```
 ```json
 {
   "api": {
@@ -784,7 +767,7 @@ curl -X GET https://api.notion.com/v1/users/me \
   -H "Notion-Version: $NOTION_VERSION"
 
 # 如果成功，会返回你的用户信息
-```text
+```
 ~~**测试2：查询数据库**~~
 
 ```bash
@@ -798,7 +781,7 @@ curl -X POST "https://api.notion.com/v1/databases/$DATABASE_ID/query" \
   -d '{}'
 
 # 如果成功，会返回数据库中的条目
-```text
+```
 ~~**测试3：创建页面**~~
 
 ```bash
@@ -825,7 +808,7 @@ curl -X POST https://api.notion.com/v1/pages \
   }'
 
 # 如果成功，会返回新创建页面的信息
-```text
+```
 ~~**测试4：使用 OpenClaw 测试**~~
 
 ```bash
@@ -852,7 +835,7 @@ OpenClaw：正在测试 Notion API 连接...
 3. 项目数据库 (projects)
 
 ✅ Notion 集成配置完成！
-```text
+```
 #### ~~常见访问题排查~~
 
 ~~**访问题1：API 调用返回 401 Unauthorized**~~
@@ -868,7 +851,7 @@ echo $NOTION_API_KEY
 # 重新复制 API Key
 # 访问 https://www.notion.so/my-integrations
 # 重新复制密钥并更新配置
-```text
+```
 ~~**访问题2：API 调用返回 404 Not Found**~~
 
 ~~原因：页面或数据库未分分享给 Integration~~
@@ -903,7 +886,7 @@ curl -X POST https://api.notion.com/v1/search \
       "value": "database"
     }
   }' | jq '.results[] | {id: .id, title: .title}'
-```text
+```
 #### ~~安全建议~~
 
 ~~**1. 保护 API Key**~~
@@ -914,7 +897,7 @@ chmod 600 ~/.openclaw/config/notion.json
 # 不要将 API Key 提交到 Git
 echo "*.json" >> ~/.openclaw/.gitignore
 echo "openclaw.json" >> ~/.gitignore
-```text
+```
 ~~**2. 使用环境变量**~~
 ```bash
 # 在 ~/.bashrc 或 ~/.zshrc 中设置
@@ -922,14 +905,14 @@ export NOTION_API_KEY="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # 在脚本中使用
 NOTION_API_KEY="${NOTION_API_KEY}"
-```text
+```
 ~~**3. 定期轮换密钥**~~
 ```bash
 # 每3-6个月更换一次 API Key
 # 1. 在 Notion 中创建新的 Integration
 # 2. 更新配置文件
 # 3. 删除旧的 Integration
-```text
+```
 ~~**4. 最小权限原则**~~
 - ~~只授予必要的权限~~
 - ~~只分分享需要访问的页面/数据库~~
@@ -973,7 +956,7 @@ NOTION_API_KEY="${NOTION_API_KEY}"
     }
   }
 }
-```text
+```
 ~~完成这些设置后，你就可以通过 OpenClaw 调用 Notion API 来创建、读取和更新 Notion 中的内内容了！~~
 
 ### ~~10.2.4 配置Notion集成~~
@@ -981,7 +964,7 @@ NOTION_API_KEY="${NOTION_API_KEY}"
 ```bash
 # 编辑OpenClaw 配置
 nano ~/.openclaw/openclaw.json
-```text
+```
 ~~添加Notion配置：~~
 
 ```json
@@ -998,7 +981,7 @@ nano ~/.openclaw/openclaw.json
     "syncInterval": 300
   }
 }
-```text
+```
 ~~**配置说明：**~~
 
 |~~ 参数 ~~|~~ 说明 ~~|~~ 示例 ~~|
@@ -1048,7 +1031,7 @@ OpenClaw：好的，正在保存到Notion...
 
 🔗 在Notion中打开：
 https://notion.so/abc123
-```text
+```
 ~~**示例2：批量导入文档**~~
 
 ```
@@ -1090,7 +1073,7 @@ OpenClaw：好的，正在扫描文件...
 
 🔗 在Notion中查看：
 https://notion.so/workspace/notes-import
-```text
+```
 ### ~~10.2.6 进阶技巧~~
 
 ~~**技巧1：自定义模板**~~
@@ -1104,7 +1087,7 @@ openclaw notion template create "meeting" \
 
 # 使用模板
 你：用会议模板创建今天的会议记附录
-```text
+```
 ~~**技巧2：自动化工作流**~~
 
 ```bash
@@ -1121,7 +1104,7 @@ openclaw config set notion.auto-rules '{
     "trigger": "file-change"
   }
 }'
-```text
+```
 ~~**技巧3：双向同步**~~
 
 ```bash
@@ -1130,7 +1113,7 @@ openclaw config set notion.bidirectional true
 
 # Notion更新会自动同步到本地
 # 本地更新会自动同步到Notion
-```text
+```
 ### ~~10.2.7 常见访问题~~
 
 ~~**Q1：API调用失败怎么怎么办？**~~
@@ -1147,7 +1130,7 @@ openclaw notion test
 
 # 查看错误日志
 openclaw channels logs --channel notion
-```text
+```
 ~~**Q2：如何处理大量数据？**~~
 
 ~~A：使用批量操作和分页：~~
@@ -1162,7 +1145,7 @@ openclaw notion import ~/notes/ \
 openclaw notion query \
   --database "db-id" \
   --page-size 100
-```text
+```
 ~~**Q3：如何避免重复创建？**~~
 
 ~~A：使用唯一标识符：~~
@@ -1174,7 +1157,7 @@ openclaw config set notion.dedup '{
   "field": "title",
   "action": "skip"
 }'
-```text
+```
 ### ~~10.2.8 效率提升数据~~
 
 |~~ 任务类型 ~~|~~ 手动操作 ~~|~~ 自动化 ~~|~~ 节省时间 ~~|~~ 提升比例 ~~|
@@ -1208,65 +1191,29 @@ AI视频生成是新兴的创意工具，可以将文字脚本自动转换为视
 - AI生成：10-30分钟/视频
 - 效率提升：80-90%
 
-### 10.3.2 推荐的视频生成Skills
+### 10.3.2 当前推荐：官方视频生成主路线
 
-根据ClawHub技能市场，以下是推荐的视频生成Skills：
+在 `2026.4+` 版本中，不再建议把 `video-agent`、`sora-video-gen`、`veo3-video-gen` 这类旧 Skill 当作默认视频入口。现在更推荐：
 
-**1. video-agent - HeyGen视频生成**
+- **CLI 直连**：`openclaw infer video generate`
+- **聊天工作流**：让 Agent 调用 `video_generate`
+- **默认视频模型**：按 provider 选择 `openai/sora-2` 或 `google/veo-3.1-fast-generate-preview`
+- **本地/工作流编排**：使用 `ComfyUI` provider/plugin
+
 ```bash
-# 安装
-npx clawhub@latest install video-agent
+# 直接生成视频
+openclaw infer video generate --prompt "产品发布会舞台，镜头缓慢推进，科技感灯光" --json
 
-# 功能
-• 使用HeyGen API生成AI头像视频
-• 支持多种语言和音色
-• 专业级视频质量
-• 适合教程和营销视频
-```text
-**2. sora-video-gen - OpenAI Sora**
-```bash
-# 安装
-npx clawhub@latest install sora-video-gen
+# 设置默认视频模型（二选一）
+openclaw config set agents.defaults.videoGenerationModel.primary "openai/sora-2"
+openclaw config set agents.defaults.videoGenerationModel.primary "google/veo-3.1-fast-generate-preview"
+```
 
-# 功能
-• 使用OpenAI Sora API
-• 文本生成视频
-• 高质量视频输出
-• 创意视频制作
-```text
-**3. veo3-video-gen - Google Veo**
-```bash
-# 安装
-npx clawhub@latest install veo3-video-gen
-
-# 功能
-• 使用Google Veo 3.x
-• 生成和拼接短视频
-• 支持多种风格
-• 适合短视频创作
-```text
-**4. tube-cog - YouTube内内容创作**
-```bash
-# 安装
-npx clawhub@latest install tube-cog
-
-# 功能
-• YouTube内内容创作
-• 由CellCog提供支持
-• 完整视频制作流程
-• 自动化发布布
-```text
-**5. video-cog - 长篇视频制作**
-```bash
-# 安装
-npx clawhub@latest install video-cog
-
-# 功能
-• 长篇AI视频制作
+> ⚠️ **历史说明**：下方若仍出现旧 Skill 名称或旧视频命令，请把它们视为历史参考，不要直接当作当前推荐步骤执行。
 • 多智能体协作
 • 专业级视频输出
 • 适合教程和课程
-```text
+```
 ### 10.3.3 配置视频服务
 
 **配置HeyGen（推荐）：**
@@ -1274,7 +1221,7 @@ npx clawhub@latest install video-cog
 ```bash
 # 编辑OpenClaw 配置
 nano ~/.openclaw/openclaw.json
-```text
+```
 添加HeyGen配置：
 
 ```json
@@ -1292,7 +1239,7 @@ nano ~/.openclaw/openclaw.json
     "format": "mp4"
   }
 }
-```text
+```
 **获取HeyGen API Key：**
 1. 访问 https://www.heygen.com
 2. 注册并登录账号
@@ -1365,7 +1312,7 @@ OpenClaw：好的，正在生成视频...
 
 🔗 在线预览：
 https://video.openclaw.com/abc123
-```text
+```
 **示例2：批量生成系列视频**
 
 ```
@@ -1429,7 +1376,7 @@ OpenClaw：好的，正在批量生成...
 
 🔗 下载链接：
 https://video.openclaw.com/series/abc123
-```text
+```
 ### 10.3.5 实战案例
 
 **案例1：自动化短视频创作**
@@ -1447,13 +1394,10 @@ topic=$(openclaw ask "推荐1个适合短视频的技术主题")
 # 生成脚本
 script=$(openclaw ask "为主题'${topic}'生成60秒短视频脚本")
 
-# 生成视频
-openclaw video generate \
-  --script "$script" \
-  --duration 60 \
-  --avatar "professional-male" \
-  --voice "cn-male-01" \
-  --output "daily_$(date +%Y%m%d).mp4"
+# 生成视频（推荐走官方入口）
+openclaw infer video generate \
+  --prompt "$script" \
+  --json
 
 echo "✅ 今日视频生成完成：${topic}"
 EOF
@@ -1464,7 +1408,7 @@ chmod +x daily_video.sh
 openclaw schedule add "daily-video" \
   --time "09:00" \
   --command "./daily_video.sh"
-```text
+```
 **案例2：产品介绍视频生成**
 
 场景：为新产品快速生成多语言介绍视频。
@@ -1511,48 +1455,30 @@ OpenClaw：好的，正在生成多语言版本...
 • 中文：https://video.openclaw.com/cn/abc123
 • 英文：https://video.openclaw.com/en/abc123
 • 日文：https://video.openclaw.com/jp/abc123
-```text
+```
 ### 10.3.6 进阶技巧
 
 **技巧1：自定义头像**
 
 ```bash
 # 上传自定义头像照片
-openclaw video avatar upload \
-  --photo "my_photo.jpg" \
-  --name "my-avatar"
-
-# 使用自定义头像
-openclaw video generate \
-  --avatar "my-avatar" \
-  --script "你的脚本"
-```text
+# 当前更建议直接用提示词 + 默认视频模型
+openclaw infer video generate \
+  --prompt "使用同一个角色设定生成视频，你的脚本" \
+  --json
+```
 **技巧2：视频后期处理**
 
 ```bash
-# 添加片头片尾
-openclaw video edit \
-  --input "video.mp4" \
-  --intro "intro.mp4" \
-  --outro "outro.mp4" \
-  --output "final.mp4"
-
-# 添加背景音乐
-openclaw video edit \
-  --input "video.mp4" \
-  --bgm "music.mp3" \
-  --volume 0.3 \
-  --output "with_music.mp4"
-```text
+# 当前官方文档更强调先生成原始视频，再用外部视频工具做后期
+# 例如 ffmpeg、CapCut、Premiere 或 ComfyUI 工作流
+```
 **技巧3：批量处理优化**
 
 ```bash
-# 并行生成多个视频
-openclaw video batch \
-  --scripts "scripts/*.txt" \
-  --parallel 3 \
-  --output "videos/"
-```text
+# 批量生成更建议自己用 shell/python 循环调用
+# openclaw infer video generate --prompt "$(cat scripts/1.txt)" --json
+```
 ### 10.3.7 常见访问题
 
 **Q1：视频生成失败怎么怎么办？**
@@ -1626,7 +1552,7 @@ npx clawhub@latest install elevenlabs
 • 支持多种语言和音色
 • 情感表达丰富
 • 适合专业配音
-```text
+```
 ~~**2. azure-tts - 微软语音服务**~~
 ```bash
 # 安装
@@ -1637,7 +1563,7 @@ npx clawhub@latest install azure-tts
 • 神经网络语音
 • 高质量输出
 • 企业级稳定性
-```text
+```
 ~~**3. google-tts - Google语音**~~
 ```bash
 # 安装
@@ -1648,7 +1574,7 @@ npx clawhub@latest install google-tts
 • 自然流畅
 • 多语言支持
 • 性价比高
-```text
+```
 ~~**4. openai-tts - OpenAI语音**~~
 ```bash
 # 安装
@@ -1659,7 +1585,7 @@ npx clawhub@latest install openai-tts
 • 6种高质量音色
 • 支持多种语言
 • 简单易用
-```text
+```
 ### ~~10.4.3 支持的语音服务对比~~
 
 |~~ 服务 ~~|~~ 特点 ~~|~~ 成本 ~~|~~ 音质 ~~|~~ 语言支持 ~~|
@@ -1677,7 +1603,7 @@ npx clawhub@latest install openai-tts
 ```bash
 # 编辑OpenClaw 配置
 nano ~/.openclaw/openclaw.json
-```text
+```
 ~~添加ElevenLabs配置：~~
 
 ```json
@@ -1695,7 +1621,7 @@ nano ~/.openclaw/openclaw.json
     "format": "mp3"
   }
 }
-```text
+```
 ~~**获取ElevenLabs API Key：**~~
 1. ~~访问 https://elevenlabs.io~~
 2. ~~注册并登录账号~~
@@ -1766,7 +1692,7 @@ OpenClaw：好的，正在转换...
 
 🔗 在线试听：
 https://audio.openclaw.com/abc123
-```text
+```
 ~~**示例2：批量转换文章节**~~
 
 ```
@@ -1816,7 +1742,7 @@ OpenClaw：好的，正在扫描文件...
 
 🔗 下载链接：
 https://audio.openclaw.com/batch/abc123
-```text
+```
 ### ~~10.4.6 实战案例~~
 
 ~~**案例1：自动化有声读物制作**~~
@@ -1876,7 +1802,7 @@ OpenClaw完全指南_有声版/
 
 🔗 下载链接：
 https://audio.openclaw.com/audiobook/abc123
-```text
+```
 ~~**案例2：多语言配音生成**~~
 
 ~~场景：为产品介绍视频生成多语言配音。~~
@@ -1927,54 +1853,44 @@ OpenClaw：好的，正在生成多语言配音...
 • 中文：https://audio.openclaw.com/cn/abc123
 • 英文：https://audio.openclaw.com/en/abc123
 • 日文：https://audio.openclaw.com/jp/abc123
-```text
+```
 ### ~~10.4.7 进阶技巧~~
 
 ~~**技巧1：自定义音色**~~
 
 ```bash
-# 克隆自己的声音（ElevenLabs）
-openclaw tts voice clone \
-  --samples "voice_samples/*.mp3" \
-  --name "my-voice"
+# 2026.4+ 更建议按 provider 能力配置可用音色，再走官方 TTS 入口
+# 先查看 provider / voices 能力
+openclaw infer tts voices
 
-# 使用自定义音色
-openclaw tts generate \
+# 然后直接转换
+openclaw infer tts convert \
   --text "你的文本" \
-  --voice "my-voice" \
   --output "output.mp3"
-```text
+```
 ~~**技巧2：情感控制**~~
 
 ```bash
 # 添加情感标记
-openclaw tts generate \
-  --text "这真是太棒了！[excited]" \
-  --voice "voice-id" \
-  --emotion "excited" \
+openclaw infer tts convert \
+  --text "这真是太棒了！" \
   --output "excited.mp3"
-```text
+```
 ~~**技巧3：语速和音调调整**~~
 
 ```bash
 # 调整语速和音调
-openclaw tts generate \
+openclaw infer tts convert \
   --text "你的文本" \
-  --voice "voice-id" \
-  --speed 1.2 \
-  --pitch 1.1 \
   --output "adjusted.mp3"
-```text
+```
 ~~**技巧4：批量处理优化**~~
 
 ```bash
 # 并行转换多个文件
-openclaw tts batch \
-  --input "texts/*.txt" \
-  --voice "voice-id" \
-  --parallel 5 \
-  --output "audios/"
-```text
+# 批量 TTS 建议自行脚本循环调用
+# openclaw infer tts convert --text "..." --output ./audios/file1.mp3
+```
 ### ~~10.4.8 常见访问题~~
 
 ~~**Q1：语音听起来不自然怎么怎么办？**~~
@@ -1993,13 +1909,11 @@ openclaw tts batch \
 - ~~批量转换后合并~~
 
 ```bash
-# 长文本自动分段
-openclaw tts generate \
-  --text-file "long_article.txt" \
-  --auto-split true \
-  --max-length 5000 \
-  --output "output.mp3"
-```text
+# 长文本建议脚本分段后逐段调用
+openclaw infer tts convert \
+  --text "这是第一段文本" \
+  --output "part1.mp3"
+```
 ~~**Q3：如何控制成本？**~~
 
 ~~A：~~
@@ -2017,12 +1931,11 @@ openclaw tts generate \
 - ~~AAC：高质量，文件小~~
 
 ```bash
-# 指定输出格式
-openclaw tts generate \
+# 指定输出文件
+openclaw infer tts convert \
   --text "你的文本" \
-  --format "wav" \
   --output "output.wav"
-```text
+```
 ### ~~10.4.9 效率提升数据~~
 
 |~~ 任务类型 ~~|~~ 人工附录音 ~~|~~ AI合成 ~~|~~ 节省时间 ~~|~~ 提升比例 ~~|
@@ -2095,566 +2008,27 @@ chmod +x install_api_skills.sh
 
 # 安装所有Skills
 ./install_api_skills.sh all
-```text
-**方式2：手动逐个安装**
-
-```bash
-# AI绘图服务 Skills（需要先验证是否存在）
-# 使用前建议先搜索：npx clawhub@latest search <skill-name>
-npx clawhub@latest install fal-ai
-npx clawhub@latest install nvidia-image-gen
-npx clawhub@latest install pollinations
-npx clawhub@latest install venice-ai
-npx clawhub@latest install recraft
-
-# Notion集成（目前ClawHub可能没有现成的Skill）
-# 建议使用 Notion API 直接集成或自定义 Skill
-
-# 视频生成服务 Skills
-npx clawhub@latest install video-agent
-npx clawhub@latest install sora-video-gen
-npx clawhub@latest install veo3-video-gen
-npx clawhub@latest install tube-cog
-npx clawhub@latest install video-cog
-
-# 语音合成服务 Skills
-npx clawhub@latest install elevenlabs
-npx clawhub@latest install azure-tts
-npx clawhub@latest install google-tts
-npx clawhub@latest install openai-tts
-```text
-**💡 重要提示**：
-- ClawHub 市场的 Skills 在不断更新，某些 Skills 可能不存在或已更名
-- 安装前建议先搜索：`npx clawhub@latest search <skill-name>`
-- 如果 Skill 不存在，可以：
-  1. 使用对应服务的官方 API 直接集成
-  2. 自己创建自定义 Skill
-  3. 在 GitHub 上搜索社区贡献的 Skills
-
-### 分场景安装建议
-
-**场景1：内内容创作者（必装）**
-```bash
-npx clawhub@latest install fal-ai
-npx clawhub@latest install elevenlabs
-# Notion 建议使用 API 直接集成
-```text
-- fal-ai：快速生成配图
-- elevenlabs：高质量配音
-- Notion：使用官方 API 集成（见 10.2.2 节）
-
-**场景2：视频UP主（推荐）**
-```bash
-npx clawhub@latest install video-agent
-npx clawhub@latest install tube-cog
-npx clawhub@latest install elevenlabs
-```text
-- video-agent：AI头像视频
-- tube-cog：YouTube内内容创作
-- elevenlabs：专业配音
-
-**场景3：知识工作者（推荐）**
-```bash
-npx clawhub@latest install openai-tts
-# Notion 建议使用 API 直接集成
-```text
-- openai-tts：文档转音频
-- Notion：使用官方 API 集成（见 10.2.2 节）
-
-**场景4：营销人员（推荐）**
-```bash
-npx clawhub@latest install fal-ai
-npx clawhub@latest install video-agent
-npx clawhub@latest install elevenlabs
-```text
-- fal-ai：营销素材生成
-- video-agent：产品介绍视频
-- elevenlabs：广告配音
-
-**场景5：教育工作者（推荐）**
-```bash
-npx clawhub@latest install fal-ai
-npx clawhub@latest install video-cog
-npx clawhub@latest install openai-tts
-```text
-- fal-ai：教学配图
-- video-cog：课程视频制作
-- openai-tts：有声课件
-
-### 配置优先级
-
-**必装Skills（优先级：⭐⭐⭐⭐⭐）**
-- notion - 知识管理（免费）
-- openai-tts - 语音合成（性价比高）
-- fal-ai - AI绘画（功能全面）
-
-**推荐Skills（优先级：⭐⭐⭐⭐）**
-- video-agent - 视频生成（质量高）
-- elevenlabs - 语音合成（最自然）
-- notion-mcp - Notion高级功能
-
-**可选Skills（优先级：⭐⭐⭐）**
-- 根据具体需求选择安装
-- 可以先试用再决定
-
-### 成本预算参考
-
-**月度成本估算**：
-
-| 使用场景 | Skills组合 | API成本 | 总成本/月 |
-|---------|-----------|---------|----------|
-| 轻度使用 | 基础3个 | $5-10 | $5-10 |
-| 中度使用 | 推荐6个 | $20-50 | $20-50 |
-| 重度使用 | 全部安装 | $50-150 | $50-150 |
-| 专业创作 | 高端组合 | $100-300 | $100-300 |
-
-**各服务成本明细**：
-
-| 服务类型 | 轻度使用 | 中度使用 | 重度使用 |
-|---------|---------|---------|---------|
-| AI绘图 | $2-5 | $10-20 | $30-50 |
-| Notion | $0 | $0 | $0 |
-| 视频生成 | $5-10 | $20-50 | $50-100 |
-| 语音合成 | $2-5 | $10-20 | $20-50 |
-
-**成本优化建议**：
 ```
-✅ 使用国产模型（DeepSeek、Kimi）
-✅ 批量处理任务
-✅ 复用生成结果
-✅ 设置Token限制
-✅ 选择合适的质量等级
-✅ 利用免费额度
-✅ 批量购买分享受折扣
-```text
-### 常见访问题
-
-**Q1：Skills 安装失败怎么怎么办？**
-```bash
-# 检查网络连接
-ping github.com
-
-# 使用国内镜像
-npm config set registry https://registry.npmmirror.com
-
-# 重试安装
-npx clawhub@latest install <skill-name>
-
-# 查看详细错误
-npx clawhub@latest install <skill-name> --verbose
-```text
-**Q2：Skills加载失败怎么怎么办？**
-```bash
-# 查看Skills列表
-openclaw skills list
-
-# 检查Skills状态
-openclaw skills check
-
-# 查看Skill详细信息
-openclaw skills info <skill-name>
-
-# 重启OpenClaw
-openclaw restart
-```text
-**Q3：API调用失败怎么怎么办？**
-```bash
-# 检查API配置
-openclaw config get api
-
-# 测试API连接
-openclaw api test <service-name>
-
-# 查看错误日志
-openclaw logs --limit 50
-
-# 验证API 密钥
-openclaw api verify <service-name>
-```text
-**Q4：如何更新Skills？**
-```bash
-# 更新单个Skill
-npx clawhub@latest update <skill-name>
-
-# 更新所有Skills
-npx clawhub@latest update --all
-
-# 查看可更新的Skills
-npx clawhub@latest list --outdated
-
-# 查看更新日志
-npx clawhub@latest changelog <skill-name>
-```text
-**Q5：如何卸载不需要的Skills？**
-```bash
-# 卸载单个Skill
-npx clawhub@latest uninstall <skill-name>
-
-# 卸载多个Skills
-npx clawhub@latest uninstall <skill1> <skill2> <skill3>
-
-# 检查Skills依赖
-openclaw skills check
-```text
-### 最佳实践
-
-**1. 渐进式安装**
-```
-第1周：安装基础Skills（notion, openai-tts）
-      熟悉基本使用，建立工作流程
-
-第2周：添加创作Skills（fal-ai, video-agent）
-      根据需求扩展功能
-
-第3周：优化配置和成本
-      调整参数，提升效率
-
-第4周：建立自动化工作流
-      整合所有Skills，实现自动化
-```text
-**2. 定期维护**
-```bash
-# 每周检查更新
-npx clawhub@latest list --outdated
-
-# 定期检查Skills状态
-openclaw skills check
-
-# 每季度备份配置
-openclaw backup create
-
-# 每半年评估使用情况
-openclaw stats --period 6m
-```text
-**3. 性能优化**
-```bash
-# 只加载需要的Skills
-openclaw config set skills.lazy-load true
-
-# 设置并发布限制
-openclaw config set skills.max-concurrent 3
-
-# 启用缓存
-openclaw config set skills.cache.enabled true
-openclaw config set skills.cache.ttl 3600
-
-# 设置超时时间
-openclaw config set skills.timeout 30000
-```text
-**4. 成本监控**
-```bash
-# 查看API使用统计
-openclaw stats api --period 1m
-
-# 设置成本预警
-openclaw config set cost.alert.enabled true
-openclaw config set cost.alert.threshold 100
-
-# 查看成本报告
-openclaw cost report --period 1m
-
-# 导出成本数据
-openclaw cost export --format csv
-```text
-### 进阶技巧
-
-**技巧1：使用配置文件管理Skills**
-```bash
-# 创建内内容创作配置
-cat > ~/.openclaw/profiles/content-creation.json <<EOF
-{
-  "skills": ["fal-ai", "video-agent", "elevenlabs", "notion"],
-  "description": "内内容创作工具集"
-}
-EOF
-
-# 创建知识管理配置
-cat > ~/.openclaw/profiles/knowledge-management.json <<EOF
-{
-  "skills": ["notion", "notion-mcp", "openai-tts"],
-  "description": "知识管理工具集"
-}
-EOF
-```
-
-**技巧2：自定义快捷命令**
-```bash
-# 创建快捷命令
-openclaw alias create "画图" "使用fal-ai生成图片"
-openclaw alias create "记笔记" "保存到Notion"
-openclaw alias create "配音" "使用elevenlabs转语音"
-openclaw alias create "做视频" "使用video-agent生成视频"
-
-# 使用快捷命令
-你：画图 1个可爱的小龙虾
-你：记笔记 今天学习了API集成
-你：配音 这段文字
-你：做视频 产品介绍脚本
-```text
-**技巧3：批量安装脚本**
-
-由于 `clawhub` 一次只能安装1个 Skill，可以创建批量安装脚本：
-
-```bash
-# 创建批量安装脚本
-cat > install_skills.sh << 'EOF'
-#!/bin/bash
-
-# 定义要安装的Skills
-skills=(
-    "fal-ai"
-    "notion"
-    "elevenlabs"
-    "video-agent"
-)
-
-echo "开始批量安装 Skills..."
-
-for skill in "${skills[@]}"; do
-    echo "正在安装: $skill"
-    npx clawhub@latest install "$skill"
-    
-    if [ $? -eq 0 ]; then
-        echo "✅ $skill 安装成功"
-    else
-        echo "❌ $skill 安装失败"
-    fi
-    echo "---"
-done
-
-echo "批量安装完成！"
-EOF
-
-chmod +x install_skills.sh
-./install_skills.sh
-```text
-```bash
-# 批量生成图片
-openclaw batch run "fal-ai" \
-  --input "prompts.txt" \
-  --output "images/" \
-  --parallel 3
-
-# 批量转换音频
-openclaw batch run "elevenlabs" \
-  --input "texts/" \
-  --output "audios/" \
-  --parallel 5
-
-# 批量导入Notion
-openclaw batch run "notion" \
-  --input "notes/" \
-  --database "db-id" \
-  --parallel 2
-```
-
-**技巧4：工作流自动化**
-```bash
-# 创建自动化工作流
-openclaw workflow create "daily-content" \
-  --trigger "schedule:09:00" \
-  --steps "
-    1. 生成今日主题（ask）
-    2. 生成配图（fal-ai）
-    3. 生成视频（video-agent）
-    4. 生成配音（elevenlabs）
-    5. 保存到Notion（notion）
-  "
-
-# 启用工作流
-openclaw workflow enable "daily-content"
-
-# 查看工作流状态
-openclaw workflow status "daily-content"
-```text
-### 故障排查
-
-**访问题1：Skills无法加载**
-
-可能原因：
-- 依赖未安装
-- 配置文件错误
-- 权限不足
-
-解决方案：
-```bash
-# 查看Skill依赖
-openclaw skills info <skill-name>
-
-# 重新安装依赖
-cd ~/.openclaw/skills/<skill-name>
-npm install
-
-# 检查配置
-openclaw config validate
-
-# 修复权限
-chmod -R 755 ~/.openclaw/skills/
-```text
-**访问题2：API调用超时**
-
-可能原因：
-- 网络不稳定
-- API服务器繁忙
-- 超时设置过短
-
-解决方案：
-```bash
-# 增加超时时间
-openclaw config set api.timeout 60000
-
-# 使用代理
-openclaw config set api.proxy "http://proxy:port"
-
-# 重试机制
-openclaw config set api.retry.enabled true
-openclaw config set api.retry.max 3
-```text
-**访问题3：成本超支**
-
-可能原因：
-- 使用频率过高
-- 质量设置过高
-- 未设置限制
-
-解决方案：
-```bash
-# 设置每日限额
-openclaw config set cost.daily-limit 10
-
-# 降低质量设置
-openclaw config set image.quality "standard"
-openclaw config set video.quality "medium"
-
-# 启用缓存
-openclaw config set cache.enabled true
-
-# 查看成本明细
-openclaw cost detail --period 1d
-```text
----
-
-## ~~本章节小结~~
-
-~~本章节详细介绍了OpenClaw与第三方API服务的集成方法，涵盖了4个核心应用场景：~~
-
-### ~~核心内内容回顾~~
-
-~~**10.1 AI绘图服务集成** - 效率提升90%+~~
-- ~~完整的bananapro-image-gen Skill安装和配置教程~~
-- ~~从基础使用到批量生成的实战案例~~
-- ~~提示词优化技巧和成本控制方法~~
-- ~~推荐5个ClawHub市场的AI绘画Skills~~
-
-~~**10.2 Notion数据同步** - 效率提升98%+~~
-- ~~3个推荐的Notion集成Skills（notion, notion-mcp, notion-database）~~
-- ~~完整的API配置和权限设置流程~~
-- ~~自动创建笔记、批量导入、会议记附录等实战案例~~
-- ~~自定义模板和自动化工作流配置~~
-
-~~**10.3 视频生成服务** - 效率提升90%+~~
-- ~~5个推荐的视频生成Skills（video-agent, sora-video-gen等）~~
-- ~~HeyGen、Sora、Veo等主流服务的配置方法~~
-- ~~AI头像视频、批量生成、多语言版本等实战案例~~
-- ~~自定义头像、视频后期处理等进阶技巧~~
-
-~~**10.4 语音合成接入** - 效率提升95%+~~
-- ~~4个推荐的语音合成Skills（elevenlabs, azure-tts等）~~
-- ~~ElevenLabs、Azure、Google等服务的对比和配置~~
-- ~~文本转语音、有声读物、多语言配音等实战案例~~
-- ~~自定义音色、情感控制、批量处理等进阶技巧~~
-
-### ~~综合效率提升~~
-
-~~**平均效率提升**：93%+~~
-~~**平均成本节省**：95%+~~
-~~**适用场景**：创作、管理、营销、教育~~
-
-### ~~核心价值~~
-
-~~**1. 能力扩展**~~
-```
-✅ AI绘图：从文字到图像
-✅ 知识管理：自动化笔记和数据库
-✅ 视频创作：从脚本到成片
-✅ 语音合成：从文字到声音
-```text
-~~**2. 效率提升**~~
-```
-✅ 绘图：30分钟 → 1分钟
-✅ 笔记：5分钟 → 5秒
-✅ 视频：2小时 → 10分钟
-✅ 配音：1小时 → 2分钟
-```text
-~~**3. 成本优化**~~
-```
-✅ 绘图成本：$50 → $0.1
-✅ Notion：免费
-✅ 视频成本：$200 → $2
-✅ 配音成本：$100 → $0.3
-```text
-~~**4. 质量保证**~~
-```
-✅ 专业级输出质量
-✅ 多语言支持
-✅ 批量处理能力
-✅ 自动化工作流
-```
-
-### ~~实战技巧总结~~
-
-~~**1. Skills选择**~~
-- ~~根据需求选择合适的Skills~~
-- ~~优先使用ClawHub市场的成熟Skills~~
-- ~~关注成本和质量的平衡~~
-
-~~**2. 配置优化**~~
-- ~~正确配置API 密钥和权限~~
-- ~~设置合理的默认参数~~
-- ~~启用自动化规则~~
-
-~~**3. 成本控制**~~
-- ~~使用合适的质量等级~~
-- ~~批量处理分享受折扣~~
-- ~~复用生成结果~~
-
-~~**4. 质量提升**~~
-- ~~优化输入内内容（提示词、脚本、文本）~~
-- ~~使用高质量模型~~
-- ~~进行后期处理~~
-
-### ~~下一步行动~~
-
-1. ~~**立即开始**：选择1个场景，安装对应的Skills~~
-2. ~~**实践验证**：通过实际案例测试效果~~
-3. ~~**优化流程**：根据使用情况调整配置~~
-4. ~~**扩展应用**：探索更多集成可能性~~
-
-~~通过API集成，OpenClaw从1个AI助手升级为全能创作平台。掌握这些集成方法，你将拥有：~~
-- ~~🎨 AI绘画能力~~
-- ~~📝 自动化知识管理~~
-- ~~🎬 视频创作能力~~
-- ~~🎙️ 语音合成能力~~
-
-~~开始使用这些强大的API集成功能，让OpenClaw成为你的超级创作助手！~~
-
----
-
-**下一章节预告：** 第11章节 高级配置（多模型切换/成本优化/性能调优）
-
-
----
-
-## ~~🌐 在线阅读~~
-
-~~📖 **想在线阅读此章节节？**~~
-
-~~[🔗 在线阅读此章节节](https://awesome.tryopenclaw.asia/docs/03-advanced/10-api-integration/)~~
-
-~~访问网站获取更好的阅读体验：~~
-- ~~📱 响应式设计，支持手机、平板、电脑~~
--  ~~支持黑暗模式，保护眼睛~~
-- ~~🔍 内置搜索功能，快速定位内内容~~
-- ~~📋 目附录导航，轻松跳转章节节~~
-
-~~[🏠 访问完整教网站](https://awesome.tryopenclaw.asia)~~
+## ✅ 2026.4+ API / 媒体能力推荐清单
+
+本章末尾原来的“逐个安装一整套 Skills”清单已经不适合作为默认路径。当前更建议按能力来配置 OpenClaw：
+
+- **图片**：`openclaw infer image generate` / Agent 调 `image_generate`
+- **视频**：`openclaw infer video generate` / Agent 调 `video_generate`
+- **语音合成**：`openclaw infer tts convert`
+- **音乐**：Agent 调 `music_generate`
+- **网页与搜索**：`openclaw infer web search` / `openclaw infer web fetch`
+- **本地工作流编排**：`ComfyUI` provider/plugin
+- **外部自动化**：`Task Flow + Webhooks`
+
+**推荐排查顺序**：
+1. `openclaw --version`
+2. `openclaw models list`
+3. 先试官方入口：`openclaw infer ...`
+4. 需要工作流时再接 `video_generate` / `music_generate` / `ComfyUI`
+5. 只有官方主路线不满足需求时，再考虑第三方 Skill 生态
+
+**什么时候还可以看旧 Skill 清单**：
+- 你在维护历史项目
+- 你明确知道某个 Skill 仍在维护
+- 你愿意自行验证安装方式、provider、命令入口和兼容性

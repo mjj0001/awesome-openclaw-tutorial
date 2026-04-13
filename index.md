@@ -10,7 +10,7 @@ title: 首页
 [![GitHub stars](https://img.shields.io/github/stars/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.3.24-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
+[![Version](https://img.shields.io/badge/version-v2026.4.11-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 [![CSDN](https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn)](https://blog.csdn.net/xianyu120)
 [![Bilibili](https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili)](https://space.bilibili.com/399102586)
@@ -19,6 +19,8 @@ title: 首页
 [![X](https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Nikitka_aktikiN)
 
 > 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 清华大学出版社出版，在开源教程基础上全面重写+逐条验证。🛒 [京东专属购买链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
+
+> 🔄 **2026-04-13 更新说明**：本仓库现按 **OpenClaw v2026.4.11（稳定版）** 校对；`v2026.4.12-beta.1` 仅作预发布参考。第 1/2/5/7 章已补当前主线，第 10-15 章已增加高风险提示与新版入口，动手前请优先参考官方文档。
 
 ---
 
@@ -66,20 +68,20 @@ title: 首页
 
 ### 🔥 核心功能（实战）
 - 📁 [第4章：文件管理](docs/02-core-features/04-file-management.md) - 效率提升81%
-- 🧠 [第5章：知识库](docs/02-core-features/05-knowledge-management.md) - 第二大脑系统
+- 🧠 [第5章：知识库](docs/02-core-features/05-knowledge-management.md) - 第二大脑系统 + Active Memory / Dreaming 补充
 - 📅 [第6章：日程管理](docs/02-core-features/06-schedule-management.md) - AI自动创建日程
-- ⚙️ [第7章：自动化](docs/02-core-features/07-automation-workflow.md) - 24小时为你工作
+- ⚙️ [第7章：自动化](docs/02-core-features/07-automation-workflow.md) - 定时任务 + Task Flow / Webhooks 更新
 
 ### 💎 进阶技能（提升）
 - 🔌 [第8章：Skills扩展](docs/03-advanced/08-skills-extension.md) - 1800+技能
 - 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉/QQ/微信
-- 🔗 [第10章：API集成](docs/03-advanced/10-api-integration.md) - 绘图/视频/语音
+- 🔗 [第10章：API集成](docs/03-advanced/10-api-integration.md) - 官方 infer / 媒体生成主路线
 - ⚙️ [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md) - 性能优化
 
 ### 🎯 实战案例（直接套用）
 - 👔 [第12章：5类人群实战](docs/04-practical-cases/12-personal-productivity.md) - 效率提升85%
 - 🔗 [第13章：高级自动化](docs/04-practical-cases/13-advanced-automation.md) - ROI 9000%-15900%
-- 🎨 [第14章：创意应用](docs/04-practical-cases/14-creative-applications.md) - AI绘画/视频/翻译
+- 🎨 [第14章：创意应用](docs/04-practical-cases/14-creative-applications.md) - 以官方媒体能力与 ComfyUI 为主
 - 🚀 [第15章：超级个体](docs/04-practical-cases/15-solo-entrepreneur-cases.md) - 一人顶一个团队
 
 ### 📚 附录工具（速查）
@@ -188,20 +190,28 @@ openclaw gateway restart
 
 ---
 
-### 🆕 v2026.3.24 更新（2026年3月26日，当前最新）
+### 🆕 v2026.4.11 稳定版更新（2026年4月12日）
 
-**重要变更**
-- **Node.js 最低版本要求提升**：macOS 现在要求 Node >= 22.16.0（Linux/Windows 要求 >= 22.14.0），如安装失败请先检查 Node 版本
-- 多平台（Discord / Telegram / Slack / 飞书）频道稳定性修复
-- exec approvals 安全策略多处收紧
+**当前基线**
+- **稳定版**：`v2026.4.11`
+- **预发布参考**：`v2026.4.12-beta.1`（2026年4月13日）
+- **推荐运行时**：`Node 24`；如继续走兼容路径，建议至少 `Node 22.16+`
+
+**2026.4 主线变化**
+- **Active Memory**：回复前自动拉取相关偏好、上下文和历史细节
+- **Dreaming + Memory Wiki**：长期记忆、结构化 `claim/evidence`、矛盾/新鲜度管理成为主线能力
+- **Task Flow + Webhooks**：自动化从“定时任务”升级到“持久化流程 + 外部事件触发”
+- **`openclaw infer`**：统一 `model / image / audio / tts / video / web / embedding` CLI 入口
+- **内建媒体能力**：官方 `video_generate` / `music_generate` 与 `ComfyUI` provider/plugin 已可直接使用
+- **Control UI**：新增多语言与富内容 `[embed ...]` 展示能力
 
 **升级命令**：
 ```bash
-npm install -g openclaw@latest
-openclaw --version  # 确认版本为 2026.3.24
+npm install -g openclaw@2026.4.11
+openclaw --version  # 确认版本为 2026.4.11
 ```
 
-> ⚠️ **WSL/Linux 安装提示**：如升级后提示缺少 UI 资产，请确认 Node 版本 >= 22.14，然后重新执行 `npm install -g openclaw@latest`
+> ⚠️ **新手建议**：如果你的目标是“按教程稳定跑通”，优先使用 `v2026.4.11`。`v2026.4.12-beta.1` 适合尝鲜验证，不建议直接作为默认教程基线。
 
 ---
 
@@ -350,7 +360,7 @@ openclaw --version  # 确认版本为 2026.3.24
 ## 📈 项目进度
 
 - ✅ **v1.6**（2026-03-18）：新增一键部署教程（8个平台）
-- ✅ **v1.7**（2026-03-27）：同步 OpenClaw v2026.3.12 ~ v2026.3.24 版本更新内容，追加多版本重要提示
+- ✅ **v1.8**（2026-04-13）：同步 OpenClaw `v2026.4.11` 稳定版能力地图，补充记忆系统、Task Flow、Webhooks 与官方媒体主路线提示
 - ✅ **v1.9**（2026-04-04）：同步橙皮书 v1.3~v1.4 更新——ClawBot 改为微信官方插件（iLink 协议）、新增 Chrome DevTools 附着模式、Dashboard v2 详解、腾讯全家桶、GLM-5-Turbo、安全漏洞统计、Skills 数据更新（55内置/13,700+ ClawHub）
 - 🔄 **v1.8**（进行中）：优化内容质量，补充实战案例
 
@@ -375,7 +385,7 @@ openclaw --version  # 确认版本为 2026.3.24
 **最后更新**：2026年4月4日
 **教程版本**：v1.9
 **总字数**：408,000字（15章节 + 15附录）
-**适用OpenClaw版本**：2026.3.24（推荐最新版）
+**适用OpenClaw版本**：2026.4.11（稳定版） / 2026.4.12-beta.1（预发布参考）
 
 🎉 **教程已完成 | 支持续优化 | 完全免费** 🎉
 🚀 **一个人 + OpenClaw = 无限可能** 🚀

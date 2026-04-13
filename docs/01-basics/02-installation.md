@@ -4,6 +4,8 @@
 
 > 本章节将手把手教你安装 OpenClaw。
 
+> ⚠️ **当前基线**：截至 **2026-04-13**，本教程推荐使用 **OpenClaw v2026.4.11（稳定版）**；`v2026.4.12-beta.1` 仅作为预发布参考。运行时优先使用 **Node 24**。
+
 ![OpenClaw 安装界面](https://upload.maynor1024.live/file/1771085321300_installation-interface.png)
 
 
@@ -108,7 +110,7 @@ OpenClaw在Mac上体验最好，因为：
 - 推荐 macOS 14 Sonoma 或 macOS 15 Sequoia
 
 **前置软件**：
-- Node.js 22.0.0+（会自动安装）
+- Node.js 24（推荐）/ 22.16+（兼容路径，会自动安装）
 - Homebrew（可选，用于安装依赖）
 
 ### 安装步骤
@@ -143,7 +145,7 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 ```bash
 openclaw --version
 ```
-如果显示版本号（如 `2026.3.2`），说明安装成功！
+如果显示版本号（如 `2026.4.11`），说明安装成功！
 
 #### 第四步：初始化配置
 
@@ -296,7 +298,7 @@ openclaw uninstall
 - Windows 10 或 Windows 11
 
 **前置软件**：
-- Node.js 22.0.0+
+- Node.js 24（推荐）/ 22.16+（兼容路径）
 
 ### 部署方式选择
 
@@ -349,16 +351,16 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl git wget build-essential
 ```
 
-#### 第四步：安装Node.js 22+
+#### 第四步：安装Node.js 24（推荐）
 
 ```bash
 # 添加NodeSource仓库
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 
 # 安装Node.js
 sudo apt install -y nodejs
 
-# 验证版本（必须≥22.x）
+# 验证版本（推荐 v24.x）
 node -v
 npm -v
 ```
@@ -411,12 +413,12 @@ openclaw gateway run --port 18789
 
 适合不想使用WSL2的纯Windows用户。
 
-#### 第一步：安装Node.js 22+
+#### 第一步：安装Node.js 24（推荐）
 
 **方法一：官网下载安装**
 
 1. 访问 https://nodejs.org/zh-cn
-2. 下载Windows安装包（LTS版本22.x）
+2. 下载Windows安装包（推荐 24.x 版本）
 3. 运行安装程序，勾选「自动安装必要的工具」
 
 #### 第二步：验证Node.js安装
@@ -596,7 +598,7 @@ openclaw config set channels.feishu '{"enabled":true,"appId":"cli_xxx","appSecre
 
 ```bash
 # Ubuntu/Debian
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # 验证安装
@@ -744,7 +746,7 @@ openclaw onboard
    openclaw --version
    ```
    
-   如果显示版本号（如 `2026.3.2`），说明OpenClaw已预装成功。
+   如果显示版本号（如 `2026.4.11`），说明OpenClaw已预装成功。
 
 ![OpenClaw镜像](https://upload.maynor1024.live/file/1770742213992_02-openclaw-image.png)
 
@@ -1010,7 +1012,7 @@ openclaw onboard
 ### 前置要求
 
 **必需环境**：
-- Node.js 22.0.0+（必需）
+- Node.js 24（推荐）/ 22.16+（兼容路径）（必需）
 - pnpm（可选，推荐用于源码构建）
 
 **推荐配置**：
@@ -3123,11 +3125,13 @@ openclaw config set gateway.port 18790
 
 > 🔄 **保支持最新**：定期升级OpenClaw以获得新功能、性能优化和安全修复。
 
-> ⚠️ **重要提示**：目前推荐使用 **2026.3.2** 版本。2026.2.12 版本存在已知 bug（[Issue #15141](https://github.com/openclaw/openclaw/issues/15141)），会导致 heartbeat 和消息处理功能异常。
+> ⚠️ **重要提示**：目前推荐使用 **2026.4.11（稳定版）**。如果你只是想稳定跑通本教程，请不要直接把 `v2026.4.12-beta.1` 当默认基线。
+
+> 📝 **历史问题版本**：`2026.2.12` 存在已知 bug（[Issue #15141](https://github.com/openclaw/openclaw/issues/15141)），会导致 heartbeat 和消息处理功能异常。
 
 ### 推荐版本
 
-**当前推荐版本**：2026.3.2
+**当前推荐版本**：2026.4.11
 
 **已知访问题版本**：
 - ❌ 2026.2.12：Session 路径验证 bug，影响 heartbeat 和 Telegram/飞书消息处理
@@ -3202,13 +3206,13 @@ which openclaw  # 应该没有输出
 **第四步：安装新版本**
 
 ```bash
-# 安装推荐版本 2026.3.2（需要使用--force参数）
-npm install -g openclaw@2026.3.2 --force
+# 安装推荐版本 2026.4.11（需要使用--force参数）
+npm install -g openclaw@2026.4.11 --force
 ```
 > ⚠️ **版本选择说明**：  
-> - 推荐安装 2026.3.2 版本（稳定）
-> - 避免安装 2026.2.12 版本（存在 session 路径 bug）
-> - 如果需要最新功能，等待 2026.2.13+ 版本修复后再升级
+> - 教程默认按 `2026.4.11` 稳定版编写
+> - `2026.4.12-beta.1` 是预发布版，适合尝鲜和验证新能力
+> - 如果你只想稳定跑通教程，优先使用稳定版，不要把 beta 当默认基线
 
 > ⚠️ **为什么需要--force？**  
 > npm会检测到已存在的文件，使用`--force`强制覆盖。
@@ -3250,7 +3254,7 @@ openclaw channels status
 ```
 成功的输出应该显示：
 ```
-2026.3.2
+2026.4.11
 
 Runtime: running (pid xxxxx, state active)
 RPC probe: ok
@@ -3272,7 +3276,7 @@ Dashboard: http://127.0.0.1:18789/
 
 ![升级完成验证](https://upload.maynor1024.live/file/1770949103492_image-20260213101814142.png)
 
-*图：升级完成，版本更新到2026.3.2*
+*图：升级完成，版本更新到2026.4.11*
 
 ### 方式二：官方脚本升级
 
@@ -3370,7 +3374,7 @@ npm error EEXIST: file already exists
 **解决方案**：
 ```bash
 # 使用--force参数强制覆盖
-npm install -g openclaw@2026.3.2 --force
+npm install -g openclaw@2026.4.11 --force
 ```
 
 #### 访问题2：Gateway启动失败
@@ -3402,8 +3406,8 @@ current version is 2026.2.1-zh.3
 
 **解决方案**：
 ```bash
-# 升级到推荐版本 2026.3.2
-npm install -g openclaw@2026.3.2 --force
+# 升级到推荐版本 2026.4.11
+npm install -g openclaw@2026.4.11 --force
 openclaw doctor --fix
 ```
 
@@ -3508,7 +3512,7 @@ openclaw gateway restart
 
 1. **使用--force参数**：
    ```bash
-   npm install -g openclaw@2026.3.2 --force
+   npm install -g openclaw@2026.4.11 --force
    ```
 
 2. **运行doctor修复**：
@@ -3577,17 +3581,17 @@ openclaw gateway restart
 
 **解决方案**：
 1. **不要升级到 2026.2.12**
-2. **如果已升级，回退到 2026.3.2**：
+2. **如果已升级，回退到 2026.4.11**：
    ```bash
    openclaw gateway stop
    npm uninstall -g openclaw
-   npm install -g openclaw@2026.3.2 --force
+   npm install -g openclaw@2026.4.11 --force
    openclaw doctor --fix
    openclaw gateway restart
    ```
 
 **推荐做法**：
-- 使用 2026.3.2 版本（当前最稳定）
+- 使用 2026.4.11 版本（当前最稳定）
 - 等待 2026.2.13+ 版本修复后再升级
 - 关注官方 GitHub Issues 获取最新信息
 
@@ -3690,13 +3694,13 @@ curl -s https://api.github.com/repos/openclaw/openclaw/releases/latest
    - Discord社区
    - 飞书群组
 
-### 升级案例：2026.2.1-zh.3 → 2026.3.2
+### 升级案例：2026.2.1-zh.3 → 2026.4.11
 
 以下是一次真实的升级案例，供参考。
 
 **升级背景**：
 - 原版本：2026.2.1-zh.3（中文版）
-- 目标版本：2026.3.2（推荐稳定版）
+- 目标版本：2026.4.11（推荐稳定版）
 - 升级原因：获取新功能和性能优化
 
 **升级过程**：
@@ -3718,7 +3722,7 @@ curl -s https://api.github.com/repos/openclaw/openclaw/releases/latest
 
 4. **安装新版本**：
    ```bash
-   npm install -g openclaw@2026.3.2 --force
+   npm install -g openclaw@2026.4.11 --force
    ```
 
 5. **修复配置**：
@@ -3733,7 +3737,7 @@ curl -s https://api.github.com/repos/openclaw/openclaw/releases/latest
 
 7. **验证升级**：
    ```bash
-   openclaw --version  # 显示：2026.3.2
+   openclaw --version  # 显示：2026.4.11
    openclaw gateway status  # 显示：running
    ```
 

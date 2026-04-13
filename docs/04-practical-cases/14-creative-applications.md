@@ -24,6 +24,24 @@
 
 ## ~~🎯 本章节内内容~~
 
+## ✅ 2026.4+ 创意工作流先看这个
+
+> ⚠️ **高风险提醒**：本章正文很多案例仍依赖旧 Skill 名称或旧命令入口，适合作为思路参考，不适合直接复制执行。
+
+**当前更推荐的创意工作流入口**：
+- **画图**：`openclaw infer image generate` 或 Agent 调 `image_generate`
+- **视频**：`openclaw infer video generate` 或 Agent 调 `video_generate`
+- **音乐**：Agent 调 `music_generate`
+- **本地工作流**：`ComfyUI` 官方 provider/plugin
+- **模型示例**：OpenAI `sora-2`、Google `veo-3.1-fast-generate-preview`、ComfyUI workflow
+
+**使用建议**：
+1. 优先走官方媒体能力，再考虑第三方 Skill
+2. 如果你要手机端/聊天端直接使用，优先让 Agent 调工具，不要先手工拼旧命令
+3. 如果你要本地可控工作流，优先看 ComfyUI，而不是继续堆旧生态脚本
+
+---
+
 - ~~14.1 AI绘画工作流~~
 - ~~14.2 视频脚本生成~~
 - ~~14.3 多语言翻译助手~~
@@ -38,7 +56,7 @@
 
 **用户**：内内容创作者、设计师、自媒体运营、教程作者
 **需求**：快速生成配图、白板图、Logo设计、批量处理
-**工具**：Gemini图像生成、Banana Pro、Midjourney、Stable Diffusion
+**工具**：Gemini图像生成、官方 `image_generate`、ComfyUI、Midjourney、Stable Diffusion
 
 **痛点**：
 ❌ 手机无法使用：专业绘图工具只有网页版
@@ -60,7 +78,7 @@
 
 与传统绘图工具相比，Gemini有独特优势：
 
-| 特性 | Gemini | DALL-E 3 | Midjourney | Banana Pro |
+| 特性 | Gemini | DALL-E 3 | Midjourney | 第三方旧方案 |
 |------|--------|----------|------------|------------|
 | 集成方式 | Chat API | 专用API | Discord Bot | 网页 |
 | 成本 | 低（0.05-0.4元/张） | 中 | 高 | 中 |
@@ -79,73 +97,30 @@
 - ⚠️ 超写实人像（建议用Midjourney）
 - ⚠️ 艺术创作（建议用Midjourney）
 
-### 14.1.2 安装bananapro-image-gen Skill
+### 14.1.2 当前推荐：直接使用官方图像能力
 
-在开始使用之前，需要先安装绘图Skill。
+如果你的目标是 **2026.4+ 版本稳定跑通**，不建议再把 `bananapro-image-gen` 当默认主路线。推荐优先顺序：
 
-**方式1：从GitHub安装（推荐）**
+1. `openclaw infer image generate`
+2. 让 Agent 直接调用 `image_generate`
+3. 需要本地工作流或可视化编排时，再接 `ComfyUI`
 
-```bash
-# 克隆技能仓库
-git clone https://github.com/xianyu110/my-awesome-skills.git
-
-# 复制到OpenClaw的skills目附录
-cp -r my-awesome-skills/.claude/skills/bananapro-image-gen ~/.openclaw/skills/
-
-# 安装依赖
-cd ~/.openclaw/skills/bananapro-image-gen
-pip3 install -r requirements.txt
-```text
-**方式2：使用npx命令安装**
+**最短可用示例**：
 
 ```bash
-npx skills add https://github.com/xianyu110/my-awesome-skills --skill bananapro-image-gen
-```text
-**验证安装：**
+# 命令行直接出图
+openclaw infer image generate --prompt "一只赛博朋克风格的小龙虾，霓虹灯背景" --json
 
-```bash
-# 检查skill是否安装成功
-ls ~/.openclaw/skills/bananapro-image-gen
+# 如果你已经在聊天里使用 OpenClaw，也可以直接说：
+# “帮我生成一张赛博朋克风格的小龙虾插图”
+```
 
-# 应该看到以下文件：
-# SKILL.md - 完整文档
-# README.md - 快速开始
-# scripts/generate_image.py - 生成脚本
-# test.sh - 测试脚本
-# test_chapters.sh - 章节节测试脚本
-```text
-**配置API 密钥：**
+**适合继续往下看的场景**：
+- 想快速生成教程配图、白板图、封面图
+- 想在聊天端直接让 Agent 生成图片
+- 想后续再扩展到视频、音乐、本地 ComfyUI 工作流
 
-编辑OpenClaw 配置文件：
-
-```bash
-nano ~/.openclaw/openclaw.json
-```text
-添加以下配置：
-
-```json
-{
-  "api": {
-    "gemini": {
-      "apiKey": "your-api-key-here",
-      "baseUrl": "https://apipro.maynor1024.live",
-      "model": "gemini-3-pro-image-preview"
-    }
-  }
-}
-```text
-**获取API 密钥：**
-1. 访问中转API服务商（推荐使用支持Gemini的中转服务）
-2. 注册账号并充值（建议先充值10-20元测试）
-3. 获取API Key
-4. 配置到OpenClaw中
-
-**成本参考：**
-- 生成1张1K图片：约0.05-0.1元
-- 生成1张2K图片：约0.1-0.2元
-- 生成1张4K图片：约0.2-0.4元
-
-💡 **省钱技巧：** 日常使用1K分辨率即可，只有需要打印或高清展示时才用2K/4K。
+> ⚠️ **旧方案说明**：本章原来的 `bananapro-image-gen`、第三方中转 API、旧配置片段和旧截图，现在只建议作为历史参考，不再推荐作为默认教程路径。
 
 ### 14.1.3 手机上用OpenClaw画图
 
@@ -169,7 +144,7 @@ OpenClaw：好的，正在使用Gemini生成...
 • 风格：赛博朋克
 • 质量：高清
 • 尺寸：1024x1024
-• 模型：Banana Pro v3
+• 模型：官方图像能力 / 已配置 provider
 
 ⏳ 生成中...（预计30秒）
 
@@ -185,7 +160,7 @@ OpenClaw：好的，正在使用Gemini生成...
 
 已保存到：本地图片库
 已同步到：飞书相册
-```text
+```
 ![Banana绘画示例 - AI生成的艺术作品](https://upload.maynor1024.live/file/1770176324389_image_29.jpg)
 
 **语音修改图片**：
@@ -216,7 +191,7 @@ OpenClaw：好的，正在修改...
 • 调整了姿态更有气势
 
 满意吗？如果还需要调整，继续告诉我~
-```text
+```
 ![语音修改后的绘画 - 实时调整画面细节](https://upload.maynor1024.live/file/1770176332471_image_30.jpg)
 
 ### 14.1.4 实战案例：生成教程章节节总结图
@@ -232,11 +207,13 @@ OpenClaw：好的，正在修改...
 **实际操作：**
 
 ```bash
-# 使用提供的测试脚本
-cd ~/.openclaw/skills/bananapro-image-gen
-bash test_chapters.sh
-```text
-**脚本会自动生成4张示例图片：**
+# 更推荐的做法：按章节依次调用官方图像入口
+openclaw infer image generate --prompt "生成一张白板图片，手写字体风格，总结 OpenClaw 第1章节核心要点" --json
+```
+
+> ⚠️ **说明**：这里原来使用的是 `bananapro-image-gen` 自带测试脚本。现在更建议直接用官方图像入口，方便后续迁移到 Agent 工作流或 ComfyUI。
+
+**下面继续沿用旧案例的提示词思路作为参考：**
 
 **示例1：第1章节总结（OpenAI格式）**
 
@@ -270,7 +247,7 @@ ChatGPT Plus: 140元/月
 省钱70%！
 
 用手写字体，添加箭头、框图、下划线等手绘元素
-```text
+```
 生成结果：
 - 文件名：`test_output/chapters/chapter1_summary.png`
 - 分辨率：1K
@@ -307,7 +284,7 @@ ChatGPT Plus: 140元/月
 用户消息 → Gateway → OpenClaw Core → Skills → 返回结果
 
 用手写字体，添加框图、箭头、图标等手绘元素
-```text
+```
 生成结果：
 - 文件名：`test_output/chapters/architecture.png`
 - 分辨率：2K（高清）
@@ -340,7 +317,7 @@ API配置：
 • 中转API：一个地址访问300+模型
 
 用手写字体，添加对比表格、箭头、图标
-```text
+```
 **示例4：第3章节人设配置**
 
 提示词：
@@ -373,7 +350,7 @@ USER.md：你的信息和偏好
 配置后：懂你的伙伴
 
 用手写字体，添加文件夹图标、箭头、对比框
-```text
+```
 **效果数据：**
 
 | 指标 | 手动绘制 | AI生成 | 提升 |
@@ -397,7 +374,7 @@ USER.md：你的信息和偏好
 • 多次尝试：可能需要生成2-3次选最好的
 • 人工审核：生成后需要检查内内容准确性
 • 格式调整：可能需要微调尺寸和格式
-```text
+```
 **命令行批量生成：**
 
 如果你需要为整本教程生成配图，可以创建批量脚本：
@@ -420,17 +397,17 @@ for chapter in "${chapters[@]}"; do
     
     echo "生成 ${num} - ${title}"
     
-    python3 scripts/generate_image.py \
+    openclaw infer image generate \
         --prompt "生成一张白板图片，手写字体风格，总结${title}的核心要点..." \
-        --filename "output/${num}_summary.png" \
-        --api-format openai
+        --api-format openai \
+        --json
     
     echo "✅ ${num} 完成"
     sleep 2  # 避免API限流
 done
 
 echo "🎉 所有章节节配图生成完成！"
-```text
+```
 **查看生成的图片：**
 
 ```bash
@@ -445,7 +422,7 @@ ls -lh test_output/chapters/
 
 # 在macOS上打开查看
 open test_output/chapters/
-```text
+```
 ### 14.1.5 更多AI绘画Skills推荐
 
 根据ClawHub技能市场，以下是推荐的AI绘画相关Skills：
@@ -460,7 +437,7 @@ npx clawhub@latest install fal-ai
 • 视频生成
 • 音频生成
 • 支持多种模型
-```text
+```
 **2. nvidia-image-gen - NVIDIA FLUX模型**
 ```bash
 # 安装
@@ -470,7 +447,7 @@ npx clawhub@latest install nvidia-image-gen
 • 使用NVIDIA FLUX模型
 • 高质量图像生成
 • 支持图像编辑
-```text
+```
 **3. pollinations - 多模态生成**
 ```bash
 # 安装
@@ -481,7 +458,7 @@ npx clawhub@latest install pollinations
 • 图像生成
 • 视频生成
 • 完全免费
-```text
+```
 **4. venice-ai - 图像视频一体化**
 ```bash
 # 安装
@@ -491,7 +468,7 @@ npx clawhub@latest install venice-ai
 • 图像生成、编辑、放大
 • 从图像创建视频
 • 多种风格支持
-```text
+```
 **5. recraft - 专业设计工具**
 ```bash
 # 安装
@@ -502,7 +479,7 @@ npx clawhub@latest install recraft
 • 矢量化
 • 图像放大
 • 背景替换
-```text
+```
 ### 14.1.6 批量生成配图实战
 
 ```
@@ -537,7 +514,7 @@ OpenClaw：好的，正在处理...
 • 3D渲染风格
 
 需要尝试其他风格吗？
-```text
+```
 **批量风格转换**：
 
 ```
@@ -581,31 +558,29 @@ OpenClaw：好的，正在批量处理...
 • 失败：0张
 • 总耗时：4分32秒
 • 平均每张：27秒
-```text
+```
 ### 14.1.5 配置方法
 
 ```bash
-# 1. 安装Banana Pro Skills
-clawhub install banana-pro
-openclaw config set banana.api-key "YOUR_API_KEY"
+# 1. 先完成模型配置
+openclaw onboard
 
-# 2. 配置Gemini API（Banana Pro需要）
-openclaw config set gemini.api-key "YOUR_GEMINI_KEY"
-openclaw config set gemini.model "gemini-2.0-flash-exp"
+# 2. 验证模型是否可用
+openclaw models list
 
-# 3. 配置图片保存
-openclaw config set image.save-path "~/Pictures/OpenClaw"
-openclaw config set image.auto-sync true
-openclaw config set image.sync-to "feishu,notion"
+# 3. 直接测试官方图像入口
+openclaw infer image generate --prompt "一张适合教程封面的白板风格插图" --json
 
-# 4. 配置批量处理
-openclaw config set image.batch-size 10
-openclaw config set image.parallel-tasks 3
+# 4. 如果需要本地工作流，再配置 ComfyUI
+# 具体可参考官方 ComfyUI provider/plugin 文档
+```
+
+> ⚠️ **执行建议**：不要再把第三方旧 Skill 的 API Key、旧配置字段和旧安装方式当作默认起点。先让官方图像入口稳定跑通，再决定是否扩展到其他生态。
 
 # 5. 配置提示词优化
 openclaw config set image.prompt-enhance true
 openclaw config set image.prompt-language "en"
-```text
+```
 ### 14.1.6 效率提升数据
 
 **使用前后对比**：
@@ -626,7 +601,7 @@ openclaw config set image.prompt-language "en"
 • 使用后：20张 × 0.5分钟 = 10分钟
 • 每周节省：90分钟
 • 每月节省：360分钟 ≈ 6小时
-```text
+```
 ---
 
 ## ~~14.2 视频脚本生成~~
@@ -643,14 +618,14 @@ openclaw config set image.prompt-language "en"
 ❌ 脚本耗时：写脚本要几小时
 ❌ 结构混乱：不知道怎么组织内内容
 ❌ 缺少亮点：内内容平淡无奇
-```text
+```
 ~~**目标**：~~
 ```
 ✅ 快速生成脚本
 ✅ 结构清晰完整
 ✅ 内内容有吸引力
 ✅ 批量生产内内容
-```text
+```
 ### ~~14.2.2 短视频脚本生成~~
 
 ~~**场景：生成抖音短视频脚本**~~
@@ -739,7 +714,7 @@ OpenClaw：好的，正在生成...
 
 📝 文案已保存
 🎬 脚本已导出为PDF
-```text
+```
 ### ~~14.2.3 长视频脚本生成~~
 
 ~~**场景：生成B站长视频脚本**~~
@@ -910,7 +885,7 @@ OpenClaw：好的，正在生成...
 📝 文案已保存
 🎬 脚本已导出为Word文档
 📊 已生成分镜头脚本
-```text
+```
 ### ~~14.2.4 批量生成系列脚本~~
 
 ~~**场景：生成系列视频脚本**~~
@@ -1014,7 +989,7 @@ OpenClaw：好的，正在规划...
 第9期：AI绘画工作流
 • 时长：15分钟
 • 内内容：
-  - Banana Pro集成
+  - 官方图像能力 / ComfyUI 工作流
   - 手机上画图
   - 批量生成配图
   - 风格转换技巧
@@ -1050,96 +1025,33 @@ OpenClaw：好的，正在规划...
 • 素材准备清单
 
 需要我生成某一期的详细脚本吗？
-```text
-### ~~14.2.5 更多视频创作Skills推荐~~
+```
+### 14.2.5 2026.4+ 视频生成主路线（推荐）
 
-~~根据ClawHub技能市场，以下是推荐的视频创作相关Skills：~~
+不再建议把 `video-agent`、`sora-video-gen`、`veo3-video-gen` 这类旧 Skill 当作默认教程入口。现在更推荐：
 
-~~**1. video-agent - HeyGen视频生成**~~
-```bash
-# 安装
-npx clawhub@latest install video-agent
+- **CLI 直连**：`openclaw infer video generate`
+- **聊天工作流**：让 Agent 直接调用 `video_generate`
+- **默认视频模型**：根据 provider 选择 `openai/sora-2` 或 `google/veo-3.1-fast-generate-preview`
+- **本地/工作流编排**：使用 `ComfyUI` provider/plugin
 
-# 功能
-• 使用HeyGen API生成AI头像视频
-• 支持多种语言
-• 专业级视频质量
-```text
-~~**2. sora-video-gen - OpenAI Sora**~~
-```bash
-# 安装
-npx clawhub@latest install sora-video-gen
-
-# 功能
-• 使用OpenAI Sora API
-• 文本生成视频
-• 高质量视频输出
-```text
-~~**3. veo3-video-gen - Google Veo**~~
-```bash
-# 安装
-npx clawhub@latest install veo3-video-gen
-
-# 功能
-• 使用Google Veo 3.x
-• 生成和拼接短视频
-• 支持多种风格
-```text
-~~**4. tube-cog - YouTube内内容创作**~~
-```bash
-# 安装
-npx clawhub@latest install tube-cog
-
-# 功能
-• YouTube内内容创作
-• 由CellCog提供支持
-• 完整视频制作流程
-```text
-~~**5. video-cog - 长篇视频制作**~~
-```bash
-# 安装
-npx clawhub@latest install video-cog
-
-# 功能
-• 长篇AI视频制作
-• 多智能体协作
-• 专业级视频输出
-```text
-~~**6. youtube-title-generator - 标题生成**~~
-```bash
-# 安装
-npx clawhub@latest install youtube-title-generator
-
-# 功能
-• 生成吸引人的YouTube标题
-• 基于内内容分析
-• 提高点击率
-```text
-### ~~14.2.6 配置方法~~
+**推荐示例**：
 
 ```bash
-# 1. 配置脚本生成
-openclaw config set script.platform "douyin,bilibili"
-openclaw config set script.style "professional"
+# 直接生成视频
+openclaw infer video generate --prompt "赛博朋克城市夜景，镜头缓慢推进" --json
 
-# 2. 配置内内容优化
-openclaw config set script.optimize true
-openclaw config set script.add-hooks true
+# 设置默认视频模型（二选一）
+openclaw config set agents.defaults.videoGenerationModel.primary "openai/sora-2"
+openclaw config set agents.defaults.videoGenerationModel.primary "google/veo-3.1-fast-generate-preview"
+```
 
-# 3. 配置批量生成
-openclaw config set script.batch-mode true
-openclaw config set script.series-planning true
-```text
-### ~~14.2.6 效率提升数据~~
+**什么时候还需要回头看旧生态**：
+- 你必须兼容历史脚本或历史项目
+- 你在验证某个第三方 Skill 是否还维护
+- 你清楚知道该 Skill 的 provider、安装方式、命令入口都仍然可用
 
-|~~ 任务类型 ~~|~~ 使用前 ~~|~~ 使用后 ~~|~~ 节省时间 ~~|~~ 提升比例 ~~|
-|---------|--------|--------|----------|----------|
-|~~ 短视频脚本 ~~|~~ 60分钟 ~~|~~ 5分钟 ~~|~~ 55分钟 ~~|~~ 91.7% ~~|
-|~~ 长视频脚本 ~~|~~ 180分钟 ~~|~~ 15分钟 ~~|~~ 165分钟 ~~|~~ 91.7% ~~|
-|~~ 系列规划 ~~|~~ 300分钟 ~~|~~ 20分钟 ~~|~~ 280分钟 ~~|~~ 93.3% ~~|
-|~~ **平均** ~~|~~ **540分钟** ~~|~~ **40分钟** ~~|~~ **500分钟** ~~|~~ **92.6%** ~~|
-
----
+> ⚠️ **执行提醒**：如果你只是想稳定跑通创意工作流，请优先走官方主路线，不要先从旧 Skill 安装清单开始。
 
 ## 14.3 多语言翻译助手
 
@@ -1155,14 +1067,14 @@ openclaw config set script.series-planning true
 ❌ 术语不统一：专业术语翻译混乱
 ❌ 格式丢失：翻译后格式乱了
 ❌ 效率低下：一段一段复制粘贴
-```text
+```
 **目标**：
 ```
 ✅ 准确翻译
 ✅ 术语统一
 ✅ 保支持格式
 ✅ 批量处理
-```text
+```
 ### 14.3.2 文档翻译
 
 **场景：翻译技术文档**
@@ -1226,7 +1138,7 @@ personal settings and other functions...
 • 术语对照表.xlsx
 
 需要我发布送给美国团队吗？
-```text
+```
 ### 14.3.3 实时对话翻译
 
 **场景：跨国会议实时翻译**
@@ -1278,7 +1190,7 @@ Regarding the timeline, we plan to complete the first phase next month...
 • 完整翻译记附录已保存
 • 术语库已更新
 • 会议纪要已生成（中英双语）
-```text
+```
 ### 14.3.4 批量翻译
 
 **场景：批量翻译产品文档**
@@ -1344,7 +1256,7 @@ OpenClaw：好的，正在批量翻译...
 
 📦 下载链接：
 • 产品文档_多语言版.zip
-```text
+```
 ### 14.3.5 更多翻译Skills推荐
 
 根据ClawHub技能市场，以下是推荐的翻译相关Skills：
@@ -1359,7 +1271,7 @@ npx clawhub@latest install translator
 • 实时翻译
 • 文档翻译
 • 术语库管理
-```text
+```
 **2. straker-verify - 专业翻译**
 ```bash
 # 安装
@@ -1369,7 +1281,7 @@ npx clawhub@latest install straker-verify
 • 专业AI驱动翻译
 • 可选人工审核
 • 高质量保证
-```text
+```
 **3. japanese-translation-and-tutor - 日英翻译**
 ```bash
 # 安装
@@ -1379,7 +1291,7 @@ npx clawhub@latest install japanese-translation-and-tutor
 • 日英双向翻译
 • 日语学习辅导
 • 文化背景解释
-```text
+```
 **4. lyric-translator - 歌词翻译**
 ```bash
 # 安装
@@ -1389,7 +1301,7 @@ npx clawhub@latest install lyric-translator
 • 将印尼歌曲歌词翻译成英语
 • 保支持韵律和意境
 • 自然流畅的翻译
-```text
+```
 **5. tamil-whatsapp - 泰米尔语处理**
 ```bash
 # 安装
@@ -1399,7 +1311,7 @@ npx clawhub@latest install tamil-whatsapp
 • 处理WhatsApp上的泰米尔语消息
 • 音译支持
 • 实时翻译
-```text
+```
 **6. language-learning - 语言学习助手**
 ```bash
 # 安装
@@ -1409,7 +1321,7 @@ npx clawhub@latest install language-learning
 • AI语言导师
 • 学习任何语言
 • 个性化学习计划
-```text
+```
 ### 14.3.6 配置方法
 
 ```bash
@@ -1429,7 +1341,7 @@ openclaw config set translate.parallel-tasks 3
 # 4. 配置格式保留
 openclaw config set translate.keep-format true
 openclaw config set translate.keep-links true
-```text
+```
 ### 14.3.6 效率提升数据
 
 | 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
@@ -1455,14 +1367,14 @@ openclaw config set translate.keep-links true
 ❌ 图表制作繁琐：一个一个调整
 ❌ 报告撰写累：每周都要写
 ❌ 重复劳动多：每次都是相同流程
-```text
+```
 ~~**目标**：~~
 ```
 ✅ 自动清洗数据
 ✅ 快速生成图表
 ✅ 自动生成报告
 ✅ 一键完成分析
-```text
+```
 ### ~~14.4.2 数据清洗~~
 
 ~~**场景：清洗销售数据**~~
@@ -1525,7 +1437,7 @@ OpenClaw：好的，正在分析数据...
 • 使用前：85%
 • 使用后：98%
 • 提升：+13%
-```text
+```
 ### ~~14.4.3 数据可视化~~
 
 ~~**场景：生成销售分析图表**~~
@@ -1594,7 +1506,7 @@ OpenClaw：好的，正在分析...
 • 重点开发布西部市场
 • 优化产品结构
 • 建立客户分级管理体系
-```text
+```
 ### ~~14.4.4 自动生成报告~~
 
 ~~**场景：生成周报**~~
@@ -1708,7 +1620,7 @@ OpenClaw：好的，正在生成...
 To: 销售团队全体成员
 Subject: 【销售周报】2026-02-03 至 2026-02-09
 Attachment: 销售周报.pdf
-```text
+```
 ### 14.4.5 更多数据分析Skills推荐
 
 根据ClawHub技能市场，以下是推荐的数据分析相关Skills：
@@ -1723,7 +1635,7 @@ npx clawhub@latest install data-analyst
 • 报告生成
 • SQL查询
 • 电子表格分析
-```text
+```
 **2. senior-data-scientist - 高级数据科学**
 ```bash
 # 安装
@@ -1734,7 +1646,7 @@ npx clawhub@latest install senior-data-scientist
 • 机器学习模型
 • 统计分析
 • 预测建模
-```text
+```
 **3. senior-data-engineer - 数据工程**
 ```bash
 # 安装
@@ -1745,7 +1657,7 @@ npx clawhub@latest install senior-data-engineer
 • ETL流程设计
 • 数据仓库管理
 • 性能优化
-```text
+```
 **4. csv-pipeline - CSV数据处理**
 ```bash
 # 安装
@@ -1756,7 +1668,7 @@ npx clawhub@latest install csv-pipeline
 • 数据转换
 • 数据分析
 • 报告生成
-```text
+```
 **5. duckdb-en - DuckDB分析**
 ```bash
 # 安装
@@ -1767,7 +1679,7 @@ npx clawhub@latest install duckdb-en
 • SQL分析
 • 数据处理
 • 高性能查询
-```text
+```
 **6. google-analytics-api - GA4分析**
 ```bash
 # 安装
@@ -1778,7 +1690,7 @@ npx clawhub@latest install google-analytics-api
 • 托管认证
 • 数据查询
 • 报告生成
-```text
+```
 **7. supabase - 数据库操作**
 ```bash
 # 安装
@@ -1789,7 +1701,7 @@ npx clawhub@latest install supabase
 • 数据库操作
 • 向量搜索
 • 存储管理
-```text
+```
 **8. excel - Excel处理**
 ```bash
 # 安装
@@ -1800,7 +1712,7 @@ npx clawhub@latest install excel
 • 格式化
 • 公式计算
 • 数据分析
-```text
+```
 **9. data-lineage-tracker - 数据血缘追踪**
 ```bash
 # 安装
@@ -1810,7 +1722,7 @@ npx clawhub@latest install data-lineage-tracker
 • 跟踪数据来源
 • 转换记附录
 • 数据质量监控
-```text
+```
 ### 14.4.6 配置方法
 
 ```bash
@@ -1830,7 +1742,7 @@ openclaw schedule add "weekly-report" \
 # 4. 配置数据源
 openclaw config set data.source "sales_system"
 openclaw config set data.auto-sync true
-```text
+```
 ### 14.4.6 效率提升数据
 
 | 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
@@ -1856,7 +1768,7 @@ openclaw config set data.auto-sync true
 
 每周节省：635分钟 ≈ 10.6小时
 每月节省：42.4小时 ≈ 5.3个工作日
-```text
+```
 ### 14.5.3 进阶使用：多轮深度讨论
 
 **场景：AI时代的一人公司战略规划**
@@ -1874,7 +1786,7 @@ openclaw config set data.auto-sync true
     - 凯文·凯利（科技思想家）
     
     讨论轮次：3轮
-```text
+```
 **完整讨论过程**（由于篇幅限制，这里展示核心要点）：
 
 **第1轮：访问题本质探讨**
@@ -1917,7 +1829,7 @@ openclaw config set data.auto-sync true
    • AI自动化：90%重复工作
    • 流程优化：标准化服务
    • 工具矩阵：OpenClaw + 专业AI
-```text
+```
 ![多Agent深度讨论 - 不同视角的思维碰撞](https://upload.maynor1024.live/file/1770782774452_image_31.jpg)
 
 ### 14.5.4 配置方法
@@ -1949,7 +1861,7 @@ openclaw config set multi-agent.rules '{
   "max-participants": 10,
   "auto-summary": true
 }'
-```text
+```
 ### 14.5.5 使用技巧
 
 **技巧1：选择合适的专家**
@@ -1963,7 +1875,7 @@ openclaw config set multi-agent.rules '{
 • 相同领域的专家
 • 重复的视角
 • 无关的背景
-```text
+```
 **技巧2：设计好的访问题**
 ```
 ✅ 好的访问题：
@@ -1975,7 +1887,7 @@ openclaw config set multi-agent.rules '{
 • 封闭性：只有是非答案
 • 模糊性：没有明确目标
 • 简单性：不需要讨论
-```text
+```
 **技巧3：控制讨论节奏**
 ```
 建议轮次：
@@ -1987,7 +1899,7 @@ openclaw config set multi-agent.rules '{
 • 快速讨论：5分钟
 • 常规讨论：10分钟
 • 深度讨论：15-20分钟
-```text
+```
 ### 14.5.6 应用场景
 
 **场景1：战略规划**
@@ -2040,7 +1952,7 @@ openclaw config set multi-agent.rules '{
 • 客观理性：减少主观偏见
 
 质量提升：+40%
-```text
+```
 **成本效益分析**：
 ```
 传统方式：
@@ -2055,7 +1967,7 @@ openclaw config set multi-agent.rules '{
 • 总成本：$5
 
 ROI：($5,500 - $5) / $5 = 109,900%
-```text
+```
 ### 14.5.8 注意事项
 
 **1. AI的局限性**
@@ -2065,7 +1977,7 @@ ROI：($5,500 - $5) / $5 = 109,900%
 • 复杂决策需要人工审核
 • 关键决策需要多方验证
 • 法律合规需要专业咨询
-```text
+```
 **2. 讨论质量控制**
 ```
 ✅ 提升质量：
@@ -2074,7 +1986,7 @@ ROI：($5,500 - $5) / $5 = 109,900%
 • 设计好的访问题
 • 引导讨论方向
 • 及时总结归纳
-```text
+```
 **3. 成本控制**
 ```
 💰 节省成本：
@@ -2082,7 +1994,7 @@ ROI：($5,500 - $5) / $5 = 109,900%
 • 控制讨论轮次
 • 避免重复讨论
 • 复用讨论结果
-```text
+```
 ### 14.5.9 最佳实践
 
 **实践1：定期头脑风暴**
@@ -2091,7 +2003,7 @@ ROI：($5,500 - $5) / $5 = 109,900%
 openclaw schedule add "weekly-strategy" \
   --time "Mon 10:00" \
   --prompt "组织战略讨论会，回顾上周，规划本周"
-```text
+```
 **实践2：重大决策前讨论**
 ```
 重大决策前，先进行多Agent讨论：
@@ -2099,7 +2011,7 @@ openclaw schedule add "weekly-strategy" \
 • 分析利弊得失
 • 评估风险机会
 • 制定行动方案
-```text
+```
 **实践3：讨论结果归档**
 ```bash
 # 自动归档讨论结果
@@ -2111,7 +2023,7 @@ openclaw config set brainstorm.mindmap true
 
 # 自动同步到知识库
 openclaw config set brainstorm.sync-to "notion,feishu"
-```text
+```
 ### 14.5.10 总结
 
 多Agent头脑风暴是OpenClaw最具创意的功能之一：
@@ -2123,7 +2035,7 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 ✅ 高效决策：快速达成共识
 ✅ 完整记附录：自动生成文档
 ✅ 成本低廉：远低于真人专家
-```text
+```
 **使用建议**：
 ```
 1. 选择合适的专家角色
@@ -2131,7 +2043,7 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 3. 控制讨论轮次和时间
 4. 及时总结和归档
 5. 结合人工判断
-```text
+```
 通过多Agent头脑风暴，你可以：
 - 在30分钟内完成传统需要8小时的讨论
 - 获得5-10个专家的多元视角
@@ -2166,7 +2078,7 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 ~~✅ 提升创作效率~~
 ~~✅ 激发布创意灵感~~
 ~~✅ 批量生产内内容~~
-```text
+```
 **2. 多场景适用**
 ```
 ~~✅ 内内容创作~~
@@ -2174,21 +2086,21 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 ~~✅ 跨国协作~~
 ~~✅ 数据分析~~
 ~~✅ 战略决策~~
-```text
+```
 **3. 智能化处理**
 ```
 ~~✅ AI优化提示词~~
 ~~✅ 自动格式保留~~
 ~~✅ 智能质量检查~~
 ~~✅ 批量自动处理~~
-```text
+```
 **4. 成本效益显著**
 ```
 ~~✅ 节省人力成本~~
 ~~✅ 提升产出质量~~
 ~~✅ 缩短制作周期~~
 ~~✅ 降低试错成本~~
-```text
+```
 ### 成功关键
 
 1. **选对工具**：根据需求选择合适的Skills
@@ -2218,7 +2130,7 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 ✅ 访问题解决：复杂访问题分析
 ✅ 创意生成：营销方案策划
 ✅ 决策支持：重大决策讨论
-```text
+```
 **优势**：
 ```
 ✅ 多视角分析：避免思维盲区
@@ -2226,7 +2138,7 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 ✅ 完整记附录：自动生成会议纪要
 ✅ 成本低廉：无需真人专家
 ✅ 可重复执行：多次迭代优化
-```text
+```
 ### 14.5.2 基础使用：简单头脑风暴
 
 **场景：产品命名讨论**
@@ -2387,7 +2299,7 @@ Logo设计方向：
 • 行动计划.xlsx
 
 已推送到飞书 ✅
-```text
+```
 ![多Agent协作示例 - 团队式访问题解决](https://upload.maynor1024.live/file/1770782773075_image_30.jpg)
 
 ---
@@ -2402,226 +2314,27 @@ Logo设计方向：
 
 ---
 
-## ~~📦 本章节Skills完整安装指南~~
+## ✅ 2026.4+ 创意能力清单（推荐）
 
-### ~~一键安装所有创意Skills~~
+本章末尾原来的“批量安装创意 Skills”清单已经不适合作为默认路径。当前更建议按能力分类来使用 OpenClaw：
 
-```bash
-# AI绘画工作流 Skills
-npx clawhub@latest install fal-ai
-npx clawhub@latest install nvidia-image-gen
-npx clawhub@latest install pollinations
-npx clawhub@latest install venice-ai
-npx clawhub@latest install recraft
+- **画图**：`openclaw infer image generate` / Agent 调 `image_generate`
+- **视频**：`openclaw infer video generate` / Agent 调 `video_generate`
+- **音乐**：Agent 调 `music_generate`
+- **本地工作流**：`ComfyUI` provider/plugin
+- **翻译与数据处理**：按具体场景再选择第三方 Skill，不建议先批量安装一整套旧生态包
 
-# 视频脚本生成 Skills
-npx clawhub@latest install video-agent
-npx clawhub@latest install sora-video-gen
-npx clawhub@latest install veo3-video-gen
-npx clawhub@latest install tube-cog
-npx clawhub@latest install video-cog
-npx clawhub@latest install youtube-title-generator
+**排查顺序**：
+1. 先确认版本：`openclaw --version`
+2. 再确认模型：`openclaw models list`
+3. 先试官方入口：`openclaw infer ...`
+4. 需要流程化时，再看 `Task Flow` / `Webhooks` / `ComfyUI`
 
-# 多语言翻译 Skills
-npx clawhub@latest install translator
-npx clawhub@latest install straker-verify
-npx clawhub@latest install japanese-translation-and-tutor
-npx clawhub@latest install language-learning
-
-# 数据分析自动化 Skills
-npx clawhub@latest install data-analyst
-npx clawhub@latest install senior-data-scientist
-npx clawhub@latest install senior-data-engineer
-npx clawhub@latest install csv-pipeline
-npx clawhub@latest install duckdb-en
-npx clawhub@latest install google-analytics-api
-npx clawhub@latest install supabase
-npx clawhub@latest install excel
-
-# 多Agent头脑风暴（内置功能，无需安装）
-```text
-### ~~分场景安装建议~~
-
-~~**场景1：内内容创作者**~~
-```bash
-npx clawhub@latest install fal-ai
-npx clawhub@latest install video-agent
-npx clawhub@latest install translator
-```text
-~~**场景2：视频UP主**~~
-```bash
-npx clawhub@latest install video-agent
-npx clawhub@latest install tube-cog
-npx clawhub@latest install youtube-title-generator
-```text
-~~**场景3：跨国团队**~~
-```bash
-npx clawhub@latest install translator
-npx clawhub@latest install straker-verify
-npx clawhub@latest install language-learning
-```text
-~~**场景4：数据分析师**~~
-```bash
-npx clawhub@latest install data-analyst
-npx clawhub@latest install csv-pipeline
-npx clawhub@latest install excel
-npx clawhub@latest install google-analytics-api
-```text
-~~**场景5：创业者/管理者**~~
-```bash
-npx clawhub@latest install fal-ai
-npx clawhub@latest install video-agent
-npx clawhub@latest install translator
-npx clawhub@latest install data-analyst
-```text
-### ~~配置优先级~~
-
-~~**必装Skills（优先级：⭐⭐⭐⭐⭐）**~~
-- ~~translator - 翻译助手~~
-- ~~data-analyst - 数据分析~~
-- ~~fal-ai - AI绘画~~
-
-~~**推荐Skills（优先级：⭐⭐⭐⭐）**~~
-- ~~video-agent - 视频生成~~
-- ~~excel - Excel处理~~
-- ~~csv-pipeline - CSV处理~~
-
-~~**可选Skills（优先级：⭐⭐⭐）**~~
-- ~~根据具体需求选择安装~~
-
-### ~~成本预算参考~~
-
-~~**月度成本估算**：~~
-
-|~~ 使用场景 ~~|~~ Skills组合 ~~|~~ API成本 ~~|~~ 总成本 ~~|
-|---------|-----------|---------|--------|
-|~~ 轻度使用 ~~|~~ 基础3个 ~~|~~ $5-10 ~~|~~ $5-10 ~~|
-|~~ 中度使用 ~~|~~ 推荐6个 ~~|~~ $20-50 ~~|~~ $20-50 ~~|
-|~~ 重度使用 ~~|~~ 全部安装 ~~|~~ $50-100 ~~|~~ $50-100 ~~|
-
-~~**成本优化建议**：~~
-```
-✅ 使用国产模型（DeepSeek、Kimi）
-✅ 批量处理任务
-✅ 复用生成结果
-✅ 设置Token限制
-✅ 选择合适的分辨率/质量
-```text
-### ~~常见访问题~~
-
-~~**Q1：Skills 安装失败怎么怎么办？**~~
-```bash
-# 检查网络连接
-ping github.com
-
-# 使用国内镜像
-npm config set registry https://registry.npmmirror.com
-
-# 重试安装
-npx clawhub@latest install <skill-name>
-```text
-~~**Q2：Skills加载失败怎么怎么办？**~~
-```bash
-# 查看Skills列表
-openclaw skills list
-
-# 检查Skills状态
-openclaw skills check
-
-# 重启OpenClaw
-openclaw restart
-```text
-~~**Q3：API调用失败怎么怎么办？**~~
-```bash
-# 检查API配置
-openclaw config get api
-
-# 测试API连接
-openclaw api test
-
-# 查看错误日志
-openclaw logs --limit 50
-```text
-~~**Q4：如何更新Skills？**~~
-```bash
-# 更新单个Skill
-npx clawhub@latest update <skill-name>
-
-# 更新所有Skills
-npx clawhub@latest update --all
-
-# 查看可更新的Skills
-npx clawhub@latest list --outdated
-```text
-### ~~最佳实践~~
-
-~~**1. 渐进式安装**~~
-```
-第1周：安装基础Skills，熟悉使用
-第2周：根据需求添加专业Skills
-第3周：优化配置，提升效率
-第4周：建立自动化工作流
-```text
-~~**2. 定期维护**~~
-```bash
-# 每周检查更新
-npx clawhub@latest list --outdated
-
-# 定期检查Skills状态
-openclaw skills check
-
-# 每季度备份配置
-openclaw backup create
-```text
-~~**3. 性能优化**~~
-```bash
-# 只加载需要的Skills
-openclaw config set skills.lazy-load true
-
-# 设置并发布限制
-openclaw config set skills.max-concurrent 3
-
-# 启用缓存
-openclaw config set skills.cache.enabled true
-```text
-### ~~进阶技巧~~
-
-~~**技巧1：创建Skills组合**~~
-~~**技巧1：使用配置文件管理Skills**~~
-```bash
-# 创建内内容创作配置
-cat > ~/.openclaw/profiles/content-creation.json <<EOF
-{
-  "skills": ["fal-ai", "video-agent", "translator"],
-  "description": "内内容创作工具集"
-}
-EOF
-```
-
-~~**技巧2：自定义快捷命令**~~
-```bash
-# 创建快捷命令
-openclaw alias create "画图" "使用fal-ai生成图片"
-openclaw alias create "翻译" "使用translator翻译"
-openclaw alias create "分析" "使用data-analyst分析数据"
-```text
-~~**技巧3：批量操作**~~
-```bash
-# 批量生成图片
-openclaw batch run "fal-ai" \
-  --input "prompts.txt" \
-  --output "images/"
-
-# 批量翻译文档
-openclaw batch run "translator" \
-  --input "docs/" \
-  --output "translated/"
-```
+> ⚠️ **结论**：旧的创意 Skill 清单可以保留作历史参考，但不应继续作为“默认推荐安装方案”。
 
 ---
 
 **下一章节预告**：第15章节将学习常见访问题与解决方案，包括安装配置、API连接、Skills加载和性能优化等访问题的完整解决方案。
-
 
 ---
 
