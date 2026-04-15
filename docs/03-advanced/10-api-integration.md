@@ -24,9 +24,16 @@
 
 ~~本章节将介绍如何将OpenClaw与各种第三方API服务集成，扩展AI的能力边界。重点介绍4个实用场景的配置方法：AI绘图、Notion数据同步、视频生成和语音合成。~~
 
-## ✅ 2026.4+ 推荐主路线（先看这个）
+## ✅ 2026.4.14 推荐主路线（先看这个）
 
 > ⚠️ **高风险提醒**：本章下方大量旧命令和第三方 Skill 名称已不再是官方主线，包括 `bananapro-image-gen`、`video-agent`、`sora-video-gen`、`veo3-video-gen`、`openclaw video generate`、`openclaw tts generate` 等。
+
+## 🆕 v2026.4.14 补充：这章现在还该关注什么
+
+- **媒体能力继续官方化**：图片、视频、TTS、音乐越来越适合统一从 `infer` CLI 或 Agent 工具入口进入
+- **provider/model 兼容性更好**：最新版在 Codex 自定义模型、Ollama、图片/PDF 工具等路径上做了多处修复
+- **如果你追最新版**：建议默认先验证 `openclaw infer image generate`、`openclaw infer video generate`、`openclaw infer tts convert`，再决定要不要回头看旧 Skill 路线
+- **如果你只按教程基线跑**：仍可保留 `v2026.4.11` 环境，但别把旧命令当作官方最新推荐主线
 
 | 场景 | 本章旧写法 | 现在建议的官方主路线 |
 |------|-----------|----------------------|
@@ -38,9 +45,10 @@
 | 外部自动化接入 | 分散脚本 | 使用 `Task Flow + Webhooks` |
 
 **建议阅读顺序**：
-1. 先按第 2 章把运行时升级到 `v2026.4.11` + `Node 24`
+1. 先按第 2 章决定你使用 `v2026.4.14` 还是 `v2026.4.11` 教程兼容基线，并确保运行时为 `Node 24`
 2. 再看官方 `infer` CLI / `video_generate` / `music_generate`
-3. 只有官方主路线不满足需求时，再回头参考第三方 Skill 生态
+3. 如果你要追最新版，优先用官方媒体能力，不要先装旧第三方 Skill
+4. 只有官方主路线不满足需求时，再回头参考第三方 Skill 生态
 
 ---
 
