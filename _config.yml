@@ -28,9 +28,7 @@ navigation:
   - title: 首页
     url: /
   - title: 搜索
-    url: /search
-  - title: 一键部署
-    url: /Openclaw史上最简单教程，小白一键部署
+    url: /search-enhanced.md
   - title: 快速开始
     url: /docs/01-basics/03-quick-start
   - title: 核心功能
@@ -39,12 +37,14 @@ navigation:
     url: /docs/03-advanced/08-skills-extension
   - title: 实战案例
     url: /docs/04-practical-cases/12-personal-productivity
-  - title: 命令速查
+  - title: 附录
     url: /appendix/A-command-reference
+  - title: 国产Claw选购
+    url: /appendix/O-domestic-claw-products
   - title: Skills生态
     url: /appendix/N-skills-ecosystem
-  - title: 配置结构
-    url: /appendix/L-config-file-structure
+  - title: 安全指南
+    url: /docs/03-advanced/99-security-guide
 
 # Relative links
 relative_links:

@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.4.14-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
+[![Version](https://img.shields.io/badge/version-v2026.4.11-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 [![CSDN](https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn)](https://blog.csdn.net/xianyu120)
 [![Bilibili](https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili)](https://space.bilibili.com/399102586)
@@ -16,28 +16,26 @@
 
 > 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 清华大学出版社出版，在开源教程基础上全面重写+逐条验证。🛒 [京东专属购买链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
-> 🔄 **2026-04-15 更新说明**：官方最新稳定版已发布到 **OpenClaw v2026.4.14**。本仓库正文仍以 **v2026.4.11（教程兼容基线）** 为主，但已为第 `1/2/5/7/10/11/14` 章补充 `v2026.4.14` 差异提示、主线入口和高风险提醒。动手前请优先参考官方 Release Notes 与官方文档。
+> 🔄 **2026-04-13 更新说明**：本仓库现按 **OpenClaw v2026.4.11（稳定版）** 校对；`v2026.4.12-beta.1` 仅作预发布参考。第 1/2/5/7 章已补当前主线，第 10-15 章已增加高风险提示与新版入口，动手前请优先参考官方文档。
 
 ## 📌 本教程与 OpenClaw 最新版差异说明
 
 为了避免你把旧章节当成最新版官方教程，先看这 4 点：
 
-- **官方最新稳定版**：`v2026.4.14`（2026-04-14 发布），新增 `gpt-5.4-pro` 前向兼容、Telegram forum topic names、更多 provider/browser/gateway 安全与稳定性修复
-- **当前教程基线**：正文主体仍按 `v2026.4.11` 稳定版校对；如果你要追最新版，请把本教程理解为“主线导航 + 历史参考”
-- **已优先更新的章节**：`README`、第 `1/2/5/7/10/11/14` 章已补 `2026.4.14` 差异说明、官方主线入口和高风险提示
+- **当前教程基线**：本仓库目前按 `v2026.4.11` 稳定版校对；如果 GitHub Releases 出现更高版本，请以官方 Release Notes 和官方文档为准
+- **已优先更新的章节**：`README`、第 `1/2/5/7/10/11/14` 章已补 `2026.4+` 主线入口和风险提示
 - **仍含历史内容的章节**：部分旧案例、旧截图、旧 Skill 名称、旧配置片段仍保留在其他章节里，适合作为思路参考，不建议直接复制执行
-- **当前应优先使用的官方主线**：`openclaw onboard`、`openclaw models auth login --provider <provider>`、`openclaw infer ...`、`Task Flow`、`Webhooks`、`ComfyUI`、`openclaw exec-policy ...`
+- **当前应优先使用的官方主线**：`openclaw onboard`、`openclaw models auth login --provider <provider>`、`openclaw infer ...`、`Task Flow`、`Webhooks`、`ComfyUI`
 
 | 类型 | 本教程当前状态 | 阅读建议 |
 |------|----------------|----------|
-| 官方最新稳定版 | `v2026.4.14` | 想跟官方最新功能、修复与 provider 变化，请优先看 Release Notes |
-| 教程兼容基线 | `v2026.4.11` | 新手想按书中正文稳定跑通，可先按这个版本验证 |
-| 预发布能力 | `v2026.4.12-beta.1` 仅作历史参考 | 不再建议作为默认体验基线 |
+| 版本基线 | 已对齐 `v2026.4.11` | 新手优先按这个版本跑通 |
+| 预发布能力 | `v2026.4.12-beta.1` 仅作参考 | 想尝鲜再看，不要默认照抄 |
 | 安装/配置主线 | 已补新版入口 | 优先看第 `2` 章和第 `11` 章 |
 | 媒体/创意能力 | 已补 `infer` / `video_generate` / `music_generate` / `ComfyUI` 主线 | 优先看第 `10` 章和第 `14` 章 |
 | 旧 Skill 生态 | 仍有历史内容残留 | 先 `search/info` 验证，再决定是否安装 |
 
-> ⚠️ **一句话判断**：如果你看到 `local-anthropic`、`local-google`、`bananapro-image-gen`、`video-agent`、整串 `clawhub install ...`，请先把它理解为“历史参考”；如果你看到 `gpt-5.4-pro`、`allowPrivateNetwork`、`exec-policy`、`Active Memory 插件`、`Talk Mode / MLX`，这些更接近 `v2026.4.12 ~ v2026.4.14` 的新版主线。
+> ⚠️ **一句话判断**：如果你看到 `local-anthropic`、`local-google`、`bananapro-image-gen`、`video-agent`、整串 `clawhub install ...`，请先把它理解为“历史参考”，不要默认当成 `2026.4+` 官方推荐步骤。
 
 ---
 
@@ -188,34 +186,28 @@ openclaw gateway restart
 
 ---
 
-### 🆕 v2026.4.14 最新稳定版更新（2026年4月14日）
+### 🆕 v2026.4.11 稳定版更新（2026年4月12日）
 
-**版本现状**
-- **官方最新稳定版**：`v2026.4.14`
-- **教程兼容基线**：`v2026.4.11`
+**当前基线**
+- **稳定版**：`v2026.4.11`
+- **预发布参考**：`v2026.4.12-beta.1`（2026年4月13日）
 - **推荐运行时**：`Node 24`；如继续走兼容路径，建议至少 `Node 22.16+`
 
-**从 `v2026.4.11` 到 `v2026.4.14` 你最该知道的变化**
-- **记忆系统继续主线化**：`v2026.4.12` 引入可选的 **Active Memory 插件**，把“回复前回忆”正式做成可配置能力
-- **执行审批更正式**：新增 `openclaw exec-policy show / preset / set`，更适合统一管理 `tools.exec.*` 策略
-- **Provider 配置更细**：新增 `models.providers.*.request.allowPrivateNetwork`，适合自托管 OpenAI-compatible endpoint
-- **模型目录更新**：`v2026.4.14` 增加 `gpt-5.4-pro` 前向兼容，并修复 Codex 自定义模型目录可见性问题
-- **语音与渠道能力补强**：`v2026.4.12` 增加 Talk Mode 的本地 MLX speech provider，`v2026.4.14` 增加 Telegram forum topic names 进入 agent context
-- **安全/稳定性修复更多**：`v2026.4.14` 对 gateway-tool、browser SSRF、attachments、scheduler、Ollama、proxy 等路径做了大量修复
+**2026.4 主线变化**
+- **Active Memory**：回复前自动拉取相关偏好、上下文和历史细节
+- **Dreaming + Memory Wiki**：长期记忆、结构化 `claim/evidence`、矛盾/新鲜度管理成为主线能力
+- **Task Flow + Webhooks**：自动化从“定时任务”升级到“持久化流程 + 外部事件触发”
+- **`openclaw infer`**：统一 `model / image / audio / tts / video / web / embedding` CLI 入口
+- **内建媒体能力**：官方 `video_generate` / `music_generate` 与 `ComfyUI` provider/plugin 已可直接使用
+- **Control UI**：新增多语言与富内容 `[embed ...]` 展示能力
 
-**安装最新版**：
-```bash
-npm install -g openclaw@2026.4.14
-openclaw --version  # 确认版本为 2026.4.14
-```
-
-**安装教程兼容基线**：
+**升级命令**：
 ```bash
 npm install -g openclaw@2026.4.11
 openclaw --version  # 确认版本为 2026.4.11
 ```
 
-> ⚠️ **新手建议**：如果你的目标是“按本教程正文稳定跑通”，可以先用 `v2026.4.11`；如果你想体验官方最新能力与修复，请使用 `v2026.4.14`，并把本教程理解为“主线导航 + 历史参考”。
+> ⚠️ **新手建议**：如果你的目标是“按教程稳定跑通”，优先使用 `v2026.4.11`。`v2026.4.12-beta.1` 适合尝鲜验证，不建议直接作为默认教程基线。
 
 ---
 
@@ -389,7 +381,7 @@ openclaw --version  # 确认版本为 2026.4.11
 **最后更新**：2026年4月4日
 **教程版本**：v1.9
 **总字数**：408,000字（15章节 + 15附录）
-**适用OpenClaw版本**：2026.4.14（官方最新稳定版） / 2026.4.11（教程兼容基线）
+**适用OpenClaw版本**：2026.4.11（稳定版） / 2026.4.12-beta.1（预发布参考）
 
 🎉 **教程已完成 | 支持续优化 | 完全免费** 🎉
 🚀 **一个人 + OpenClaw = 无限可能** 🚀

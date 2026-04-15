@@ -22,7 +22,7 @@
 
 ---
 
-## ✅ 2026.4.14 官方配置主路线（先看这个）
+## ✅ 2026.4+ 官方配置主路线（先看这个）
 
 > ⚠️ **高风险提醒**：本章早期内容把 `Antigravity Manager`、`local-anthropic`、`local-google`、`google-antigravity` 等历史代理/旧 provider 方案当成主线，这已经不符合当前官方推荐路径。现在更建议直接使用 OpenClaw 自带的 provider、auth profile、模型配置与 `infer` CLI。
 
@@ -59,21 +59,6 @@ openclaw exec-policy show
 - 文本/通用：`openai`、`openai-codex`、`anthropic`、`google`、`google-gemini-cli`、`zai`、`minimax`
 - 视频：`openai/sora-2`、`google/veo-3.1-fast-generate-preview`
 - 本地媒体工作流：`ComfyUI` provider/plugin
-
-## 🆕 v2026.4.12 ~ v2026.4.14 这章还需要知道的新增点
-
-- **`openclaw exec-policy` 正式成为主线入口**：除了 `show`，还应关注 `preset` / `set`，便于统一管理 `tools.exec.*` 审批策略
-- **provider 私网访问更细**：`models.providers.*.request.allowPrivateNetwork` 适合自托管 OpenAI-compatible endpoint，不建议再用模糊的旧代理思路替代
-- **模型目录在变**：官方最新稳定版已经为 `gpt-5.4-pro` 做了前向兼容，也修复了 Codex 自定义模型目录可见性问题
-- **安全收口更严格**：`v2026.4.14` 开始，gateway-tool 对高危 `config.patch` / `config.apply` 会做更严格限制；如果你在维护旧自动化配置脚本，建议同时关注 `openclaw security audit`
-- **本章后文的 Antigravity / `local-*` 内容仍保留**：但它们现在更适合作为“存量项目迁移参考”，不适合作为新环境默认路线
-
-**如果你现在要从零配置**，推荐顺序是：
-1. `openclaw onboard`
-2. `openclaw models auth login --provider <provider>`
-3. 设置 `agents.defaults.model.primary` / `fallbacks`
-4. `openclaw exec-policy show`
-5. 需要自托管模型时，再补 `models.providers.*` 的细项配置
 
 ---
 

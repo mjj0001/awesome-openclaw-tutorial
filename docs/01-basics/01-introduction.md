@@ -4,7 +4,7 @@
 
 > 在开始使用 OpenClaw之前，先了解它是什么，为什么要用它，以及它能带来什么。
 
-> ⚠️ **版本说明**：截至 **2026-04-15**，官方最新稳定版已更新到 **OpenClaw v2026.4.14**；本教程正文仍主要按 **v2026.4.11（教程兼容基线）** 编写。如果你只想稳定跑通教程，可以先按基线操作；如果你想追最新版，请结合官方 Release Notes 阅读。
+> ⚠️ **版本说明**：截至 **2026-04-13**，本教程按 **OpenClaw v2026.4.11（稳定版）** 校对；`v2026.4.12-beta.1` 仅作预发布参考。如果你只想稳定跑通教程，请优先使用稳定版。
 
 > 💡 **重要前提**：OpenClaw 现在的主线能力不只来自 Skills，还包括官方内建的记忆系统、Task Flow、媒体生成工具、Webhooks 和 `infer` CLI。教程中凡是遇到“第三方 Skill 安装失败”或“命令找不到”，优先按官方主路线排查。
 
@@ -38,14 +38,6 @@ OpenClaw 是一个**开源的 AI 智能体 Gateway 网关**，让你可以在本
 - **Task Flow + Webhooks**：把自动化从“定时触发”扩展为“可恢复、可追踪、可被外部系统驱动”的工作流
 - **`openclaw infer`**：统一模型、图片、音频、TTS、视频、网页搜索和 embedding 的 CLI 入口
 - **Control UI 多语言**：当前官方已支持简中、繁中、日语、韩语、法语、德语、西语等多语言界面
-
-### 2026.4.14 相比教程基线还新增了什么
-
-- **`gpt-5.4-pro`**：官方已为 Codex 侧增加前向兼容支持，适合关注 GPT-5.4 家族模型的用户
-- **Active Memory 插件化**：从“能力概念”进一步发展为可选插件与 memory sub-agent 路线
-- **Talk Mode / MLX**：macOS 本地语音能力增强，适合追求本地体验的用户
-- **Telegram forum topic names**：话题名会进入 agent context 与 metadata，更利于多主题群聊协作
-- **更多安全与稳定性修复**：browser、gateway、attachments、scheduler、Ollama、proxy 等路径都更稳
 
 ### 工作原理
 
