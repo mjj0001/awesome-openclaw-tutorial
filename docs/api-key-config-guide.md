@@ -571,7 +571,7 @@ openclaw models list
 
 - [配置文件结构完整指南](config-file-structure.md) - 配置文件详细说明
 - [第2章：安装配置](01-basics/02-installation.md) - 基础配置教程
-- [第11章：高级配置](03-advanced/11-advanced-configuration.md) - 高级配置技巧
+- [第11章：高级配置](03-advanced/11-advanced-configuration.md) - 模型、记忆、审批与性能
 
 ---
 

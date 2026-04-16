@@ -499,7 +499,7 @@ source ~/.zshrc
 ## 🔗 相关文档
 
 - [第2章：安装配置](../docs/01-basics/02-installation.md) - 基础配置教程
-- [第11章：高级配置](../docs/03-advanced/11-advanced-configuration.md) - 高级配置技巧
+- [第11章：高级配置](../docs/03-advanced/11-advanced-configuration.md) - 模型、记忆、审批与性能
 - [配置文件模板](../appendix/H-config-templates.md) - 更多配置模板
 
 ---

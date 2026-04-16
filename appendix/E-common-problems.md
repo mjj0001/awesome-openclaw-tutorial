@@ -523,7 +523,7 @@ openclaw session prune --days 30
 - [第2章节：安装部署](../docs/01-basics/02-installation.md) - 完整安装指南
 - [第8章节：Skills扩展](../docs/03-advanced/08-skills-extension.md) - Skills使用管理
 - [第9章节：多平台集成](../docs/03-advanced/09-multi-platform-integration.md) - 平台接入配置
-- [第11章节：高级配置](../docs/03-advanced/11-advanced-configuration.md) - 性能优化
+- [第11章节：高级配置](../docs/03-advanced/11-advanced-configuration.md) - 模型、记忆、审批与性能
 
 ---
 

@@ -55,7 +55,7 @@
 ### 03-advanced（高级特性篇）- 5个文件
 8. ✅ 08-skills-extension.md - 第8章：Skills扩展
 9. ✅ 099-multi-platform-integration.md - 第9章：多平台集成
-10. ✅ 10-api-integration.md - 第10章：API集成
+10. ✅ 10-api-integration.md - 第10章：API 与外部能力集成
 11. ✅ 11-advanced-configuration.md - 第11章：高级配置
 12. ✅ 99-security-guide.md - 安全指南
 13. ✅ feishu-checklist.md - 飞书配置检查清单

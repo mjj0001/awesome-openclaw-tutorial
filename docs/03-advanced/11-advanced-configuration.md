@@ -1,2535 +1,468 @@
-> 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 全面重写+逐条验证，修复了线上教程的已知问题。🛒 [京东专属购买（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
+> 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 清华大学出版社出版，在开源教程基础上全面重写+逐条验证。🛒 [京东专属购买链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
-# ~~第11章节 高级配置（多模型切换/成本优化/性能调优）~~
+# 第11章节 高级配置（模型、记忆、审批与性能）
 
-> ~~💡 **本章节目标**：掌握OpenClaw的高级配置技巧，包括Antigravity Manager配置、多模型切换、成本优化和性能调优。~~
-
----
-
-## ⚠️ 重要提示
-
-**本章节及后续章节（第10-15章）存在以下已知问题**：
-- 部分Skills名称或安装方式已变更，可能导致找不到技能
-- 部分配置参数名称已修改，可能导致配置失败
-
-**解决方案**：
-- 📖 **推荐购买纸质书**：《OpenClaw超级个体实操手册》（清华大学出版社，2026年3月底上市）
-  - 144条CLI命令已逐条核对验证
-  - 9套配置模板全部在实际环境跑通
-  - ⭐ [Star本仓库](https://github.com/xianyu110/awesome-openclaw-tutorial)第一时间获取上市通知
-- 🔍 **查阅官方文档**：https://docs.openclaw.ai
-- 💬 **提交Issue**：https://github.com/xianyu110/awesome-openclaw-tutorial/issues
+> 本章目标：把 OpenClaw 当前稳定版里最重要的高级配置讲清楚，包括模型选择、认证、媒体默认模型、Active Memory、Memory Wiki，以及执行审批与安全边界。
 
 ---
 
-## ✅ 2026.4+ 官方配置主路线（先看这个）
+## 版本基线
 
-> ⚠️ **高风险提醒**：本章早期内容把 `Antigravity Manager`、`local-anthropic`、`local-google`、`google-antigravity` 等历史代理/旧 provider 方案当成主线，这已经不符合当前官方推荐路径。现在更建议直接使用 OpenClaw 自带的 provider、auth profile、模型配置与 `infer` CLI。
-
-| 场景 | 本章旧主线 | 2026.4+ 当前建议 |
-|------|-----------|------------------|
-| 首次配置 | 手工改 JSON / 外部代理 | `openclaw onboard` 或 `openclaw configure` |
-| 模型认证 | Antigravity / 本地代理 Token | `openclaw models auth login --provider <provider>` |
-| 默认模型 | 手工写 `local-anthropic` / `local-google` | `openclaw config set agents.defaults.model.primary "<provider/model>"` |
-| 备用模型 | 零散 JSON 片段 | `agents.defaults.model.fallbacks` |
-| 视频/音乐模型 | 本章未形成主线 | `agents.defaults.videoGenerationModel.primary` / `agents.defaults.musicGenerationModel.primary` |
-| 执行审批 | 几乎未覆盖 | `openclaw exec-policy show` / `preset` / `set` |
-| 命令行推理 | 分散旧命令 | 统一使用 `openclaw infer ...` |
-
-**官方推荐的最短配置路径**：
-
-```bash
-# 1) 新手先用交互式向导
-openclaw onboard
-
-# 2) 查看模型
-openclaw models list
-
-# 3) 设置默认模型
-openclaw config set agents.defaults.model.primary "openai/gpt-5.4"
-
-# 4) 需要视频生成时设置默认视频模型
-openclaw config set agents.defaults.videoGenerationModel.primary "openai/sora-2"
-
-# 5) 查看执行审批策略
-openclaw exec-policy show
-```
-
-**建议优先使用的 provider 路线**：
-- 文本/通用：`openai`、`openai-codex`、`anthropic`、`google`、`google-gemini-cli`、`zai`、`minimax`
-- 视频：`openai/sora-2`、`google/veo-3.1-fast-generate-preview`
-- 本地媒体工作流：`ComfyUI` provider/plugin
+- **当前稳定版**：`v2026.4.14`（2026-04-14）
+- **当前预发布版**：`v2026.4.15-beta.1`（2026-04-15）
+- 本章默认按 `v2026.4.14` 写；beta 功能只在“预发布补充”里点到为止
 
 ---
 
-## ~~⚙️ 本章节内内容~~
+## 先给小白的阅读说明
 
-- ~~11.1 Antigravity Manager完全配置指南~~
-- ~~11.2 多模型切换策略~~
-- ~~11.3 记忆搜索配置（Memory Search）~~
-- ~~11.4 成本优化方案~~
-- ~~11.5 性能调优技巧~~
-- ~~11.6 模型提供商配置详解~~
-- ~~11.7 工具系统详解~~
-- ~~11.8 CLI 命令完整参考~~
+### 这一章到底解决什么问题
+
+很多新手一看到 `openclaw.json`、`models.json`、`AGENTS.md`、provider auth，就会马上开始手改配置。结果往往是：
+
+- 不知道哪里才是当前生效值
+- 改了配置却没改到真正的默认模型
+- 认证、回退模型、媒体模型混在一起
+
+这一章就是帮你把这些东西拆开。
+
+### 如果你只想先把配置跑通，先看这几节
+
+- **先看 `11.1`**：知道推荐顺序
+- **再看 `11.2`**：把主模型、回退模型、认证配通
+- **然后看 `11.3`**：分清会话模型和媒体模型
+- **最后看 `11.6`**：知道安全边界，不要误配审批
+
+### 开始前的最低前提
+
+你不需要先懂所有 JSON 字段，但至少要满足：
+
+1. 已跑过 `openclaw onboard`
+2. 至少有一个 provider 能成功登录
+3. 愿意先用 CLI 看状态，再决定是否手改配置文件
+
+### 小白最容易犯的 3 个错
+
+- 一上来就手改 JSON，不先看 `models status`
+- 把 `imageModel` 和 `imageGenerationModel` 当成同一个东西
+- 看到配置项很多，就以为“全都配上才算完整”
 
 ---
 
-## 11.1 ~~Antigravity Manager完全配置指南~~（历史方案，不再推荐作为主线）
+## 11.1 推荐配置路径：先向导，后精调
 
-> ⚠️ **快速判断**：如果你不是在维护已经跑起来的 Antigravity 旧部署，请直接跳到 `11.6`。下方 `11.1.2 ~ 11.1.13` 涉及历史 provider 名称、手工改 `openclaw.json`、旧 gateway 命令和旧代理思路，只适合作为存量项目参考。
+OpenClaw 2026.4 之后，高级配置的推荐顺序不是“先手改 JSON”，而是：
 
-### 11.1.1 什么是Antigravity Manager？
+1. `openclaw onboard`
+2. `openclaw models auth add|login`
+3. `openclaw models status|list|set`
+4. 需要时再手动改 `openclaw.json` / `models.json`
 
-**定义**：
-
-Antigravity Manager是1个AI API代理工具，可以让你通过本地服务访问多个AI模型（Claude、Gemini、GPT等），统一管理API 密钥和请求。
-
-**项目地址**：https://github.com/lbjlaq/Antigravity-Manager
-
-**为什么要用Antigravity Manager？**
-
-把OpenClaw和Antigravity Manager结合使用，你可以：
-
-- ✅ **本地部署**：所有数据在本地处理，保护隐私
-- ✅ **统一管理**：1个工具管理所有AI模型
-- ✅ **成本控制**：使用自己的API 密钥，避免中间商加价
-- ✅ **灵活切换**：随时切换不同的模型，无需修改代码
-- ✅ **技能扩展**：通过ClawHub安装各种实用技能
-
-![Antigravity Manager架构图 - 统一管理多个AI服务](https://upload.maynor1024.live/file/1770264626936_image-20260205121018123.png)
-
-### 11.1.2 系统要求和前置准备
-
-**系统要求**：
-- macOS 10.15+、Windows 10+、或Linux
-- 至少4GB内存
-- 稳定的网络连接
-
-**需要准备的东西**：
-1. Antigravity Manager安装包
-2. AI模型的API Key（或独分享账号）
-3. 基本的命令行操作能力
-
-### 11.1.3 安装Antigravity Manager
-
-#### macOS用户
-
-1. 访问[Antigravity Manager Releases](https://github.com/lbjlaq/Antigravity-Manager/releases)
-2. 下载最新版本的`.dmg`文件
-3. 双击`.dmg`文件，将应用拖入`Applications`文件夹
-4. 打开应用（首次打开可能需要在「系统偏好设置 → 安全性与隐私」中允许）
-
-#### Windows用户
-
-1. 访问[Antigravity Manager Releases](https://github.com/lbjlaq/Antigravity-Manager/releases)
-2. 下载最新版本的`.exe`安装包
-3. 运行安装程序，按照提示完成安装
-4. 启动Antigravity Manager
-
-#### Linux用户
-
-1. 访问[Antigravity Manager Releases](https://github.com/lbjlaq/Antigravity-Manager/releases)
-2. 下载最新版本的`.AppImage`或`.deb`文件
-3. 给予执行权限并运行：
-
-```bash
-chmod +x Antigravity-Manager-*.AppImage
-./Antigravity-Manager-*.AppImage
-```
-#### 验证安装
-
-启动后，应用会在本地运行1个API服务，默认地址：`http://127.0.0.1:8045`
-
-在浏览器中访问这个地址，如果能看到管理界面，说明安装成功。
-
-### 11.1.4 配置AI模型账号
-
-Antigravity Manager需要你提供AI模型的API 密钥才能工作。
-
-#### 方案1：使用官方API
-
-**Claude API**
-1. 访问[Anthropic Console](https://console.anthropic.com/)
-2. 注册账号并绑定信用卡
-3. 创建API Key
-4. 复制保存
-
-**Gemini API**
-1. 访问[Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 登录Google账号
-3. 创建API Key
-4. 复制保存
-
-**OpenAI API**
-1. 访问[OpenAI Platform](https://platform.openai.com/api-keys)
-2. 注册账号并绑定信用卡
-3. 创建API Key
-4. 复制保存
-
-#### 方案2：购买独分享账号（推荐）
-
-如果你不想自己申请API，可以购买独分享账号：
-
-**推荐**：学生账号Gemini 3 Pro独分享账号12个月（支持反重力）
-
-**优势：**
-- ✅ 独分享账号，无需担心限流
-- ✅ 支持Antigravity Manager
-- ✅ 12个月有效期
-- ✅ 性价比高
-- ✅ 即买即用
-
-#### 在Antigravity Manager中配置API Key
-
-1. 打开Antigravity Manager管理界面
-2. 点击「API Keys」
-3. 选择对应的AI服务商（Claude、Gemini、OpenAI）
-4. 输入API Key
-5. 点击「保存」
-
-### 11.1.5 生成User Token
-
-User Token是OpenClaw访问Antigravity Manager的凭证。
-
-1. 在Antigravity Manager界面中，点击右上角「User Tokens」
-2. 点击「创建新Token」
-3. 复制生成的Token（例如：`sk-82bc103b51f24af888af525a7835e87c`）
-4. ⚠️ **重要**：妥善保存这个Token，它只会显示一次！
-
-### 11.1.6 当前建议：不要再新增 `local-anthropic` / `local-google`
-
-如果你是 **新配置环境**，现在不建议再照着旧教程手工往 `~/.openclaw/openclaw.json` 里塞 `local-anthropic`、`local-google` 这类 provider。更稳妥的做法是直接走官方配置主线：
-
-```bash
-# 1) 先走交互式向导
-openclaw onboard
-
-# 2) 或者按 provider 单独登录
-openclaw models auth login --provider anthropic
-openclaw models auth login --provider google
-
-# 3) 看当前可用模型
-openclaw models list
-
-# 4) 设置默认文本模型
-openclaw config set agents.defaults.model.primary "anthropic/claude-sonnet-4-5"
-
-# 5) 如需切到 Google 系列模型，再切默认模型
-openclaw config set agents.defaults.model.primary "google/gemini-2.5-pro"
-```
-
-**为什么这样更稳**：
-- 不需要自己维护旧代理 provider 名称
-- 不需要手工改大段 JSON
-- 后续升级到 `infer` CLI、视频模型、ComfyUI 时更顺滑
-
-> ⚠️ **历史说明**：下方如果仍出现 `local-anthropic`、`local-google`、`google-antigravity` 之类名称，请一律按“旧部署参考”理解，不要作为 2026.4+ 新环境的默认配置方式。
-
-### 11.1.7 当前主线的验证方法
-
-```bash
-# 查看已认证 / 已注册模型
-openclaw models list
-
-# 查看执行审批策略
-openclaw exec-policy show
-```
-
-**你应该重点确认**：
-- 目标 provider 已登录成功
-- 你要用的默认模型能在 `openclaw models list` 里看到
-- 没有继续依赖旧的本地代理名称
-
-### 11.1.8 历史方案什么时候还能看
-
-以下情况可以继续参考 `11.1` 后面的旧内容：
-
-- 你手头已经有可用的 Antigravity Manager 旧部署
-- 你的团队内部仍在维护 `local-*` / `google-antigravity` 老配置
-- 你愿意自行验证旧 Token、旧 provider 名称、旧网关命令是否仍兼容
-
-如果不是以上情况，建议直接跳到 `11.6` 继续看当前官方配置主线。
-### 11.1.9 模型选择指南
-
-#### Claude Sonnet 4.5
-
-**适用场景：**
-- 日常对话
-- 代码生成
-- 文档编写
-- 快速访问答
-
-**特点：**
-- 速度快
-- 成本低
-- 质量高
-- 上下文窗口：200k tokens
-
-#### Claude Opus 4.5 Thinking
-
-**适用场景：**
-- 复杂推理
-- 数学访问题
-- 算法优化
-- 深度分析
-
-**特点：**
-- 推理能力强
-- 思考过程可见
-- 适合复杂访问题
-- 上下文窗口：200k tokens
-
-#### Gemini 3 Pro Image
-
-**适用场景：**
-- 图片识别
-- 多模态任务
-- 文档分析
-- 设计评审
-
-**特点：**
-- 支持图片输入
-- 超大上下文窗口
-- 识别准确
-- 上下文窗口：2000k tokens
-
-### 11.1.10 历史部署补充说明
-
-如果你在维护旧的 Antigravity 部署，这里更推荐的原则是：
-
-- 先完整备份旧配置，再做任何 provider 级修改
-- 尽量记录你们团队真实在用的旧模型 ID，不要直接照抄教程示例
-- 能迁回官方 provider 的部分，优先迁回官方主线
-
-```bash
-# 当前环境先确认模型清单
-openclaw models list
-
-# 再查看当前默认模型
-openclaw config get agents.defaults.model.primary
-```
-
-### 11.1.11 历史命令怎么理解
-
-本节前文出现过的 `gateway restart`、手工改 `openclaw.json`、旧 `local-*` provider 名称，都应理解为 **历史部署速查**，不再是新环境默认推荐步骤。
-
-对于 `2026.4+` 新环境，更建议优先使用：
+最短起步命令：
 
 ```bash
 openclaw onboard
-openclaw models auth login --provider <provider>
+openclaw models status
 openclaw models list
-openclaw config get agents.defaults.model.primary
+openclaw models set openai/gpt-5.4
 ```
 
-### 11.1.12 当前更可靠的模型 ID 获取方式
-
-不要再默认相信本章里写死的旧 `local-*` 模型 ID。更可靠的做法是直接在你自己的环境里查询：
+如果你不知道当前到底配成了什么，先看状态，不要猜：
 
 ```bash
-openclaw models list
-```
-### 11.1.13 故障排查
-
-#### 访问题1：模型列表为空
-
-**原因**：配置文件格式错误或路径不对
-
-**解决方法**：
-```bash
-# 检查配置文件
-cat ~/.openclaw/openclaw.json | jq '.models.providers'
-
-# 如果返回错误，恢复备份
-cp ~/.openclaw/openclaw.json.backup ~/.openclaw/openclaw.json
-```
-#### 访问题2：API连接失败
-
-**原因**：Antigravity Manager未启动或端口被占用
-
-**解决方法**：
-```bash
-# 检查API是否正常
-curl http://127.0.0.1:8045/v1/models
-
-# 检查端口占用（macOS/Linux）
-lsof -i :8045
-
-# 重启Antigravity Manager
-```
-#### 访问题3：配置后模型不生效
-
-**原因**：忘记重启Gateway
-
-**解决方法**：
-```bash
-openclaw gateway restart
-```
-#### 访问题4：User Token无效
-
-**原因**：Token过期或输入错误
-
-**解决方法**：
-1. 在Antigravity Manager中重新生成Token
-2. 更新配置文件中的apiKey
-3. 重启Gateway
-
----# 测试连接
-openclaw test api
+openclaw models status --probe
+openclaw status
 ```
 
-### 10.1.5 实战案例
+### 看到什么算当前配置已经健康
 
-**案例1：配置Claude Sonnet**
-```
-步骤：
-1. 获取Claude API Key
-2. 在Antigravity Manager中添加
-3. 配置 OpenClaw
-4. 测试使用
+如果你看到下面这些现象，说明配置已经进入“可继续优化”的状态：
 
-结果：
-你：你好
-OpenClaw（Claude Sonnet）：你好！我是Claude...
-```
+- `openclaw models status` 能看到 `primary` 和 `fallbacks`
+- `openclaw models status --probe` 没报 provider 不可用或 token 失效
+- `openclaw status` 没有明显的 gateway / auth 阻塞错误
 
-**案例2：多账号管理**
-```
-场景：管理多个Claude账号
+`models status --probe` 会做真实探测，可能消耗 token，但它最适合确认以下问题：
 
-配置：
-- Claude账号1：日常使用
-- Claude账号2：备用
-- Claude账号3：高峰期使用
-
-优势：
-- 分散负载
-- 避免限流
-- 提高可用性
-```
+- token 是不是过期了
+- provider 看起来已配置，但是否真能用
+- 当前 primary / fallbacks 最终到底解析成了什么
 
 ---
 
-## ~~11.2 多模型切换策略~~
+## 11.2 模型与认证：当前该怎么配
 
-### ~~11.2.1 模型特点对比~~
+### 11.2.1 先理解三层关系
 
-|~~ 模型 ~~|~~ 优势 ~~|~~ 劣势 ~~|~~ 适用场景 ~~|
-|------|------|------|----------|
-|~~ Claude Sonnet ~~|~~ 平衡性好 ~~|~~ 价格中等 ~~|~~ 日常对话 ~~|
-|~~ Claude Opus ~~|~~ 能力最强 ~~|~~ 价格最贵 ~~|~~ 复杂任务 ~~|
-|~~ GPT-5.2 ~~|~~ 功能丰富 ~~|~~ 响应较慢 ~~|~~ 创意工作 ~~|
-|~~ Gemini 3 Pro ~~|~~ 免费额度大 ~~|~~ 能力一般 ~~|~~ 简单任务 ~~|
-|~~ DeepSeek-V3 ~~|~~ 性价比高 ~~|~~ 中文优化 ~~|~~ 编程任务 ~~|
+OpenClaw 现在的模型配置可以简化成三层：
 
-### ~~11.2.2 场景化选择策略~~
+1. **主模型**：`agents.defaults.model.primary`
+2. **回退模型**：`agents.defaults.model.fallbacks`
+3. **认证与 provider 状态**：通过 `models auth`、环境变量和 auth profile 管理
 
-~~**日常对话**：~~
+### 11.2.2 常用命令
+
+如果你是第一次接触这些命令，可以把它们理解成下面 4 类：
+
+- `status` / `list`：先看现状
+- `set`：设置主模型
+- `fallbacks add`：给主模型准备兜底
+- `auth login`：解决“为什么看得到 provider 却用不了”
+
+```bash
+# 查看当前状态
+openclaw models status
+openclaw models list
+
+# 设置主模型
+openclaw models set openai/gpt-5.4
+
+# 增加回退模型
+openclaw models fallbacks add anthropic/claude-sonnet-4-5
+openclaw models fallbacks add google/gemini-2.5-pro
+
+# 设置图像理解兜底模型
+openclaw models set-image openai/gpt-4.1-mini
+openclaw models image-fallbacks add google/gemini-2.5-pro
 ```
-推荐：Claude Sonnet 4.5
-理由：
-- 响应速度快
-- 质量稳定
-- 价格适中
-```
-~~**复杂推理**：~~
-```
-推荐：Claude Opus 4.6
-理由：
-- 推理能力最强
-- 准确率最高
-- 适合难题
-```
-~~**图片识别**：~~
-```
-推荐：Gemini 3 Pro
-理由：
-- 多模态能力强
-- 免费额度大
-- 识别准确
-```
-~~**编程任务**：~~
-```
-推荐：DeepSeek-V3
-理由：
-- 代码能力强
-- 价格便宜
-- 中文友好
-```
-### ~~11.2.3 模型内容灾机制（Fallback）~~
 
-> ~~🛡️ **高可用保障**：通过配置主模型和备用模型，确保服务不中断。~~
+### 11.2.3 当前值得注意的 provider 变化
 
-#### ~~什么是模型内容灾？~~
+根据 `v2026.4.12` 到 `v2026.4.14` 的官方 release notes：
 
-~~当主模型（primary）出现以下情况时，系统会自动切换到备用模型（fallbacks）：~~
-- ~~API 调用失败~~
-- ~~请求超时~~
-- ~~速率限制（Rate Limit）~~
-- ~~服务不可用~~
+- `v2026.4.12` 新增了**bundled Codex provider**，`codex/gpt-*` 这类模型现在走独立 Codex 路线
+- `v2026.4.12` 新增 **LM Studio provider**，本地 / 自托管 OpenAI-compatible 模型更顺手
+- `v2026.4.14` 增加了对 **`gpt-5.4-pro`** 的前向兼容支持
+- `v2026.4.14` 还修复了大量 Codex、Ollama、embedding provider 的兼容问题
 
-![服务内容灾配置示例](https://upload.maynor1024.live/file/1771085328347_service-disaster-recovery.png)
+如果你要做编程工作流，当前更推荐的几个方向：
 
-#### ~~基础内容灾配置~~
+- `openai/gpt-5.4`
+- `openai-codex/gpt-5.4`
+- `anthropic/claude-sonnet-4-5`
+- `google/gemini-2.5-pro`
 
-~~**配置文件路径**：`~/.openclaw/openclaw.json`~~
+### 11.2.4 认证方式建议
+
+```bash
+# 交互式添加 provider 认证
+openclaw models auth add
+
+# 直接对某个 provider 发起登录
+openclaw models auth login --provider openai-codex --set-default
+openclaw models auth login --provider anthropic --method cli --set-default
+```
+
+如果你是自托管 provider 或 OpenAI-compatible endpoint，优先保证：
+
+- `baseUrl` 可达
+- API key 已注入
+- 仅在可信私网环境里启用 `models.providers.*.request.allowPrivateNetwork`
+
+---
+
+## 11.3 媒体默认模型：不要再把图片、视频、音乐混着配
+
+官方现在把“会话模型”和“媒体生成模型”拆得很清楚。你至少要分清 5 类默认模型：
+
+- `agents.defaults.model`
+- `agents.defaults.imageModel`
+- `agents.defaults.imageGenerationModel`
+- `agents.defaults.videoGenerationModel`
+- `agents.defaults.musicGenerationModel`
+
+推荐配置示例：
 
 ```json
 {
   "agents": {
     "defaults": {
       "model": {
-        "primary": "anthropic/claude-opus-4-6",
+        "primary": "openai/gpt-5.4",
         "fallbacks": [
-          "openai-codex/gpt-5.3-codex",
+          "anthropic/claude-sonnet-4-5",
           "google/gemini-2.5-pro"
         ]
-      }
-    },
-    "list": [
-      {
-        "id": "main",
-        "default": true,
-        "model": {
-          "primary": "anthropic/claude-opus-4-6",
-          "fallbacks": [
-            "openai-codex/gpt-5.3-codex",
-            "google/gemini-2.5-pro"
-          ]
-        }
-      }
-    ]
-  }
-}
-```
-~~**工作流程**：~~
-```
-1. 尝试使用主模型：anthropic/claude-opus-4-6
-   ↓ 失败
-2. 切换到备用模型1：openai-codex/gpt-5.3-codex
-   ↓ 失败
-3. 切换到备用模型2：google/gemini-2.5-pro
-   ↓ 失败
-4. 返回错误信息
-```
-#### ~~实战案例1：成本优化型内容灾~~
-
-~~**场景**：优先使用便宜模型，失败后使用高质量模型~~
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "deepseek/deepseek-chat",
+      },
+      "imageModel": {
+        "primary": "openai/gpt-4.1-mini"
+      },
+      "imageGenerationModel": {
+        "primary": "openai/gpt-image-1"
+      },
+      "videoGenerationModel": {
+        "primary": "google/veo-3.1-fast-generate-preview",
         "fallbacks": [
-          "anthropic/claude-sonnet-4-5",
-          "anthropic/claude-opus-4-6"
-        ]
-      }
-    }
-  }
-}
-```
-~~**优势**：~~
-- ~~✅ 日常使用 DeepSeek（极低成本）~~
-- ~~✅ DeepSeek 限流时自动切换到 Claude Sonnet~~
-- ~~✅ 重要任务失败时使用 Claude Opus 兜底~~
-- ~~✅ 成本节省 80%+~~
-
-#### ~~实战案例2：性能优先型内容灾~~
-
-~~**场景**：优先使用最强模型，失败后降级~~
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "anthropic/claude-opus-4-6",
-        "fallbacks": [
-          "anthropic/claude-sonnet-4-5",
-          "deepseek/deepseek-chat"
-        ]
-      }
-    }
-  }
-}
-```
-~~**优势**：~~
-- ~~✅ 保证最佳质量~~
-- ~~✅ 高峰期自动降级~~
-- ~~✅ 确保服务不中断~~
-
-#### ~~实战案例3：多提供商内容灾~~
-
-~~**场景**：跨提供商内容灾，避免单点故障~~
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "anthropic/claude-sonnet-4-5",
-        "fallbacks": [
-          "openai/gpt-4o",
-          "google/gemini-2.0-flash-exp",
-          "deepseek/deepseek-chat"
-        ]
-      }
-    }
-  }
-}
-```
-~~**优势**：~~
-- ~~✅ Anthropic 故障时切换到 OpenAI~~
-- ~~✅ OpenAI 故障时切换到 Google~~
-- ~~✅ 最后使用 DeepSeek 兜底~~
-- ~~✅ 最大化服务可用性~~
-
-#### ~~配置命令行方式~~
-
-```bash
-# 设置主模型
-openclaw config set agents.defaults.model.primary "anthropic/claude-opus-4-6"
-
-# 设置备用模型（需要手动编辑 JSON）
-# 或使用 jq 命令
-cat ~/.openclaw/openclaw.json | jq '.agents.defaults.model.fallbacks = [
-  "openai-codex/gpt-5.3-codex",
-  "google/gemini-2.5-pro"
-]' > /tmp/openclaw-temp.json && mv /tmp/openclaw-temp.json ~/.openclaw/openclaw.json
-
-# 重启 Gateway 使配置生效
-openclaw gateway restart
-```
-#### ~~验证内容灾配置~~
-
-```bash
-# 查看当前配置
-openclaw config get agents.defaults.model
-
-# 输出示例：
-{
-  "primary": "anthropic/claude-opus-4-6",
-  "fallbacks": [
-    "openai-codex/gpt-5.3-codex",
-    "google/gemini-2.5-pro"
-  ]
-}
-```
-#### ~~内容灾最佳实践~~
-
-~~**1. 选择不同提供商**：~~
-~~✅ 推荐：Anthropic → OpenAI → Google~~
-~~❌ 不推荐：Claude Opus → Claude Sonnet（同提供商）~~
-```
-**2. 按能力梯度配置**：
-```
-~~✅ 推荐：高能力 → 中能力 → 低能力~~
-~~❌ 不推荐：低能力 → 高能力（浪费资源）~~
-```
-**3. 考虑成本因素**：
-```
-~~✅ 推荐：便宜 → 中等 → 昂贵（成本优化）~~
-~~✅ 推荐：昂贵 → 中等 → 便宜（质量优先）~~
-```
-**4. 限制备用数量**：
-```
-~~✅ 推荐：2-3 个备用模型~~
-~~❌ 不推荐：5+ 个备用模型（过度复杂）~~
-```
-### 11.2.4 多认证 Profile + Token 轮换
-
-> 🔐 **账号管理**：配置多个认证配置，实现账号轮换和负载均衡。
-
-#### 什么是认证 Profile？
-
-认证 Profile 允许你为同一个提供商配置多个账号，系统会按照指定顺序轮换使用，避免单账号限流。
-
-#### 基础配置
-
-**配置文件路径**：`~/.openclaw/openclaw.json`
-
-```json
-~~{~~
-~~  "auth": {~~
-~~    "profiles": {~~
-~~      "openai-codex:default": {~~
-~~        "provider": "openai-codex",~~
-~~        "mode": "oauth"~~
-~~      },~~
-~~      "anthropic:default": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "token"~~
-~~      },~~
-~~      "anthropic:manual": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "token"~~
-~~      },~~
-~~      "google-antigravity:mail1@gmail.com": {~~
-~~        "provider": "google-antigravity",~~
-~~        "mode": "oauth",~~
-~~        "email": "mail1@gmail.com"~~
-~~      },~~
-~~      "google-antigravity:mail2@gmail.com": {~~
-~~        "provider": "google-antigravity",~~
-~~        "mode": "oauth"~~
-~~      }~~
-~~    },~~
-~~    "order": {~~
-~~      "anthropic": [~~
-~~        "anthropic:default",~~
-~~        "anthropic:manual"~~
-~~      ],~~
-~~      "google-antigravity": [~~
-~~        "google-antigravity:mail1@gmail.com",~~
-~~        "google-antigravity:mail2@gmail.com"~~
-~~      ]~~
-~~    }~~
-~~  }~~
-~~}~~
-```
-#### 配置说明
-
-**profiles 字段**：
-- 定义所有可用的认证配置
-- 格式：`"提供商:标识符"`
-- `mode`：认证方式（`oauth` 或 `token`）
-- `email`：OAuth 账号邮箱（可选）
-
-**order 字段**：
-- 定义每个提供商的账号使用顺序
-- 系统会按顺序轮换使用
-- 当前账号限流时自动切换到下一个
-
-#### 实战案例1：Anthropic 双账号轮换
-
-**场景**：配置 2 个 Claude API Key，避免限流
-
-```json
-~~{~~
-~~  "auth": {~~
-~~    "profiles": {~~
-~~      "anthropic:account1": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "token"~~
-~~      },~~
-~~      "anthropic:account2": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "token"~~
-~~      }~~
-~~    },~~
-~~    "order": {~~
-~~      "anthropic": [~~
-~~        "anthropic:account1",~~
-~~        "anthropic:account2"~~
-~~      ]~~
-~~    }~~
-~~  }~~
-~~}~~
-```
-**配置 API Key**：
-```bash
-# ~~在 Antigravity Manager 中分别配置两个 API Key~~
-# ~~或在 OpenClaw 配置中添加：~~
-~~{~~
-~~  "models": {~~
-~~    "providers": {~~
-~~      "anthropic": {~~
-~~        "apiKey": "sk-ant-api-key-1",~~
-~~        ...~~
-~~      },~~
-~~      "anthropic-2": {~~
-~~        "apiKey": "sk-ant-api-key-2",~~
-~~        ...~~
-~~      }~~
-~~    }~~
-~~  }~~
-~~}~~
-```
-**工作流程**：
-```
-1. ~~使用 account1 发布送请求~~
-2. ~~account1 达到限流 → 自动切换到 account2~~
-3. ~~account2 达到限流 → 等待 account1 恢复~~
-4. ~~循环往复~~
-```
-#### 实战案例2：Google 多邮箱轮换
-
-**场景**：使用多个 Google 账号访问 Gemini
-
-```json
-~~{~~
-~~  "auth": {~~
-~~    "profiles": {~~
-~~      "google-antigravity:work@gmail.com": {~~
-~~        "provider": "google-antigravity",~~
-~~        "mode": "oauth",~~
-~~        "email": "work@gmail.com"~~
-~~      },~~
-~~      "google-antigravity:personal@gmail.com": {~~
-~~        "provider": "google-antigravity",~~
-~~        "mode": "oauth",~~
-~~        "email": "personal@gmail.com"~~
-~~      },~~
-~~      "google-antigravity:backup@gmail.com": {~~
-~~        "provider": "google-antigravity",~~
-~~        "mode": "oauth",~~
-~~        "email": "backup@gmail.com"~~
-~~      }~~
-~~    },~~
-~~    "order": {~~
-~~      "google-antigravity": [~~
-~~        "google-antigravity:work@gmail.com",~~
-~~        "google-antigravity:personal@gmail.com",~~
-~~        "google-antigravity:backup@gmail.com"~~
-~~      ]~~
-~~    }~~
-~~  }~~
-~~}~~
-```
-**优势**：
-- ✅ 3 个账号轮换，限流概率降低 66%
-- ✅ 免费额度叠加（3 倍免费额度）
-- ✅ 高峰期自动负载均衡
-
-#### 实战案例3：混合认证模式
-
-**场景**：同时使用 OAuth 和 API Token
-
-```json
-~~{~~
-~~  "auth": {~~
-~~    "profiles": {~~
-~~      "anthropic:oauth-account": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "oauth"~~
-~~      },~~
-~~      "anthropic:token-account": {~~
-~~        "provider": "anthropic",~~
-~~        "mode": "token"~~
-~~      }~~
-~~    },~~
-~~    "order": {~~
-~~      "anthropic": [~~
-~~        "anthropic:oauth-account",~~
-~~        "anthropic:token-account"~~
-~~      ]~~
-~~    }~~
-~~  }~~
-~~}~~
-```
-**使用场景**：
-- OAuth 账号：日常使用（更安全）
-- Token 账号：备用（更稳定）
-
-#### 配置最佳实践
-
-**1. 账号数量建议**：
-```
-~~✅ 推荐：2-3 个账号~~
-~~❌ 不推荐：5+ 个账号（管理复杂）~~
-```
-**2. 认证方式选择**：
-```
-~~OAuth：更安全，适合个人账号~~
-~~Token：更稳定，适合 API 密钥~~
-```
-**3. 轮换策略**：
-```
-~~✅ 按使用频率排序（高频 → 低频）~~
-~~✅ 按账号等级排序（付费 → 免费）~~
-```
-**4. 监控和维护**：
-```bash
-# ~~查看当前使用的认证配置~~
-~~openclaw config get auth.profiles~~
-
-# ~~测试认证是否有效~~
-~~openclaw test api~~
-```
-### 11.2.5 自动切换配置
-
-**基于任务类型切换**：
-```json
-~~{~~
-~~  "rules": [~~
-~~    {~~
-~~      "condition": "task.type === 'code'",~~
-~~      "model": "deepseek-v3"~~
-~~    },~~
-~~    {~~
-~~      "condition": "task.type === 'image'",~~
-~~      "model": "gemini-3-pro"~~
-~~    },~~
-~~    {~~
-~~      "condition": "task.complexity === 'high'",~~
-~~      "model": "claude-opus-4.6"~~
-~~    },~~
-~~    {~~
-~~      "condition": "default",~~
-~~      "model": "claude-sonnet-4.5"~~
-~~    }~~
-~~  ]~~
-~~}~~
-```
-**基于成本切换**：
-```json
-~~{~~
-~~  "rules": [~~
-~~    {~~
-~~      "condition": "cost.daily < 10",~~
-~~      "model": "claude-opus-4.6"~~
-~~    },~~
-~~    {~~
-~~      "condition": "cost.daily >= 10",~~
-~~      "model": "claude-sonnet-4.5"~~
-~~    }~~
-~~  ]~~
-~~}~~
-```
----
-
-## 11.3 记忆搜索配置（Memory Search）
-
-> 🧠 **智能记忆**：配置 Memory Search 让 OpenClaw 记住历史对话，提供更智能的上下文感知。
-
-### 11.3.1 什么是 Memory Search？
-
-Memory Search 是 OpenClaw 的记忆系统，可以：
-- 记住历史对话内内容
-- 搜索相关会话记附录
-- 提供上下文感知
-- 支持混合检索（向量 + 文本）
-
-### 11.3.2 基础配置
-
-**配置文件路径**：`~/.openclaw/openclaw.json`
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "memorySearch": {
-        "sources": ["memory", "sessions"],
-        "experimental": {
-          "sessionMemory": true
-        },
-        "provider": "gemini",
-        "remote": {
-          "apiKey": "AIzaSy**************************"
-        },
-        "fallback": "gemini",
-        "model": "gemini-embedding-001",
-        "query": {
-          "hybrid": {
-            "enabled": true,
-            "vectorWeight": 0.7,
-            "textWeight": 0.3
-          }
-        }
-      }
-    }
-  }
-}
-```
-### 11.3.3 配置项详解
-
-#### sources（数据源）
-
-```json
-{
-  "sources": ["memory", "sessions"]
-}
-```
-**可选值**：
-- `memory`：长期记忆（跨会话）
-- `sessions`：会话记附录（当前会话）
-
-**推荐配置**：
-```json
-// 只使用长期记忆
-"sources": ["memory"]
-
-// 同时使用长期记忆和会话记附录
-"sources": ["memory", "sessions"]
-```
-#### experimental（实验性功能）
-
-```json
-{
-  "experimental": {
-    "sessionMemory": true
-  }
-}
-```
-**sessionMemory**：
-- `true`：启用会话记忆（推荐）
-- `false`：禁用会话记忆
-
-#### provider（嵌入模型提供商）
-
-```json
-{
-  "provider": "gemini"
-}
-```
-**支持的提供商**：
-- `gemini`：Google Gemini（推荐，免费）
-- `openai`：OpenAI Embeddings
-- `local`：本地嵌入模型
-
-**推荐**：使用 Gemini（免费且效果好）
-
-#### remote（远程 API 配置）
-
-```json
-{
-  "remote": {
-    "apiKey": "AIzaSy**************************"
-  }
-}
-```
-**获取 Gemini API Key**：
-1. 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 登录 Google 账号
-3. 创建 API Key
-4. 复制并粘贴到配置中
-
-#### fallback（备用提供商）
-
-```json
-{
-  "fallback": "gemini"
-}
-```
-当主提供商失败时，使用备用提供商。
-
-#### model（嵌入模型）
-
-```json
-{
-  "model": "gemini-embedding-001"
-}
-```
-**Gemini 嵌入模型**：
-- `gemini-embedding-001`：标准模型（推荐）
-- `text-embedding-004`：高级模型
-
-**OpenAI 嵌入模型**：
-- `text-embedding-3-small`：小模型（便宜）
-- `text-embedding-3-large`：大模型（效果好）
-
-#### query（查询配置）
-
-```json
-{
-  "query": {
-    "hybrid": {
-      "enabled": true,
-      "vectorWeight": 0.7,
-      "textWeight": 0.3
-    }
-  }
-}
-```
-**hybrid（混合检索）**：
-- `enabled`：是否启用混合检索
-- `vectorWeight`：向量搜索权重（0-1）
-- `textWeight`：文本搜索权重（0-1）
-
-**权重建议**：
-```
-语义搜索优先：vectorWeight: 0.7, textWeight: 0.3
-关键词搜索优先：vectorWeight: 0.3, textWeight: 0.7
-平衡模式：vectorWeight: 0.5, textWeight: 0.5
-```
-### 11.3.4 实战案例1：基础配置（Gemini）
-
-**场景**：使用免费的 Gemini 嵌入模型
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "memorySearch": {
-        "sources": ["memory", "sessions"],
-        "experimental": {
-          "sessionMemory": true
-        },
-        "provider": "gemini",
-        "remote": {
-          "apiKey": "你的Gemini_API_Key"
-        },
-        "model": "gemini-embedding-001",
-        "query": {
-          "hybrid": {
-            "enabled": true,
-            "vectorWeight": 0.7,
-            "textWeight": 0.3
-          }
-        }
-      }
-    }
-  }
-}
-```
-**优势**：
-- ✅ 完全免费
-- ✅ 效果优秀
-- ✅ 配置简单
-
-### 11.3.5 实战案例2：高级配置（OpenAI）
-
-**场景**：使用 OpenAI 嵌入模型（更高精度）
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "memorySearch": {
-        "sources": ["memory", "sessions"],
-        "experimental": {
-          "sessionMemory": true
-        },
-        "provider": "openai",
-        "remote": {
-          "apiKey": "sk-your-openai-api-key"
-        },
-        "fallback": "gemini",
-        "model": "text-embedding-3-large",
-        "query": {
-          "hybrid": {
-            "enabled": true,
-            "vectorWeight": 0.8,
-            "textWeight": 0.2
-          }
-        }
-      }
-    }
-  }
-}
-```
-**优势**：
-- ✅ 精度更高
-- ✅ 支持更多语言
-- ✅ 有备用方案
-
-**成本**：
-- text-embedding-3-small：$0.02/百万 tokens
-- text-embedding-3-large：$0.13/百万 tokens
-
-### 11.3.6 实战案例3：本地部署（隐私优先）
-
-**场景**：使用本地嵌入模型，保护隐私
-
-```json
-{
-  "agents": {
-    "defaults": {
-      "memorySearch": {
-        "sources": ["memory", "sessions"],
-        "experimental": {
-          "sessionMemory": true
-        },
-        "provider": "local",
-        "model": "all-MiniLM-L6-v2",
-        "query": {
-          "hybrid": {
-            "enabled": true,
-            "vectorWeight": 0.6,
-            "textWeight": 0.4
-          }
-        }
-      }
-    }
-  }
-}
-```
-**优势**：
-- ✅ 完全本地，保护隐私
-- ✅ 无需 API Key
-- ✅ 无使用限制
-
-**劣势**：
-- ❌ 需要本地计算资源
-- ❌ 精度略低于云端模型
-
-### 11.3.7 配置命令行方式
-
-```bash
-# 启用 Memory Search
-openclaw config set agents.defaults.memorySearch.experimental.sessionMemory true
-
-# 设置提供商
-openclaw config set agents.defaults.memorySearch.provider "gemini"
-
-# 设置 API Key（需要手动编辑 JSON）
-# 或使用 jq 命令
-cat ~/.openclaw/openclaw.json | jq '.agents.defaults.memorySearch.remote.apiKey = "你的API_Key"' > /tmp/openclaw-temp.json && mv /tmp/openclaw-temp.json ~/.openclaw/openclaw.json
-
-# 重启 Gateway
-openclaw gateway restart
-```
-### 11.3.8 验证配置
-
-```bash
-# 查看当前配置
-openclaw config get agents.defaults.memorySearch
-
-# 测试记忆搜索
-openclaw message send "记住：我喜欢喝咖啡"
-openclaw message send "我喜欢喝什么？"
-
-# 应该返回：根据我的记忆，你喜欢喝咖啡。
-```
-### 11.3.9 使用场景
-
-**场景1：个人助手**
-```
-你：记住我的生日是 1990 年 1 月 1 日
-OpenClaw：好的，已记住。
-
-（几天后）
-你：我的生日是什么时候？
-OpenClaw：根据我的记忆，你的生日是 1990 年 1 月 1 日。
-```
-**场景2：项目管理**
-```
-你：项目 A 的截止日期是 2026 年 3 月 1 日
-OpenClaw：已记附录。
-
-（一周后）
-你：项目 A 什么时候截止？
-OpenClaw：项目 A 的截止日期是 2026 年 3 月 1 日。
-```
-**场景3：知识积累**
-```
-你：DeepSeek API 的价格是 $0.001/千 tokens
-OpenClaw：已记住。
-
-（下次对话）
-你：哪个模型最便宜？
-OpenClaw：根据我的记忆，DeepSeek 最便宜，价格是 $0.001/千 tokens。
-```
-### 11.3.10 最佳实践
-
-**1. 选择合适的提供商**：
-```
-免费用户：Gemini（免费且效果好）
-付费用户：OpenAI（精度更高）
-隐私优先：Local（完全本地）
-```
-**2. 调整混合检索权重**：
-```
-语义理解为主：vectorWeight: 0.7-0.8
-关键词匹配为主：textWeight: 0.6-0.7
-平衡模式：各 0.5
-```
-**3. 定期清理记忆**：
-```bash
-# 清理过期记忆
-openclaw memory clean --older-than 30d
-
-# 查看记忆使用情况
-openclaw memory stats
-```
-**4. 备份重要记忆**：
-```bash
-# 导出记忆
-openclaw memory export --output memory-backup.json
-
-# 导入记忆
-openclaw memory import memory-backup.json
-```
-### 11.3.11 故障排查
-
-**访问题1：记忆搜索不工作**
-
-**原因**：API Key 无效或未配置
-
-**解决方法**：
-```bash
-# 检查配置
-openclaw config get agents.defaults.memorySearch
-
-# 测试 API Key
-curl -H "Content-Type: application/json" \
-  -d '{"contents":[{"parts":[{"text":"test"}]}]}' \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=你的API_Key"
-```
-**访问题2：搜索结果不准确**
-
-**原因**：混合检索权重不合适
-
-**解决方法**：
-```json
-// 调整权重
-{
-  "query": {
-    "hybrid": {
-      "vectorWeight": 0.8,  // 提高语义搜索权重
-      "textWeight": 0.2
-    }
-  }
-}
-```
-**访问题3：记忆占用空间过大**
-
-**原因**：长期积累未清理
-
-**解决方法**：
-```bash
-# 查看记忆大小
-openclaw memory stats
-
-# 清理旧记忆
-openclaw memory clean --older-than 60d
-
-# 压缩记忆数据库
-openclaw memory compact
-```
----
-
-## 11.4 成本优化方案
-
-### 11.4.1 Token消耗分析
-
-**查看消耗统计**：
-```bash
-# ~~查看今日消耗~~
-~~openclaw stats today~~
-
-# ~~输出示例：~~
-~~今日Token消耗：~~
-- ~~Claude Sonnet：150K tokens ($0.75)~~
-- ~~Gemini Pro：50K tokens ($0.00)~~
-- ~~总计：200K tokens ($0.75)~~
-
-~~任务分布：~~
-- ~~文件搜索：30%~~
-- ~~日程管理：20%~~
-- ~~知识管理：25%~~
-- ~~其他：25%~~
-```
-**消耗优化建议**：
-
-⚠️ 高消耗任务：
-- 文件搜索：每次10K tokens
-- 建议：优化搜索范围
-
-✅ 优化方案：
-- 使用缓存
-- 减少上下文
-- 优化提示词
-```
-### ~~11.4.2 缓存策略~~
-
-~~**启用缓存**：~~
-```bash
-# 启用响应缓存
-openclaw config set cache.enabled true
-
-# 设置缓存时间（小时）
-openclaw config set cache.ttl 24
-
-# 设置缓存大小（MB）
-openclaw config set cache.maxSize 1000
-```
-~~**缓存效果**：~~
-```
-未启用缓存：
-- 相同访问题每次都调用API
-- Token消耗：10K/次
-- 成本：$0.05/次
-
-启用缓存后：
-- 相同访问题直接返回缓存
-- Token消耗：0
-- 成本：$0
-- 节省：100%
-```
-### ~~11.4.3 模型降级方案~~
-
-~~**降级策略**：~~
-```
-1. 简单任务用便宜模型
-2. 复杂任务用贵模型
-3. 失败后降级重试
-```
-~~**配置示例**：~~
-```javascript
-{
-  "fallback": [
-    "claude-opus-4.6",    // 首选
-    "claude-sonnet-4.5",  // 降级1
-    "gemini-3-pro"        // 降级2
-  ]
-}
-```
-### ~~11.4.4 成本控制实战~~
-
-~~**案例1：降低50%成本**~~
-```
-原方案：
-- 全部使用Claude Opus
-- 日均消耗：$20
-
-优化方案：
-- 简单任务用Sonnet
-- 复杂任务用Opus
-- 启用缓存
-
-优化后：
-- 日均消耗：$10
-- 节省：50%
-```
-~~**案例2：免费额度最大化**~~
-```
-策略：
-1. 优先使用Gemini（免费额度大）
-2. 超额后切换到DeepSeek（便宜）
-3. 重要任务用Claude
-
-效果：
-- 月成本：$5
-- 节省：90%
-```
----
-
-## 11.5 性能调优技巧
-
-### 11.5.1 响应速度优化
-
-**优化前**：
-```
-平均响应时间：5秒
-用户体验：一般
-```
-**优化方案**：
-```
-1. 启用缓存
-2. 减少上下文
-3. 使用流式输出
-4. 并发布处理
-```
-**优化后**：
-```
-平均响应时间：2秒
-用户体验：优秀
-提升：60%
-```
-### 11.5.2 并发布处理优化
-
-**配置并发布数**：
-```bash
-# 设置最大并发布数
-openclaw config set concurrency.max 5
-
-# 设置队列大小
-openclaw config set concurrency.queueSize 100
-```
-### 11.5.3 内存管理
-
-**监控内存使用**：
-```bash
-# 查看内存使用
-openclaw stats memory
-
-# 输出示例：
-内存使用情况：
-- 当前：512MB
-- 峰值：800MB
-- 平均：600MB
-```
-**优化建议**：
-```
-⚠️ 内存占用高：
-- 清理缓存
-- 减少并发布
-- 重启服务
-```
----
-
-## ~~📝 本章节小结~~
-
-~~学习了OpenClaw的高级配置：~~
-1. ~~Antigravity Manager配置~~
-2. ~~多模型切换策略~~
-3. ~~成本优化方案~~
-4. ~~性能调优技巧~~
-
-~~掌握这些技巧可以：~~
-- ~~降低50%以上成本~~
-- ~~提升60%响应速度~~
-- ~~提高系统稳定性~~
-
----
-
-## 11.6 模型提供商配置详解（当前推荐主线）
-
-> 🤖 **多模型支持**：OpenClaw 支持 20+ 主流 AI 模型提供商，灵活配置满足不同需求。
-
-### 11.6.0 快速配置：使用命令行向导（推荐新手）
-
-> 💡 **最简单的方式**：使用 `openclaw onboard` 命令启动配置向导，交互式配置模型。
-
-> ⚠️ **执行建议**：以下这一节才是当前更值得优先照做的内容；上面的 Antigravity / 历史 provider 片段只建议作为背景资料，不建议直接复制到生产环境。
-
-#### 启动配置向导
-
-```bash
-openclaw onboard
-```
-执行后会启动命令行交互式配置向导。
-
-#### 配置流程
-
-**步骤1：选择初始化模式**
-
-```
-◇  初始化模式
-│  快速开始
-```
-**步骤2：选择模型提供商**
-
-```
-◆  模型/认证提供商
-│  ○ OpenAI (Codex OAuth + API key)
-│  ○ Anthropic
-│  ○ MiniMax
-│  ○ Moonshot AI
-│  ○ Google
-│  ○ OpenRouter
-│  ○ Qwen
-│  ○ Z.AI (GLM 4.7)
-│  ○ Copilot
-│  ○ Vercel AI Gateway
-│  ○ OpenCode Zen
-│  ○ Xiaomi
-│  ○ Synthetic
-│  ○ Venice AI
-│  ○ Skip for now
-```
-使用 **方向键** 选择，**空格键** 确认。
-
-**步骤3：输入 API Key**
-
-根据提示输入对应提供商的 API Key。
-
-**步骤4：选择默认模型**
-
-从可用模型列表中选择默认模型。
-
-**步骤5：完成配置**
-
-配置自动保存并重启 Gateway。
-
-#### 命令行向导的优势
-
-✅ **交互式操作**：逐步引导，不易出错
-✅ **实时验证**：输入 API Key 后立即验证有效性
-✅ **自动配置**：自动生成配置文件
-✅ **一键保存**：自动保存并重启服务
-✅ **错误提示**：配置错误时会有明确的提示信息
-
-#### 验证配置
-
-配置完成后，验证模型是否可用：
-
-```bash
-# 查看已配置的模型
-openclaw models list
-
-# 测试模型连接
-openclaw message send "你好，测试一下"
-```
-#### 修改配置
-
-如果需要修改配置，再次运行：
-
-```bash
-openclaw onboard
-```
-可以添加、删除或修改模型提供商。
-
----
-
-### ~~11.6.1 支持的模型提供商~~
-
-#### ~~国际模型~~
-
-|~~ 提供商 ~~|~~ 模型 ~~|~~ 特点 ~~|~~ 价格 ~~|
-|--------|------|------|------|
-|~~ **OpenAI** ~~|~~ GPT-4o, GPT-4o-mini ~~|~~ 功能全面、生态完善 ~~|~~ 高 ~~|
-|~~ **Anthropic** ~~|~~ Claude 3.5 Sonnet, Claude 3 Opus ~~|~~ 推理能力强、安全性高 ~~|~~ 中高 ~~|
-|~~ **Google** ~~|~~ Gemini 2.0 Flash, Gemini 1.5 Pro ~~|~~ 多模态能力强、免费额度大 ~~|~~ 中 ~~|
-|~~ **xAI** ~~|~~ Grok 2 ~~|~~ 实时信息、幽默风格 ~~|~~ 中 ~~|
-|~~ **Mistral** ~~|~~ Mistral Large, Mistral Small ~~|~~ 开源友好、性价比高 ~~|~~ 中 ~~|
-|~~ **Cohere** ~~|~~ Command R+, Command R ~~|~~ 企业级、RAG 优化 ~~|~~ 中 ~~|
-
-#### ~~国产模型~~
-
-|~~ 提供商 ~~|~~ 模型 ~~|~~ 特点 ~~|~~ 价格 ~~|
-|--------|------|------|------|
-|~~ **DeepSeek** ~~|~~ DeepSeek-V3, DeepSeek-Chat ~~|~~ 性价比之王、编程能力强 ~~|~~ 极低 ~~|
-|~~ **月之暗面** ~~|~~ Kimi k2.5 ~~|~~ 超长上下文（200万字） ~~|~~ 低 ~~|
-|~~ **智谱AI** ~~|~~ GLM-4, GLM-4V ~~|~~ 多模态、中文优化 ~~|~~ 中 ~~|
-|~~ **百川智能** ~~|~~ Baichuan-4 ~~|~~ 中文理解好 ~~|~~ 中 ~~|
-|~~ **MiniMax** ~~|~~ abab6.5 ~~|~~ 语音合成、角色扮演 ~~|~~ 中 ~~|
-|~~ **阿里云** ~~|~~ Qwen-Max, Qwen-Plus ~~|~~ 阿里生态、企业级 ~~|~~ 中 ~~|
-|~~ **百度** ~~|~~ ERNIE 4.0 ~~|~~ 百度生态、知识增强 ~~|~~ 中 ~~|
-
-#### ~~本地模型~~
-
-|~~ 提供商 ~~|~~ 模型 ~~|~~ 特点 ~~|~~ 价格 ~~|
-|--------|------|------|------|
-|~~ **Ollama** ~~|~~ Llama 3.1, Qwen2.5 ~~|~~ 完全本地、隐私保护 ~~|~~ 免费 ~~|
-|~~ **LM Studio** ~~|~~ 各种开源模型 ~~|~~ 图形界面、易用 ~~|~~ 免费 ~~|
-
-### ~~11.6.2 配置 OpenAI~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "openai": {
-        "baseUrl": "https://api.openai.com/v1",
-        "apiKey": "sk-your-api-key",
-        "auth": "api-key",
-        "api": "openai-chat",
-        "models": [
-          {
-            "id": "gpt-4o",
-            "name": "GPT-4o",
-            "contextWindow": 128000,
-            "maxTokens": 16384
-          },
-          {
-            "id": "gpt-4o-mini",
-            "name": "GPT-4o Mini",
-            "contextWindow": 128000,
-            "maxTokens": 16384
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.3 配置 Anthropic (Claude)~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "anthropic": {
-        "baseUrl": "https://api.anthropic.com",
-        "apiKey": "sk-ant-your-api-key",
-        "auth": "api-key",
-        "api": "anthropic",
-        "models": [
-          {
-            "id": "claude-3-5-sonnet-20241022",
-            "name": "Claude 3.5 Sonnet",
-            "contextWindow": 200000,
-            "maxTokens": 8192
-          },
-          {
-            "id": "claude-3-opus-20240229",
-            "name": "Claude 3 Opus",
-            "contextWindow": 200000,
-            "maxTokens": 4096
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.4 配置 Google Gemini~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "google": {
-        "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
-        "apiKey": "your-google-api-key",
-        "auth": "api-key",
-        "api": "google-ai",
-        "models": [
-          {
-            "id": "gemini-2.0-flash-exp",
-            "name": "Gemini 2.0 Flash",
-            "contextWindow": 1000000,
-            "maxTokens": 8192
-          },
-          {
-            "id": "gemini-1.5-pro",
-            "name": "Gemini 1.5 Pro",
-            "contextWindow": 2000000,
-            "maxTokens": 8192
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.5 配置 DeepSeek（推荐）~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "deepseek": {
-        "baseUrl": "https://api.deepseek.com",
-        "apiKey": "sk-your-api-key",
-        "auth": "api-key",
-        "api": "openai-chat",
-        "models": [
-          {
-            "id": "deepseek-chat",
-            "name": "DeepSeek Chat",
-            "contextWindow": 64000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "deepseek-coder",
-            "name": "DeepSeek Coder",
-            "contextWindow": 64000,
-            "maxTokens": 4096
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.6 配置 Kimi（月之暗面）~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "moonshot": {
-        "baseUrl": "https://api.moonshot.cn/v1",
-        "apiKey": "sk-your-api-key",
-        "auth": "api-key",
-        "api": "openai-chat",
-        "models": [
-          {
-            "id": "moonshot-v1-8k",
-            "name": "Kimi k2.5 8K",
-            "contextWindow": 8000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "moonshot-v1-32k",
-            "name": "Kimi k2.5 32K",
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "moonshot-v1-128k",
-            "name": "Kimi k2.5 128K",
-            "contextWindow": 128000,
-            "maxTokens": 4096
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.7 配置 Ollama（本地模型）~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "ollama": {
-        "baseUrl": "http://localhost:11434",
-        "auth": "none",
-        "api": "ollama",
-        "models": [
-          {
-            "id": "llama3.1:8b",
-            "name": "Llama 3.1 8B",
-            "contextWindow": 128000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "qwen2.5:7b",
-            "name": "Qwen 2.5 7B",
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          }
-        ]
-      }
-    }
-  }
-}
-```
-### ~~11.6.8 多提供商配置示例~~
-
-```json
-{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "deepseek": {
-        "baseUrl": "https://api.deepseek.com",
-        "apiKey": "sk-deepseek-key",
-        "auth": "api-key",
-        "api": "openai-chat",
-        "models": [
-          {
-            "id": "deepseek-chat",
-            "name": "DeepSeek Chat",
-            "contextWindow": 64000,
-            "maxTokens": 4096
-          }
+          "qwen/wan2.6-r2v-flash"
         ]
       },
-      "anthropic": {
-        "baseUrl": "https://api.anthropic.com",
-        "apiKey": "sk-ant-key",
-        "auth": "api-key",
-        "api": "anthropic",
-        "models": [
-          {
-            "id": "claude-3-5-sonnet-20241022",
-            "name": "Claude 3.5 Sonnet",
-            "contextWindow": 200000,
-            "maxTokens": 8192
-          }
-        ]
-      },
-      "ollama": {
-        "baseUrl": "http://localhost:11434",
-        "auth": "none",
-        "api": "ollama",
-        "models": [
-          {
-            "id": "llama3.1:8b",
-            "name": "Llama 3.1 8B",
-            "contextWindow": 128000,
-            "maxTokens": 4096
-          }
-        ]
+      "musicGenerationModel": {
+        "primary": "google/lyria-3-clip-preview"
       }
     }
-  },
+  }
+}
+```
+
+几点说明：
+
+1. `imageModel` 用于“主模型不能直接看图”时的图像理解兜底
+2. `imageGenerationModel` 专门给 `image_generate` 用
+3. `videoGenerationModel` 和 `musicGenerationModel` 只影响共享媒体工具
+4. 如果你没有显式配置，OpenClaw 也会尝试根据已认证 provider 自动推断默认值，但生产环境不建议完全依赖自动推断
+
+---
+
+## 11.4 Active Memory：让记忆在回复前主动介入
+
+`v2026.4.12` 的一个核心变化，是 **Active Memory plugin** 进入主线能力：它会在主回复前先跑一次受限的记忆子代理，用 `memory_search` / `memory_get` 拉回和当前会话相关的偏好、上下文和历史事实。
+
+### 11.4.1 推荐起步配置
+
+```json
+{
+  "plugins": {
+    "entries": {
+      "active-memory": {
+        "enabled": true,
+        "config": {
+          "agents": ["main"],
+          "allowedChatTypes": ["direct"],
+          "modelFallbackPolicy": "default-remote",
+          "queryMode": "recent",
+          "promptStyle": "balanced",
+          "timeoutMs": 15000,
+          "maxSummaryChars": 220,
+          "persistTranscripts": false,
+          "logging": true
+        }
+      }
+    }
+  }
+}
+```
+
+### 11.4.2 什么时候该开，什么时候别开
+
+**适合开启**：
+
+- 私聊型、长期关系型助手
+- 高频重复协作
+- 需要记住偏好、习惯、上下文的场景
+
+**不适合默认开启**：
+
+- 纯自动化 worker
+- 一次性 API 任务
+- 强确定性流水线
+- 你不希望隐藏个性化影响输出的场景
+
+### 11.4.3 调试方法
+
+```bash
+openclaw memory status --deep
+```
+
+在聊天里可以用 `/verbose on` 看 Active Memory 的状态行。调优优先从这几个参数入手：
+
+- `queryMode`
+- `promptStyle`
+- `timeoutMs`
+- `maxSummaryChars`
+
+---
+
+## 11.5 Memory Wiki：把长期记忆变成“可维护的知识层”
+
+`memory-wiki` 是官方内建 plugin，它**不是用来替代 memory-core 的**，而是把长期记忆编译成结构化 wiki 层，适合：
+
+- 项目知识沉淀
+- 客户画像 / 产品知识整理
+- 知识冲突排查
+- 长周期研究类任务
+
+### 11.5.1 官方推荐理解方式
+
+- **memory-core / QMD / dreaming**：负责 recall、promotion、search、dreaming
+- **memory-wiki**：负责把 durable memory 编译成可导航的 wiki 页面与结构化 claim/evidence
+
+### 11.5.2 推荐配置示例
+
+```json
+{
+  "plugins": {
+    "entries": {
+      "memory-wiki": {
+        "enabled": true,
+        "config": {
+          "vaultMode": "isolated",
+          "vault": {
+            "path": "~/.openclaw/wiki/main",
+            "renderMode": "obsidian"
+          },
+          "bridge": {
+            "enabled": false,
+            "readMemoryArtifacts": true,
+            "indexDreamReports": true,
+            "indexDailyNotes": true,
+            "indexMemoryRoot": true,
+            "followMemoryEvents": true
+          },
+          "ingest": {
+            "autoCompile": true,
+            "maxConcurrentJobs": 1,
+            "allowUrlIngest": true
+          },
+          "search": {
+            "backend": "shared",
+            "corpus": "wiki"
+          },
+          "context": {
+            "includeCompiledDigestPrompt": false
+          },
+          "render": {
+            "preserveHumanBlocks": true,
+            "createBacklinks": true,
+            "createDashboards": true
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### 11.5.3 常用命令
+
+```bash
+openclaw wiki init
+openclaw wiki status
+openclaw wiki compile
+openclaw wiki lint
+openclaw wiki search "customer onboarding"
+openclaw wiki get entity.alpha
+```
+
+推荐工作流：
+
+1. 先让 memory-core 跑稳
+2. 再开 `memory-wiki`
+3. 默认优先 `isolated` 模式
+4. 如果你明确需要从现有 memory artifact 构建 wiki，再启用 `bridge`
+
+---
+
+## 11.6 执行审批、安全与自托管边界
+
+### 11.6.1 不要只看 `exec`，要同时看 approval 文件与 tool policy
+
+`v2026.4.12` 增加了本地 `exec-policy` 命令，目标是把 `tools.exec.*` 配置和本机审批文件同步起来。但实际落地时，你仍然要同时理解三层东西：
+
+1. `tools.exec.*`
+2. `~/.openclaw/exec-approvals.json`
+3. agent 的 tool policy / allowlist
+
+最实用的检查命令：
+
+```bash
+openclaw exec-policy show
+openclaw approvals get
+openclaw approvals get --gateway
+```
+
+如果你要给某些命令做 allowlist：
+
+```bash
+openclaw approvals allowlist add "~/Projects/**/bin/rg"
+openclaw approvals allowlist add --agent main "/usr/bin/uname"
+```
+
+### 11.6.2 Hook / Webhook 的安全底线
+
+- Hook token 和 gateway token 分开
+- 不要把 hook 暴露在根路径 `/`
+- `hooks.path` 保持独立子路径
+- Webhook 路由尽量绑定最小 `sessionKey`
+- Secret 优先走 `env` / `file` / `exec`，不要写死到仓库里
+
+### 11.6.3 自托管 provider 的私网配置
+
+`v2026.4.12` 官方加入了 `models.providers.*.request.allowPrivateNetwork`，用于你明确知道自己在访问可信私网 provider 时放开限制。这个开关非常有用，但也只应该用于**你完全控制的私网服务**。
+
+适用场景：
+
+- 自己的 LM Studio / OpenAI-compatible endpoint
+- 内网部署的代理层
+- VPN / Tailnet 内的推理网关
+
+不适用场景：
+
+- 公网随便开的代理地址
+- 不明来源共享网关
+- 混合代理环境里没有明确边界的 endpoint
+
+---
+
+## 11.7 性能调优：2026.4 值得关注的点
+
+### 11.7.1 先做“结构性调优”，再做“参数性调优”
+
+最有效的顺序通常是：
+
+1. 先把主模型 / 回退链配清楚
+2. 再把媒体模型单独拆开
+3. 再开 Active Memory / Memory Wiki
+4. 最后才调 thinking、context、fallback 数量
+
+### 11.7.2 本地模型用户的新补充
+
+`v2026.4.15-beta.1` 新增了实验参数：
+
+```json
+{
   "agents": {
     "defaults": {
-      "model": {
-        "primary": "deepseek/deepseek-chat",
-        "fallback": [
-          "anthropic/claude-3-5-sonnet-20241022",
-          "ollama/llama3.1:8b"
-        ]
+      "experimental": {
+        "localModelLean": true
       }
     }
   }
 }
 ```
-### ~~11.6.9 模型选择策略~~
 
-~~**按任务类型选择**：~~
+它会在弱本地模型场景下去掉一些重量级默认工具，降低提示词体积。**注意这是 beta 能力**，本章只把它当可选项，不建议你在生产主环境里默认打开。
 
-```javascript
-// 编程任务
-"deepseek/deepseek-coder"
-
-// 长文档处理
-"moonshot/moonshot-v1-128k"
-
-// 复杂推理
-"anthropic/claude-3-opus-20240229"
-
-// 日常对话
-"deepseek/deepseek-chat"
-
-// 多模态（图片）
-"google/gemini-2.0-flash-exp"
-
-// 本地隐私
-"ollama/llama3.1:8b"
-```
-~~**按成本选择**：~~
-
-```
-极低成本：DeepSeek ($0.001/千tokens)
-低成本：Kimi, GLM-4 ($0.01/千tokens)
-中等成本：Gemini, Mistral ($0.05/千tokens)
-高成本：Claude, GPT-4 ($0.15/千tokens)
-免费：Ollama（本地）
-```
----
-
-## 11.7 工具系统详解
-
-> 🔧 **扩展能力**：OpenClaw 的工具系统让 AI 能够执行各种操作，从文件管理到 API 调用。
-
-### 11.7.1 内置工具列表
-
-#### 文件系统工具
-
-| 工具 | 功能 | 示例 |
-|------|------|------|
-| `read_file` | 读取文件内内容 | 读取配置文件 |
-| `write_file` | 写入文件 | 保存笔记 |
-| `list_directory` | 列出目附录 | 查看文件列表 |
-| `search_files` | 搜索文件 | 找到所有 PDF |
-| `move_file` | 移动文件 | 整理文件 |
-| `delete_file` | 删除文件 | 清理临时文件 |
-
-#### Shell 工具
-
-| 工具 | 功能 | 示例 |
-|------|------|------|
-| `execute_command` | 执行命令 | 运行脚本 |
-| `run_script` | 运行脚本 | 批处理任务 |
-
-#### 网络工具
-
-| 工具 | 功能 | 示例 |
-|------|------|------|
-| `web_search` | 网页搜索 | 搜索最新信息 |
-| `fetch_url` | 获取网页 | 下载内内容 |
-| `api_call` | API 调用 | 调用第三方服务 |
-
-#### 数据处理工具
-
-| 工具 | 功能 | 示例 |
-|------|------|------|
-| `parse_json` | 解析 JSON | 处理 API 响应 |
-| `parse_csv` | 解析 CSV | 处理表格数据 |
-| `extract_text` | 提取文本 | 从 PDF 提取 |
-
-### 11.7.2 启用和禁用工具
-
-**查看可用工具**：
-```bash
-openclaw tools list
-```
-**启用工具**：
-```bash
-openclaw tools enable read_file write_file
-```
-**禁用工具**：
-```bash
-openclaw tools disable execute_command
-```
-**配置文件方式**：
-```json
-{
-  "tools": {
-    "enabled": [
-      "read_file",
-      "write_file",
-      "list_directory",
-      "web_search"
-    ],
-    "disabled": [
-      "execute_command",
-      "delete_file"
-    ]
-  }
-}
-```
-### 11.7.3 工具权限控制
-
-**设置工具权限**：
-```json
-{
-  "tools": {
-    "permissions": {
-      "read_file": {
-        "allowedPaths": [
-          "~/Documents",
-          "~/Downloads"
-        ],
-        "deniedPaths": [
-          "~/.ssh",
-          "~/.openclaw"
-        ]
-      },
-      "execute_command": {
-        "allowedCommands": [
-          "ls",
-          "cat",
-          "grep"
-        ],
-        "deniedCommands": [
-          "rm",
-          "sudo"
-        ]
-      }
-    }
-  }
-}
-```
-### 11.7.4 自定义工具开发布
-
-**创建自定义工具**：
-
-```javascript
-// ~/.openclaw/tools/my-tool.js
-export default {
-  name: "my_custom_tool",
-  description: "我的自定义工具",
-  parameters: {
-    type: "object",
-    properties: {
-      input: {
-        type: "string",
-        description: "输入参数"
-      }
-    },
-    required: ["input"]
-  },
-  async execute({ input }) {
-    // 工具逻辑
-    return {
-      success: true,
-      result: `处理结果: ${input}`
-    };
-  }
-};
-```
-**注册工具**：
-```bash
-openclaw tools register ~/.openclaw/tools/my-tool.js
-```
-### 11.7.5 工具使用示例
-
-**文件搜索**：
-```
-你：帮我找到所有包含"发布票"的 PDF 文件
-
-OpenClaw 使用工具：
-1. search_files(pattern="*.pdf", content="发布票")
-2. 返回结果：找到 3 个文件
-   - 发布票_2024_01.pdf
-   - 报销发布票.pdf
-   - 采购发布票_Q1.pdf
-```
-**网页搜索**：
-```
-你：Claude 3.5 Sonnet 最新价格是多少？
-
-OpenClaw 使用工具：
-1. web_search(query="Claude 3.5 Sonnet pricing")
-2. fetch_url(url="https://www.anthropic.com/pricing")
-3. 返回结果：
-   - 输入：$3/百万 tokens
-   - 输出：$15/百万 tokens
-```
-**数据处理**：
-```
-你：分析这个 CSV 文件的销售数据
-
-OpenClaw 使用工具：
-1. read_file(path="sales.csv")
-2. parse_csv(content=...)
-3. 分析数据并生成报告
-```
-### 11.7.6 工具链（Tool Chaining）
-
-OpenClaw 可以自动组合多个工具完成复杂任务：
-
-```
-任务：下载网页并保存为 Markdown
-
-工具链：
-1. fetch_url(url) → 获取网页内内容
-2. extract_text(html) → 提取文本
-3. convert_to_markdown(text) → 转换格式
-4. write_file(path, content) → 保存文件
-```
-### 11.7.7 工具安全最佳实践
-
-**1. 最小权限原则**：
-```json
-{
-  "tools": {
-    "enabled": [
-      "read_file",  // 只启用必要的工具
-      "web_search"
-    ]
-  }
-}
-```
-**2. 路径限制**：
-```json
-{
-  "tools": {
-    "permissions": {
-      "read_file": {
-        "allowedPaths": ["~/Documents"]  // 限制访问范围
-      }
-    }
-  }
-}
-```
-**3. 命令白名单**：
-```json
-{
-  "tools": {
-    "permissions": {
-      "execute_command": {
-        "allowedCommands": ["ls", "cat"]  // 只允许安全命令
-      }
-    }
-  }
-}
-```
----
-
-## ~~11.8 CLI 命令完整参考~~
-
-> ~~📟 **命令行工具**：OpenClaw 提供强大的 CLI 工具，方便管理和操作。~~
-
-### ~~11.8.1 核心命令~~
-
-#### ~~版本和帮助~~
+### 11.7.3 本章推荐的检查顺序
 
 ```bash
-# 查看版本
-openclaw --version
-openclaw -v
-
-# 查看帮助
-openclaw --help
-openclaw -h
-
-# 查看子命令帮助
-openclaw gateway --help
-```
-#### ~~初始化和配置~~
-
-```bash
-# 运行配置向导
-openclaw onboard
-
-# 快速开始向导
-openclaw setup
-
-# 查看配置
-openclaw config list
-
-# 获取配置项
-openclaw config get models.providers
-
-# 设置配置项
-openclaw config set gateway.port 18790
-
-# 删除配置项
-openclaw config delete models.providers.test
-```
-### ~~11.8.2 Gateway 管理~~
-
-```bash
-# 安装/启动 Gateway
-openclaw gateway install
-
-# 查看状态
-openclaw gateway status
-
-# 停止 Gateway
-openclaw gateway stop
-
-# 重启 Gateway
-openclaw gateway restart
-
-# 查看日志
-openclaw logs
-openclaw logs --follow
-openclaw logs --limit 100
-
-# 清理日志
-openclaw logs clear
-```
-### ~~11.8.3 渠道管理~~
-
-```bash
-# 列出所有渠道
-openclaw channels list
-
-# 查看渠道状态
-openclaw channels status
-
-# 添加渠道
-openclaw channels add
-
-# 删除渠道
-openclaw channels remove feishu
-
-# 测试渠道连通性
-openclaw channels status --probe
-```
-### ~~11.8.4 配对管理~~
-
-```bash
-# 列出配对请求
-openclaw pairing list
-openclaw pairing list feishu
-
-# 批准配对
-openclaw pairing approve feishu <CODE>
-
-# 拒绝配对
-openclaw pairing reject feishu <CODE>
-
-# 清理过期配对
-openclaw pairing cleanup
-```
-### ~~11.8.5 插件管理~~
-
-```bash
-# 列出已安装插件
-openclaw plugins list
-
-# 搜索插件
-openclaw plugins search feishu
-
-# 安装插件
-openclaw plugins install @openclaw/feishu
-
-# 卸载插件
-openclaw plugins uninstall @openclaw/feishu
-
-# 更新插件
-openclaw plugins update @openclaw/feishu
-
-# 更新所有插件
-openclaw plugins update --all
-```
-### ~~11.8.6 工具管理~~
-
-```bash
-# 列出所有工具
-openclaw tools list
-
-# 启用工具
-openclaw tools enable read_file write_file
-
-# 禁用工具
-openclaw tools disable execute_command
-
-# 注册自定义工具
-openclaw tools register ~/my-tool.js
-
-# 测试工具
-openclaw tools test read_file
-```
-### ~~11.8.7 Agent 管理~~
-
-```bash
-# 列出 Agents
-openclaw agents list
-
-# 创建 Agent
-openclaw agents create my-agent
-
-# 删除 Agent
-openclaw agents delete my-agent
-
-# 切换 Agent
-openclaw agents switch my-agent
-
-# 查看 Agent 配置
-openclaw agents config my-agent
-```
-### ~~11.8.8 会话管理~~
-
-```bash
-# 列出会话
-openclaw sessions list
-
-# 查看会话详情
-openclaw sessions show <session-id>
-
-# 删除会话
-openclaw sessions delete <session-id>
-
-# 清理所有会话
-openclaw sessions clear
-
-# 导出会话
-openclaw sessions export <session-id> --output session.json
-
-# 导入会话
-openclaw sessions import session.json
-```
-### ~~11.8.9 统计和监控~~
-
-```bash
-# 查看统计信息
-openclaw stats
-
-# 查看今日统计
-openclaw stats today
-
-# 查看本周统计
-openclaw stats week
-
-# 查看 API 消耗
-openclaw stats api
-
-# 查看内存使用
-openclaw stats memory
-
-# 查看性能指标
-openclaw stats performance
-```
-### ~~11.8.10 测试和诊断~~
-
-```bash
-# 测试 API 连接
-openclaw test api
-
-# 测试渠道
-openclaw test channel feishu
-
-# 测试工具
-openclaw test tool read_file
-
-# 运行诊断
-openclaw diagnose
-
-# 检查配置
-openclaw validate config
-
-# 检查健康状态
-openclaw health check
-```
-### ~~11.8.11 数据管理~~
-
-```bash
-# 备份数据
-openclaw backup create
-
-# 列出备份
-openclaw backup list
-
-# 恢复备份
-openclaw backup restore <backup-id>
-
-# 清理缓存
-openclaw cache clear
-
-# 清理临时文件
-openclaw cleanup temp
-
-# 导出数据
-openclaw export --output data.json
-
-# 导入数据
-openclaw import data.json
-```
-### ~~11.8.12 更新和维护~~
-
-```bash
-# 检查更新
-openclaw update check
-
-# 更新到最新版本
-openclaw update
-
-# 更新到指定版本
-openclaw update --version 2026.3.2
-
-# 回滚版本
-openclaw rollback
-
-# 卸载
-openclaw uninstall
-```
-### ~~11.8.13 开发布和调试~~
-
-```bash
-# 开发布模式启动
-openclaw dev
-
-# 调试模式
-openclaw --debug
-
-# 详细日志
-openclaw --verbose
-
-# 运行测试
-openclaw test
-
-# 构建项目
-openclaw build
-
-# 清理构建
-openclaw clean
-```
-### ~~11.8.14 常用命令组合~~
-
-~~**快速重启**：~~
-```bash
-openclaw gateway stop && openclaw gateway install
-```
-~~**查看实时日志**：~~
-```bash
-openclaw logs --follow | grep ERROR
-```
-~~**备份并更新**：~~
-```bash
-openclaw backup create && openclaw update
-```
-~~**清理并重启**：~~
-```bash
-openclaw cache clear && openclaw gateway restart
-```
-~~**完整诊断**：~~
-```bash
-openclaw diagnose && openclaw health check && openclaw test api
-```
-### ~~11.8.15 环境变量~~
-
-```bash
-# 设置日志级别
-export OPENCLAW_LOG_LEVEL=debug
-
-# 设置配置目附录
-export OPENCLAW_HOME=~/.openclaw
-
-# 设置 Gateway 端口
-export OPENCLAW_PORT=18789
-
-# 设置 API Key
-export DEEPSEEK_API_KEY=sk-xxx
-export MOONSHOT_API_KEY=sk-xxx
-```
-### ~~11.8.16 配置文件位置~~
-
-```bash
-# 主配置文件
-~/.openclaw/openclaw.json
-
-# 日志文件件
-~/.openclaw/logs/gateway.log
-
-# 缓存目附录
-~/.openclaw/cache/
-
-# 数据目附录
-~/.openclaw/data/
-
-# 插件目附录
-~/.openclaw/plugins/
-
-# 工具目附录
-~/.openclaw/tools/
+openclaw status
+openclaw models status --probe
+openclaw memory status --deep
+openclaw wiki status
+openclaw approvals get
+openclaw security audit
 ```
 
 ---
 
-## 📝 本章节小结
+## 11.8 本章实践建议
 
-学习了 OpenClaw 高级配置中**仍然值得优先照做**的部分：
+如果你正在配一套长期可用的 OpenClaw 环境，最稳的顺序是：
 
-### 核心内内容
-1. **官方配置主路线** - 优先使用 `openclaw onboard` / `openclaw configure`
-2. **模型提供商配置** - 直接配置官方 provider、auth profile 和默认模型
-3. **模型内容灾机制** - 使用 `primary + fallbacks` 提升稳定性
-4. **媒体模型配置** - 单独设置视频 / 音乐生成模型
-5. **记忆与搜索配置** - 根据场景启用记忆搜索与长期记忆能力
-6. **执行审批与工具策略** - 用 `exec-policy` 管理风险边界
-7. **成本与性能优化** - 在质量、速度和成本之间做平衡
-
-### 实战技能
-- ✅ 配置多个 AI 模型提供商
-- ✅ 配置模型内容灾机制（primary + fallbacks）
-- ✅ 配置默认文本 / 视频模型
-- ✅ 配置记忆搜索系统
-- ✅ 根据任务选择最优模型
-- ✅ 使用工具系统扩展功能
-- ✅ 掌握 CLI 命令高效管理
-- ✅ 优化成本和性能
-
-### 推荐配置
-- **日常使用**：DeepSeek（性价比最高）
-- **长文档**：Kimi（200万字上下文）
-- **复杂任务**：Claude 3.5 Sonnet（推理能力强）
-- **本地隐私**：Ollama（完全本地）
-- **内容灾方案**：DeepSeek → Claude Sonnet → Claude Opus
-- **记忆搜索**：Gemini Embedding（免费且效果好）
+1. 先配好 `models auth`、主模型和回退链
+2. 再单独配图片 / 视频 / 音乐模型
+3. 需要长期关系型助手时再开 Active Memory
+4. 需要“可维护知识层”时再开 Memory Wiki
+5. 最后再收紧 exec approvals、hook token 和私网 provider 边界
 
 ---
 
-~~**下一章节预告**：第12章节将进入实战案例部分，学习个人效率提升的完整工作流。~~
+## 11.9 官方参考
 
-
----
-
-## 11.9 Talk 模式配置（2026.3.8+）
-
-Talk 模式允许语音输入和输出。新增 `talk.silenceTimeoutMs` 配置项，用于设置自动发布送前的静默等待时间（毫秒）。
-
-```json
-{
-  "talk": {
-    "silenceTimeoutMs": 2000  // 默认2秒无声后自动发布送
-  }
-}
-```
-
-**使用场景**：
-- 语音对话时，避免频繁中断
-- 调整响应灵敏度（值越小越灵敏）
-- 适配不同网络延迟环境
-
-**推荐值**：
-- 快速响应：1000-1500ms
-- 平衡模式：2000-2500ms（默认）
-- 宽松模式：3000-4000ms
-
-
----
-
-~~##11.10 Brave Web Search：LLM Context 模式（2026.3.8+，可选）~~
-
-~~2026.3.8 新增可选配置 `tools.web.search.brave.mode: "llm-context"`，用于让 `web_search` 调用 Brave 的 *LLM Context*端点返回更适合大模型使用的 grounding snippets（带来源元数据）。~~
-
-```yaml
-tools:
- web:
- search:
- brave:
- mode: "llm-context"
-```
-
->~~说明：该模式为 **opt-in**，不配置则保支持原行为。~~
-
-
----
-
-## 🌐 在线阅读
-
-📖 **想在线阅读此章节节？**
-
-[🔗 在线阅读此章节节](https://awesome.tryopenclaw.asia/docs/03-advanced/11-advanced-configuration/)
-
-访问网站获取更好的阅读体验：
-- 📱 响应式设计，支持手机、平板、电脑
--  支持黑暗模式，保护眼睛
-- 🔍 内置搜索功能，快速定位内内容
-- 📋 目附录导航，轻松跳转章节节
-
-[🏠 访问完整教网站](https://awesome.tryopenclaw.asia)
+- GitHub Releases：https://github.com/openclaw/openclaw/releases
+- Models CLI：https://docs.openclaw.ai/cli/models
+- Model Concepts：https://docs.openclaw.ai/concepts/models
+- Inference CLI：https://docs.openclaw.ai/cli/infer
+- Active Memory：https://docs.openclaw.ai/concepts/active-memory
+- Memory Wiki：https://docs.openclaw.ai/plugins/memory-wiki
+- Exec Approvals：https://docs.openclaw.ai/cli/approvals

@@ -41,7 +41,7 @@
 |------|---------|------|
 | 第8章：Skills扩展 | `docs/03-advanced/08-skills-extension.md` | ✅ 有效 |
 | 第9章：多平台集成 | `docs/03-advanced/09-multi-platform-integration.md` | ✅ 有效 |
-| 第10章：API服务集成 | `docs/03-advanced/10-api-integration.md` | ✅ 有效 |
+| 第10章：API 与外部能力集成 | `docs/03-advanced/10-api-integration.md` | ✅ 有效 |
 | 第11章：高级配置 | `docs/03-advanced/11-advanced-configuration.md` | ✅ 有效 |
 | **安全指南** | `docs/03-advanced/99-security-guide.md` | ✅ 有效 |
 
@@ -49,10 +49,10 @@
 
 | 链接 | 文件路径 | 状态 |
 |------|---------|------|
-| 第12章：5类人群的效率提升实战 | `docs/04-practical-cases/12-personal-productivity.md` | ✅ 有效 |
+| 第12章：个人效率实战 | `docs/04-practical-cases/12-personal-productivity.md` | ✅ 有效 |
 | 第13章：高级自动化工作流 | `docs/04-practical-cases/13-advanced-automation.md` | ✅ 有效 |
-| 第14章：创意应用探索 | `docs/04-practical-cases/14-creative-applications.md` | ✅ 有效 |
-| 第15章：超级个体实战案例 | `docs/04-practical-cases/15-solo-entrepreneur-cases.md` | ✅ 有效 |
+| 第14章：创意应用实战 | `docs/04-practical-cases/14-creative-applications.md` | ✅ 有效 |
+| 第15章：一人公司实战 | `docs/04-practical-cases/15-solo-entrepreneur-cases.md` | ✅ 有效 |
 
 ---
 

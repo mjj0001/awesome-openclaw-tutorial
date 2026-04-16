@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.4.11-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
+[![Version](https://img.shields.io/badge/version-v2026.4.14-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 [![CSDN](https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn)](https://blog.csdn.net/xianyu120)
 [![Bilibili](https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili)](https://space.bilibili.com/399102586)
@@ -16,21 +16,21 @@
 
 > 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 清华大学出版社出版，在开源教程基础上全面重写+逐条验证。🛒 [京东专属购买链接（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
-> 🔄 **2026-04-13 更新说明**：本仓库现按 **OpenClaw v2026.4.11（稳定版）** 校对；`v2026.4.12-beta.1` 仅作预发布参考。第 1/2/5/7 章已补当前主线，第 10-15 章已增加高风险提示与新版入口，动手前请优先参考官方文档。
+> 🔄 **2026-04-16 更新说明**：本仓库当前按 **OpenClaw v2026.4.14（稳定版）** 校对；`v2026.4.15-beta.1` 仅作预发布参考。第 `10~15` 章已按官方当前主线重写，优先覆盖 `infer / models / cron / tasks / Task Flow / webhooks / Active Memory / Memory Wiki / 媒体能力`。
 
 ## 📌 本教程与 OpenClaw 最新版差异说明
 
 为了避免你把旧章节当成最新版官方教程，先看这 4 点：
 
-- **当前教程基线**：本仓库目前按 `v2026.4.11` 稳定版校对；如果 GitHub Releases 出现更高版本，请以官方 Release Notes 和官方文档为准
-- **已优先更新的章节**：`README`、第 `1/2/5/7/10/11/14` 章已补 `2026.4+` 主线入口和风险提示
+- **当前教程基线**：本仓库目前按 `v2026.4.14` 稳定版校对；如果 GitHub Releases 出现更高版本，请以官方 Release Notes 和官方文档为准
+- **已优先更新的章节**：`README` 与第 `10~15` 章已按 `2026.4+` 当前主线重写；第 `1/2/5/7` 章已补新版入口
 - **仍含历史内容的章节**：部分旧案例、旧截图、旧 Skill 名称、旧配置片段仍保留在其他章节里，适合作为思路参考，不建议直接复制执行
 - **当前应优先使用的官方主线**：`openclaw onboard`、`openclaw models auth login --provider <provider>`、`openclaw infer ...`、`Task Flow`、`Webhooks`、`ComfyUI`
 
 | 类型 | 本教程当前状态 | 阅读建议 |
 |------|----------------|----------|
-| 版本基线 | 已对齐 `v2026.4.11` | 新手优先按这个版本跑通 |
-| 预发布能力 | `v2026.4.12-beta.1` 仅作参考 | 想尝鲜再看，不要默认照抄 |
+| 版本基线 | 已对齐 `v2026.4.14` | 新手优先按这个版本跑通 |
+| 预发布能力 | `v2026.4.15-beta.1` 仅作参考 | 想尝鲜再看，不要默认照抄 |
 | 安装/配置主线 | 已补新版入口 | 优先看第 `2` 章和第 `11` 章 |
 | 媒体/创意能力 | 已补 `infer` / `video_generate` / `music_generate` / `ComfyUI` 主线 | 优先看第 `10` 章和第 `14` 章 |
 | 旧 Skill 生态 | 仍有历史内容残留 | 先 `search/info` 验证，再决定是否安装 |
@@ -71,14 +71,14 @@
 ### 💎 进阶技能（提升）
 - 🔌 [第8章：Skills扩展](docs/03-advanced/08-skills-extension.md) - 1800+技能
 - 🤖 [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md) - 飞书/企微/钉钉/QQ/微信
-- 🔗 [第10章：API集成](docs/03-advanced/10-api-integration.md) - 官方 infer / 媒体生成主路线
-- ⚙️ [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md) - 性能优化
+- 🔗 [第10章：API 与外部能力集成](docs/03-advanced/10-api-integration.md) - infer / webhooks / 媒体工作流
+- ⚙️ [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md) - 模型 / 记忆 / 审批 / 性能
 
 ### 🎯 实战案例（直接套用）
-- 👔 [第12章：5类人群实战](docs/04-practical-cases/12-personal-productivity.md) - 效率提升85%
-- 🔗 [第13章：高级自动化](docs/04-practical-cases/13-advanced-automation.md) - ROI 9000%-15900%
-- 🎨 [第14章：创意应用](docs/04-practical-cases/14-creative-applications.md) - 以官方媒体能力与 ComfyUI 为主
-- 🚀 [第15章：超级个体](docs/04-practical-cases/15-solo-entrepreneur-cases.md) - 一人顶一个团队
+- 👔 [第12章：个人效率实战](docs/04-practical-cases/12-personal-productivity.md) - 知识工作 / 编程 / 创作 / 学习 / 个人运营
+- 🔗 [第13章：高级自动化](docs/04-practical-cases/13-advanced-automation.md) - cron / tasks / Task Flow / hooks / standing orders
+- 🎨 [第14章：创意应用](docs/04-practical-cases/14-creative-applications.md) - 图片 / 视频 / 音乐 / TTS / ComfyUI
+- 🚀 [第15章：一人公司实战](docs/04-practical-cases/15-solo-entrepreneur-cases.md) - 选题 / 交付 / 分发 / 复盘
 
 ### 📚 附录工具（速查）
 - [命令速查表](appendix/A-command-reference.md) | [必装Skills](appendix/B-skills-catalog.md)
@@ -102,7 +102,7 @@
 - [Gateway启动失败？](appendix/E-common-problems.md#gateway问题) → 检查认证配置
 
 ### 成本优化
-- [API费用太高？](docs/03-advanced/11-advanced-configuration.md#成本优化)
+- [API费用太高？](docs/03-advanced/11-advanced-configuration.md)
 - [如何省钱？](appendix/F-best-practices.md) - 使用国产模型节省95%
 
 </details>
@@ -186,34 +186,34 @@ openclaw gateway restart
 
 ---
 
-### 🆕 v2026.4.11 稳定版更新（2026年4月12日）
+### 🆕 v2026.4.14 稳定版更新（2026年4月14日）
 
 **当前基线**
-- **稳定版**：`v2026.4.11`
-- **预发布参考**：`v2026.4.12-beta.1`（2026年4月13日）
+- **稳定版**：`v2026.4.14`
+- **预发布参考**：`v2026.4.15-beta.1`（2026年4月15日）
 - **推荐运行时**：`Node 24`；如继续走兼容路径，建议至少 `Node 22.16+`
 
 **2026.4 主线变化**
-- **Active Memory**：回复前自动拉取相关偏好、上下文和历史细节
+- **Active Memory**：已进入稳定主线，回复前主动拉取相关偏好、上下文和历史细节
 - **Dreaming + Memory Wiki**：长期记忆、结构化 `claim/evidence`、矛盾/新鲜度管理成为主线能力
 - **Task Flow + Webhooks**：自动化从“定时任务”升级到“持久化流程 + 外部事件触发”
 - **`openclaw infer`**：统一 `model / image / audio / tts / video / web / embedding` CLI 入口
 - **内建媒体能力**：官方 `video_generate` / `music_generate` 与 `ComfyUI` provider/plugin 已可直接使用
-- **Control UI**：新增多语言与富内容 `[embed ...]` 展示能力
+- **模型与 provider 修复**：`v2026.4.12` 到 `v2026.4.14` 集中修复了 Codex、Ollama、embedding、媒体、SSRF 与 UI 等一批兼容问题
 
 **升级命令**：
 ```bash
-npm install -g openclaw@2026.4.11
-openclaw --version  # 确认版本为 2026.4.11
+npm install -g openclaw@2026.4.14
+openclaw --version  # 确认版本为 2026.4.14
 ```
 
-> ⚠️ **新手建议**：如果你的目标是“按教程稳定跑通”，优先使用 `v2026.4.11`。`v2026.4.12-beta.1` 适合尝鲜验证，不建议直接作为默认教程基线。
+> ⚠️ **新手建议**：如果你的目标是“按教程稳定跑通”，优先使用 `v2026.4.14`。`v2026.4.15-beta.1` 适合尝鲜验证，不建议直接作为默认教程基线。
 
 ---
 
 ## 📖 纸质书：《OpenClaw超级个体实操手册》
 
-⚠️ **重要提示**：本教程从第10章开始存在skill找不到和配置参数错误的问题（[#34](https://github.com/xianyu110/awesome-openclaw-tutorial/issues/34)）
+⚠️ **当前说明**：开源教程的第 `10~15` 章已按 `v2026.4.14` 主线重写；纸质书仍然是更系统的重写版，适合需要完整、稳定、逐条验证内容的读者。
 
 **纸质书已全面修正，现已上市！**
 
@@ -275,14 +275,14 @@ openclaw --version  # 确认版本为 2026.4.11
 ### 第三部分：进阶技能（4章节）
 - [第8章：Skills扩展](docs/03-advanced/08-skills-extension.md)
 - [第9章：多平台集成](docs/03-advanced/09-multi-platform-integration.md)
-- [第10章：API服务集成](docs/03-advanced/10-api-integration.md)
-- [第11章：高级配置](docs/03-advanced/11-advanced-configuration.md)
+- [第10章：API 与外部能力集成](docs/03-advanced/10-api-integration.md)
+- [第11章：高级配置（模型、记忆、审批与性能）](docs/03-advanced/11-advanced-configuration.md)
 
 ### 第四部分：实战案例（4章节）
-- [第12章：5类人群效率提升实战](docs/04-practical-cases/12-personal-productivity.md)
+- [第12章：个人效率实战](docs/04-practical-cases/12-personal-productivity.md)
 - [第13章：高级自动化工作流](docs/04-practical-cases/13-advanced-automation.md)
-- [第14章：创意应用探索](docs/04-practical-cases/14-creative-applications.md)
-- [第15章：超级个体实战案例](docs/04-practical-cases/15-solo-entrepreneur-cases.md)
+- [第14章：创意应用实战](docs/04-practical-cases/14-creative-applications.md)
+- [第15章：一人公司实战](docs/04-practical-cases/15-solo-entrepreneur-cases.md)
 
 ---
 
@@ -354,9 +354,9 @@ openclaw --version  # 确认版本为 2026.4.11
 ## 📈 项目进度
 
 - ✅ **v1.6**（2026-03-18）：新增一键部署教程（8个平台）
-- ✅ **v1.8**（2026-04-13）：同步 OpenClaw `v2026.4.11` 稳定版能力地图，补充记忆系统、Task Flow、Webhooks 与官方媒体主路线提示
+- ✅ **v1.10**（2026-04-16）：第 `10~15` 章按 OpenClaw `v2026.4.14` 稳定版主线重写，并同步 README / 章节入口 / 纸书推荐文案
 - ✅ **v1.9**（2026-04-04）：同步橙皮书 v1.3~v1.4 更新——新增微信ClawBot、腾讯全家桶、浏览器渠道、GLM-5-Turbo、安全漏洞统计
-- 🔄 **v1.8**（进行中）：优化内容质量，补充实战案例
+- 🔄 **v1.11**（进行中）：继续清理第 `1~9` 章旧口径与历史案例
 
 ---
 
